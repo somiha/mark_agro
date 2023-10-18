@@ -14,6 +14,9 @@ const cart = require("./cart.route");
 const all_products = require("./all-products.route");
 const startPage = require("./flashSell.route");
 
+//somiha
+const adminRoute = require("./adminRoute/adminRoute");
+const adminApiRoute = require("./adminApiRoute/adminApiRoute");
 
 Router.use(productDetailsRouter);
 Router.use(fvProductsRouter);
@@ -27,5 +30,9 @@ Router.use(regRouter);
 Router.use(cart);
 Router.use(all_products);
 Router.use(startPage);
+
+//somiha
+Router.use(adminRoute);
+Router.use(adminApiRoute);
 
 module.exports = Router;

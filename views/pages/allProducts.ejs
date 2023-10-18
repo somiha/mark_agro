@@ -1,0 +1,181 @@
+<%- include('../partials/navigation.ejs') %>
+<div class="bg-gray-100 px-5 pt-5 rounded-md">
+
+    <div class="flex justify-between items-center flex-wrap gap-5">
+        <p class="text-xl xl:text-2xl font-semibold text-tColor2">All Products</p>
+        <div class="bg-white relative ml-auto">
+            <input class="py-2 pl-3 pr-6 focus:outline-none max-w-[205px] rounded-md" type="text"
+                placeholder="Search product...">
+            <i class="fa-solid fa-magnifying-glass absolute top-1/2 right-2 -translate-y-1/2 text-tColor"></i>
+        </div>
+        <a href="/add-products" class="primary-btn">+ Add Brand Products</a>
+    </div>
+
+    <!-- All Orders Table -->
+    <div class="mt-5">
+
+        <div class="flex flex-col justify-around">
+
+            <div class="bg-white pt-5 mt-5 overflow-x-scroll md:overflow-hidden px-5">
+                <table class="table-auto text-xs md:text-sm profile-table w-[230%] md:w-full">
+                    <thead>
+                        <tr>
+                            <th>PRODUCT CODE</th>
+                            <th>ITEM</th>
+                            <th>CATEGORY</th>
+                            <th>PRICE</th>
+                            <th>SOLD</th>
+                            <th>SALES</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for (let product of paginatedProducts) { %>
+                        <tr>
+                            <td class="text-tColor"><%= product.product_id %></td>
+                            <td>
+                                <div class="flex items-center gap-2">
+                                    <img src="<%= product.product_image_url %>" alt="" class="h-9 w-9">
+                                    <p class="font-semibold"><%= product.product_name %></p>
+                                </div>
+                            </td>
+                            <td><span
+                                    class="bg-tColor text-white px-3 py-2 rounded"><%= product.extra_cat_name %></span>
+                            </td>
+                            <td>$<%= product.product_price %></td>
+                            <td><%= product.sell_count %></td>
+                            <td>$15,302.00</td>
+                            <td>
+                                <a href="#"><i class="fa-solid fa-ellipsis text-tColor"></i></a>
+                            </td>
+                        </tr>
+
+                        <% } %>
+
+                    </tbody>
+                </table>
+
+            </div>
+
+            <!-- Page Select -->
+
+            <div class="flex flex-col xl:flex-row justify-between xl:items-center py-5 gap-2">
+                <p class="text-center text-xs xl:text-sm text-tColor">
+                    Show <%= paginatedProducts.length %> from <%= products.length %> products
+                </p>
+
+                <div
+                    class="scale-75 xl:scale-100 grid grid-flow-col content-center ml-auto mr-auto xl:mr-0 font-semibold xl:text-sm text-tColor gap-3">
+                    <% if (page > 1) { %>
+                    <a class="h-6 w-6 rounded flex items-center justify-center"
+                        href="/all-products?page=<%= page - 1 %>">
+                        <svg width="6" height="10" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7.125 0.75L0.875 7L7.125 13.25" stroke="#84818A" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </a>
+                    <% } %>
+
+                    <% const maxPagesToShow = 8;
+                       const startPage = Math.max(1, page - Math.floor(maxPagesToShow / 2));
+                       const endPage = Math.min(
+                           Math.ceil(products.length / productsPerPage),
+                           startPage + maxPagesToShow - 1
+                       );
+            
+                       for (let i = startPage; i <= endPage; i++) { %>
+                    <a class=" h-6 w-6 rounded flex items-center justify-center <%= i === page ? 'bg-blue-100 text-primaryColor' : '' %>"
+                        href="/all-products?page=<%= i %>"><%= i %></a>
+                    <% } %>
+
+                    <% if (page < Math.ceil(products.length / productsPerPage)) { %>
+                    <a class="h-6 w-6 rounded flex items-center justify-center"
+                        href="/all-products?page=<%= page + 1 %>">
+                        <svg width="6" height="10" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0.875 0.75L7.125 7L0.875 13.25" stroke="#84818A" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </a>
+                    <% } %>
+                </div>
+            </div>
+
+
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+
+
+
+<!-- Header Section Script -->
+<script>
+    // Menu toggle button 
+    const toggleButton = document.getElementById("toggle-button");
+    const toggleMenu = document.getElementById("toggle-menu");
+    var toggleCounter = 1;
+    toggleButton.onclick = function () {
+        toggleCounter++;
+        if (toggleCounter % 2 == 0) {
+            toggleMenu.classList.remove("hidden");
+            toggleMenu.classList.add("grid");
+        }
+        else {
+            toggleMenu.classList.remove("grid");
+            toggleMenu.classList.add("hidden");
+        }
+    }
+
+
+</script>
+
+
+<!-- Accordion Script -->
+<script>
+    const accordionButtons = document.querySelectorAll('.accordion-button');
+    const accordionMenu = document.querySelectorAll('.menu-collapse');
+
+    accordionButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const accordionCollapse = button.nextElementSibling;
+            button.setAttribute('aria-expanded', button.getAttribute('aria-expanded') === 'false' ? 'true' : 'false');
+            accordionCollapse.classList.toggle('hidden');
+        });
+    });
+
+    // Set all accordion items to collapsed state by default
+    document.querySelectorAll('.menu-collapse').forEach(collapse => {
+        collapse.classList.add('hidden');
+    });
+
+
+
+</script>
+
+<script>
+    const tables = document.querySelectorAll('.table-collapse');
+    window.onclick = function (event) {
+        for (let table of tables) {
+            if (event.target == table) {
+                table.classList.toggle('hidden');
+            }
+        }
+    };
+</script>
+
+
+
+
+</body>
+
+</html>

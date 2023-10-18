@@ -11,7 +11,6 @@ app.use(cookieParser());
 app.use(express.static(__dirname + "/public"));
 app.use(Router);
 
-
 // static files
 app.use(express.static("public"));
 app.use("/css", express.static(__dirname + "public/css"));
@@ -19,8 +18,9 @@ app.use("/images", express.static(__dirname + "public/images"));
 app.use("/js", express.static(__dirname + "public/js"));
 
 app.set("view engine", "ejs");
+app.set("views");
 
-const port = 3000;
+const port = 3010;
 app.listen(port, function () {
   console.log("Listening on port 3000");
 });

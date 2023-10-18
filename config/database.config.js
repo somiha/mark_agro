@@ -1,10 +1,10 @@
-const mysql = require("mysql");
+const mysql = require("mysql2");
 // const dotenv = require('dotenv');
 
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "",
+  password: "12345678",
   database: "mark_agro",
 });
 
