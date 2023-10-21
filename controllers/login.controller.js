@@ -82,21 +82,24 @@ exports.numberVerify = (req, res) => {
 exports.passReset = (req, res) => {
   var { oldPassword, newPassword, confirmPass } = req.body;
   var { number } = req.query;
-  console.log("n", { number });
-  var numb = "+" + number.substr(1, number.length);
+
   if (newPassword != confirmPass) {
     res.status(200).json({
       status: false,
       message: "New Pass and Confirm Pass didn't match !",
-      client: {
-        newPassword,
-        confirmPass,
-      },
+      client: {},
     });
     return;
   }
 
-  console.log(oldPassword, newPassword, number);
+  if (newPassword === oldPassword) {
+    res.status(200).json({
+      status: false,
+      message: "Please use new password",
+      client: {},
+    });
+    return;
+  }
 
   let myPromise = new Promise(function (myResolve, myReject) {
     db.query(

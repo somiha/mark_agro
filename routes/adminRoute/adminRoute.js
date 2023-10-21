@@ -5,6 +5,8 @@ const {
 
 const { getDashboard } = require("../../controllers/admin/dashboardController");
 
+const { getMainCat } = require("../../controllers/admin/catController");
+
 const {
   getAddProducts,
 } = require("../../controllers/admin/addProductController");
@@ -12,5 +14,6 @@ const {
 router.get("/", getDashboard);
 router.get("/all-products", getAllProducts);
 router.get("/add-products", getAddProducts);
+router.get("/main-category", getMainCat);
 
 module.exports = router;

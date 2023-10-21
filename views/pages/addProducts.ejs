@@ -24,7 +24,7 @@
                     <div class="col-span-1 xl:col-span-2">
                         <p class="text-tColor3 mb-2">Product Name</p>
                         <input class=" border rounded px-3 py-2 flex-1 focus:outline-none focus:shadow-outline w-full"
-                            type="text" id="product-name" name="product-name" placeholder="Product Name">
+                            type="text" id="product_name" name="product-name" placeholder="Product Name">
                     </div>
 
                     <div class="col-span-1">
@@ -45,114 +45,27 @@
                             </div>
                             <input
                                 class=" border rounded-r border-l-0 px-3 py-2 flex-1 focus:outline-none focus:shadow-outline w-full"
-                                type="number" id="product-price" name="product-price" placeholder="Price">
+                                type="number" id="product_price" name="product-price" placeholder="Price">
                         </div>
                     </div>
 
                 </div>
 
-                <div class="grid grid-cols-1 xl:grid-cols-3 gap-5">
 
-                    <div class="col-span-1 xl:col-span-2">
-                        <p class="text-tColor3 mb-2">SKU</p>
-                        <input class=" border rounded px-3 py-2 flex-1 focus:outline-none focus:shadow-outline w-full"
-                            type="text" id="product-name" name="product-name" placeholder="Product SKU">
-                    </div>
-
-                    <div class="col-span-1">
-                        <p class="text-tColor3 mb-2">Weight</p>
-                        <div class="flex mb-4 items-center">
-                            <div class="relative">
-                                <select
-                                    class=" border rounded-l px-3 py-2 pr-8 appearance-none focus:outline-none focus:shadow-outline"
-                                    id="country-code" name="country-code">
-                                    <option value="USD">Kgs</option>
-                                    <option value="GPT">Lbs</option>
-                                    <!-- Add more options here -->
-                                </select>
-                                <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
-                                    <i class="text-sm fa-solid fa-angle-down"></i>
-                                </div>
-                            </div>
-                            <input
-                                class=" border rounded-r border-l-0 px-3 py-2 flex-1 focus:outline-none focus:shadow-outline w-full"
-                                type="number" id="product-price" name="product-price" placeholder="Price">
-                        </div>
-                    </div>
-
-                </div>
 
                 <!-- Product Right Section -->
                 <div class="xl:absolute top-0 right-0 xl:pl-5 xl:w-1/4">
                     <p class="font-semibold text-lg text-tColor2 py-5">Primary Details</p>
 
                     <div>
-                        <p class="text-tColor3 mb-2">Main Category</p>
+                        <p class="text-tColor3 mb-2">Category</p>
                         <div class="relative">
                             <select
                                 class=" border rounded-l px-3 py-2 pr-8 appearance-none focus:outline-none focus:shadow-outline w-full"
                                 id="country-code" name="country-code">
-                                <option value="">Electronics</option>
-                                <option value="">Hobby</option>
-                                <option value="">Beauty</option>
-                                <option value="">Fashion</option>
-                                <option value="">Furniture</option>
-                                <option value="">Books</option>
-                                <option value="">Gadget</option>
-                                <option value="">Music</option>
-                                <option value="">Health</option>
-                                <option value="">Investment</option>
-                                <option value="">Camera</option>
-                                <!-- Add more options here -->
-                            </select>
-                            <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
-                                <i class="text-sm fa-solid fa-angle-down"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mt-5">
-                        <p class="text-tColor3 mb-2">Sub Category</p>
-                        <div class="relative">
-                            <select
-                                class=" border rounded-l px-3 py-2 pr-8 appearance-none focus:outline-none focus:shadow-outline w-full"
-                                id="country-code" name="country-code">
-                                <option value="">Electronics</option>
-                                <option value="">Hobby</option>
-                                <option value="">Beauty</option>
-                                <option value="">Fashion</option>
-                                <option value="">Furniture</option>
-                                <option value="">Books</option>
-                                <option value="">Gadget</option>
-                                <option value="">Music</option>
-                                <option value="">Health</option>
-                                <option value="">Investment</option>
-                                <option value="">Camera</option>
-                                <!-- Add more options here -->
-                            </select>
-                            <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
-                                <i class="text-sm fa-solid fa-angle-down"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="my-5">
-                        <p class="text-tColor3 mb-2">Extra Category</p>
-                        <div class="relative">
-                            <select
-                                class=" border rounded-l px-3 py-2 pr-8 appearance-none focus:outline-none focus:shadow-outline w-full"
-                                id="country-code" name="country-code">
-                                <option value="">Electronics</option>
-                                <option value="">Hobby</option>
-                                <option value="">Beauty</option>
-                                <option value="">Fashion</option>
-                                <option value="">Furniture</option>
-                                <option value="">Books</option>
-                                <option value="">Gadget</option>
-                                <option value="">Music</option>
-                                <option value="">Health</option>
-                                <option value="">Investment</option>
-                                <option value="">Camera</option>
+                                <% for(let cat of extraCat){ %>
+                                <option value="<%= cat.extra_cat_id %>"><%= cat.extra_cat_name %></option>
+                                <% } %>
                                 <!-- Add more options here -->
                             </select>
                             <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
@@ -166,7 +79,7 @@
                 <div class="border-b pb-10">
                     <p class="text-tColor3 mb-2">Description</p>
                     <textarea class="border rounded-r px-3 py-2 flex-1 focus:outline-none focus:shadow-outline w-full"
-                        id="product-desciption" name="product-description" rows="4" cols="50"
+                        id="product_desciption" name="product-description" rows="4" cols="50"
                         placeholder="Enter Product Description"></textarea>
                 </div>
 
@@ -175,56 +88,19 @@
                 <div class="border-b py-10 w-fit">
                     <p class="font-semibold text-lg text-tColor2 mb-2">Media</p>
 
-                    <div class="flex flex-wrap gap-5">
-
-                        <div class="">
-                            <div class="h-40 w-40 p-2 flex justify-center items-center border rounded">
-                                <img src="img/product-upload-1.png" alt="">
-                            </div>
-                            <div class="grid grid-cols-2 text-sm border mt-2 py-2">
-                                <button><i class="fa-regular fa-eye w-full border-r text-tColor"></i></button>
-                                <button><i class="fa-regular fa-trash-can w-full text-tertiaryColor"></i></button>
-                            </div>
-                        </div>
-
-                        <div>
-                            <div class="h-40 w-40 p-2 flex justify-center items-center border rounded">
-                                <img src="img/product-upload-2.png" alt="">
-                            </div>
-                            <div class="grid grid-cols-2 text-sm border mt-2 py-2">
-                                <button><i class="fa-regular fa-eye w-full border-r text-tColor"></i></button>
-                                <button><i class="fa-regular fa-trash-can w-full text-tertiaryColor"></i></button>
-                            </div>
-                        </div>
-
-                        <div>
-                            <div class="h-40 w-40 p-2 flex justify-center items-center border rounded">
-                                <img src="img/product-upload-3.png" alt="">
-                            </div>
-                            <div class="grid grid-cols-2 text-sm border mt-2 py-2">
-                                <button><i class="fa-regular fa-eye w-full border-r text-tColor"></i></button>
-                                <button><i class="fa-regular fa-trash-can w-full text-tertiaryColor"></i></button>
-                            </div>
-                        </div>
-
-                        <div>
-                            <label for="dropzone-file"
-                                class="flex flex-col items-center justify-center border border-dashed rounded-lg cursor-pointer h-40 w-40">
-                                <div class="flex flex-col items-center justify-center p-5">
-                                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M18 16V2C18 0.9 17.1 0 16 0H2C0.9 0 0 0.9 0 2V16C0 17.1 0.9 18 2 18H16C17.1 18 18 17.1 18 16ZM5.5 10.5L8 13.51L11.5 9L16 15H2L5.5 10.5Z"
-                                            fill="#1A63A6" />
-                                    </svg>
-
-                                    <p class="mt-2 text-sm text-primaryColor text-center">Browse image..</p>
-                                </div>
-                                <input id="dropzone-file" type="file" class="hidden" />
-                            </label>
-                        </div>
+                    <div class="flex gap-5 flex-wrap items-center">
+                        <h5>Product Feature Image</h5>
 
                     </div>
+                    <input name="product-featured-image" type="file"
+                        class="dropzone-feature-file custom-feature-file-label" style="margin-top: 5px;" required />
+                    <hr class="mt-2">
+                    <h6>Add Product Image</h6>
+                    <div class="mb-4" id="productImageContainer">
+                        <!-- product image fields will be dynamically added here -->
+                    </div>
+                    <button type="button" class="bg-primaryColor text-white rounded px-4 py-2" id="addImageBtn">Add
+                        Image</button>
 
                 </div>
 
@@ -300,6 +176,24 @@
         }
     });
 
+</script>
+
+<script>
+    // JavaScript to handle dynamically adding and removing subcategory fields
+    document.getElementById("addImageBtn").addEventListener("click", function () {
+        const productImageContainer = document.getElementById("productImageContainer");
+        const newProdcutImageField = document.createElement("div");
+        newProdcutImageField.className = "flex items-center mb-2";
+        newProdcutImageField.innerHTML = `
+    <input  name="product-image" type="file" class="dropzone-file custom-file-label" style="margin-top: 5px;" />
+      <button type="button"  style="margin-left: 10px;" class="bg-red-800 text-white px-4 py-1 rounded" onclick="removeSubcategoryField(this)">Remove</button>
+    `;
+        productImageContainer.appendChild(newProdcutImageField);
+    });
+
+    function removeSubcategoryField(button) {
+        button.parentNode.remove();
+    }
 </script>
 
 <script>

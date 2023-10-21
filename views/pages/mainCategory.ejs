@@ -1,0 +1,226 @@
+<%- include('../partials/navigation.ejs') %>
+
+<div class="bg-gray-100 px-5 pt-5 rounded-md">
+
+    <div class="flex justify-between items-center flex-wrap gap-5">
+        <p class="text-xl xl:text-2xl font-semibold text-tColor2">Categories</p>
+        <div class="bg-white relative ml-auto">
+            <input class="py-2 pl-3 pr-6 focus:outline-none max-w-[205px] rounded-md" type="text"
+                placeholder="Search categories...">
+            <i class="fa-solid fa-magnifying-glass absolute top-1/2 right-2 -translate-y-1/2 text-tColor"></i>
+        </div>
+        <button class="primary-btn" id="add-category-btn">+ Add Category</button>
+    </div>
+
+    <!-- All Orders Table -->
+    <div class="mt-5">
+
+        <div class="flex flex-col justify-around">
+
+            <div class="flex flex-col xl:flex-row justify-between items-start xl:items-center gap-3">
+
+                <ul class="flex gap-7 border-b-2 pb-2 flex-wrap">
+                    <li><a href="/main-category" class="font-bold border-b-2 border-primaryColor pb-[10px]">Main</a>
+                    </li>
+                    <li><a href="dashboard-subCategory.html">Sub</a></li>
+                    <li><a href="dashboard-extraCategory.html">Extra</a></li>
+                </ul>
+
+                <div class="relative ml-auto">
+                    <button class="accordion-button menu-list">
+                        <i class="fa-solid fa-filter"></i>
+                        <span>Filter By</span>
+                        <i class="fa-solid fa-sort-down -mt-1"></i>
+                    </button>
+
+                    <ul class="menu-collapse bg-white absolute right-0 p-5 shadow-md">
+                        <li><a href="#">By Name</a></li>
+                        <li><a href="#">By Price</a></li>
+                        <li><a href="#">By Category</a></li>
+                        <li><a href="#">By Sales</a></li>
+                    </ul>
+                </div>
+
+
+            </div>
+
+            <div class="bg-white pt-5 mt-5 overflow-x-scroll md:overflow-hidden px-5">
+                <table class="table-auto text-xs md:text-sm profile-table w-[150%] md:w-full">
+                    <thead>
+                        <tr>
+                            <th>NO</th>
+                            <th>CATEGORY</th>
+                            <th>PRODUCTS</th>
+                            <th>SALES</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for (let mainCat of mainCats) { %>
+                        <tr>
+                            <td class="text-tColor"><%= mainCat.main_cat_id %></td>
+                            <td><%= mainCat.main_cat_name %></td>
+                            <td><span><%= mainCat.sell_count %></span> Products</td>
+                            <td>$<%= mainCat.total_price %></td>
+                            <td>
+                                <a href="#"><i class="fa-solid fa-ellipsis text-tColor"></i></a>
+                            </td>
+                        </tr>
+
+                        <% } %>
+
+
+
+
+                    </tbody>
+                </table>
+
+            </div>
+
+            <!-- Page Select -->
+            <div class="flex flex-col xl:flex-row justify-between xl:items-center py-5 gap-2">
+                <p class="text-center text-xs xl:text-sm text-tColor">Show <span>11</span> from <span>11</span>
+                    categories</p>
+
+                <div
+                    class="scale-75 xl:scale-100 grid grid-flow-col content-center ml-auto mr-auto xl:mr-0 font-semibold xl:text-sm text-tColor gap-3">
+                    <a class="h-6 w-6 rounded flex items-center justify-center" href="#"><svg width="6" height="10"
+                            viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7.125 0.75L0.875 7L7.125 13.25" stroke="#84818A" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </a>
+                    <a class="bg-blue-100 text-primaryColor h-6 w-6 rounded flex items-center justify-center"
+                        href="#">1</a>
+                    <a class="h-6 w-6 rounded flex items-center justify-center" href="#">2</a>
+                    <a class="h-6 w-6 rounded flex items-center justify-center" href="#">3</a>
+                    <a class="h-6 w-6 rounded flex items-center justify-center" href="#">4</a>
+                    <a class="h-6 w-6 rounded flex items-center justify-center" href="#">5</a>
+                    <a class="h-6 w-6 rounded flex items-center justify-center" href="#">...</a>
+                    <a class="h-6 w-6 rounded flex items-center justify-center" href="#">12</a>
+                    <a class="h-6 w-6 rounded flex items-center justify-center" href="#"><svg width="6" height="10"
+                            viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0.875 0.75L7.125 7L0.875 13.25" stroke="#84818A" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+</div>
+
+<!-- Add Extra Category Section -->
+<div class="bg-white h-screen max-h-[1080px] w-full xl:w-1/3 2xl:w-1/4 absolute top-0 right-0 shadow-lg p-10 hidden"
+    id="add-category">
+    <form action="">
+
+        <div class="flex justify-between items-center">
+            <p class="text-xl font-semibold">Add Category</p>
+            <button id="category-close-button"><i
+                    class="fa-solid fa-xmark bg-secondaryColor text-white text-sm rounded-[50%] px-[7px] py-[5px]"></i></button>
+        </div>
+
+        <p class="my-5 text-tColor2">You only need to enter the basic information when you create the categories.</p>
+
+        <div>
+            <p class="mb-2">Category Name</p>
+            <input class=" border rounded px-3 py-2 flex-1 focus:outline-none focus:shadow-outline w-full" type="text"
+                id="category-name" name="category-name" placeholder="Category Name">
+        </div>
+
+        <button class="bg-primaryColor text-white rounded px-4 py-2 w-full mt-5" type="submit">Publish</button>
+    </form>
+
+</div>
+
+</section>
+
+
+
+
+
+<!-- Header Section Script -->
+<script>
+    // Menu toggle button 
+    const toggleButton = document.getElementById("toggle-button");
+    const toggleMenu = document.getElementById("toggle-menu");
+    var toggleCounter = 1;
+    toggleButton.onclick = function () {
+        toggleCounter++;
+        if (toggleCounter % 2 == 0) {
+            toggleMenu.classList.remove("hidden");
+            toggleMenu.classList.add("grid");
+        }
+        else {
+            toggleMenu.classList.remove("grid");
+            toggleMenu.classList.add("hidden");
+        }
+    }
+
+
+</script>
+
+
+<!-- Accordion Script -->
+<script>
+    const accordionButtons = document.querySelectorAll('.accordion-button');
+    const accordionMenu = document.querySelectorAll('.menu-collapse');
+
+    accordionButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const accordionCollapse = button.nextElementSibling;
+            button.setAttribute('aria-expanded', button.getAttribute('aria-expanded') === 'false' ? 'true' : 'false');
+            accordionCollapse.classList.toggle('hidden');
+        });
+    });
+
+    // Set all accordion items to collapsed state by default
+    document.querySelectorAll('.menu-collapse').forEach(collapse => {
+        collapse.classList.add('hidden');
+    });
+
+
+</script>
+
+<!-- Add Sub Category -->
+<script>
+
+    const categoryOpen = document.getElementById("add-category-btn");
+    const categoryClose = document.getElementById("category-close-button");
+    const categorySection = document.getElementById("add-category");
+
+    categoryOpen.onclick = function () {
+        categorySection.classList.remove("hidden");
+    }
+
+    categoryClose.onclick = function () {
+        categorySection.classList.add("hidden");
+    }
+
+</script>
+
+<script>
+    const tables = document.querySelectorAll('.table-collapse');
+    window.onclick = function (event) {
+        for (let table of tables) {
+            if (event.target == table) {
+                table.classList.toggle('hidden');
+            }
+        }
+    };
+</script>
+
+
+
+
+</body>
+
+</html>

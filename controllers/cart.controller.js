@@ -217,11 +217,12 @@ exports.addToCart = (req, res) => {
                         // New in cart
                         // Fetch product info
                         db.query(
+                          // "SELECT `products`.`product_id`, `products`.`product_name`, `products`.`product_price`, `products`.`product_short_des`, `products`.`product_details_des`, `products`.`product_cat_id`,`products`.`seller_id`,`products`.`sell_count`, `extra_cat`.*, order_details.order_details_id, order_details.product_total_price, order_details.product_quantity, orders.* FROM products INNER JOIN order_details ON order_details.product_id = products.product_id INNER JOIN orders ON orders.order_id = order_details.order_id INNER JOIN `extra_cat` ON `extra_cat`.`extra_cat_id` = `products`.`product_cat_id` WHERE orders.order_id = ?",
                           "SELECT `products`.`product_id`, `products`.`product_name`, `products`.`product_price`, `products`.`product_short_des`, `products`.`product_details_des`, `products`.`product_cat_id`,`products`.`seller_id`,`products`.`sell_count`, `extra_cat`.*, order_details.order_details_id, order_details.product_total_price, order_details.product_quantity, orders.* FROM products INNER JOIN order_details ON order_details.product_id = products.product_id INNER JOIN orders ON orders.order_id = order_details.order_id INNER JOIN `extra_cat` ON `extra_cat`.`extra_cat_id` = `products`.`product_cat_id` WHERE orders.order_id = ?",
                           [order_id],
                           (err3, res3) => {
                             if (!err3) {
-                              const productInfo = res3[0];
+                              const productInfo = res3;
                               res.status(200).json({
                                 status: true,
                                 message: `Successfully Added Product: ${res4.insertId} to Cart: ${order_id}`,
@@ -270,11 +271,12 @@ exports.addToCart = (req, res) => {
                       if (!err4) {
                         // Fetch product info
                         db.query(
-                          "SELECT * FROM `products` WHERE `products`.`product_id` = ?",
-                          [product_id],
+                          // "SELECT * FROM `products` WHERE `products`.`product_id` = ?",
+                          "SELECT `products`.`product_id`, `products`.`product_name`, `products`.`product_price`, `products`.`product_short_des`, `products`.`product_details_des`, `products`.`product_cat_id`,`products`.`seller_id`,`products`.`sell_count`, `extra_cat`.*, order_details.order_details_id, order_details.product_total_price, order_details.product_quantity, orders.* FROM products INNER JOIN order_details ON order_details.product_id = products.product_id INNER JOIN orders ON orders.order_id = order_details.order_id INNER JOIN `extra_cat` ON `extra_cat`.`extra_cat_id` = `products`.`product_cat_id` WHERE orders.order_id = ?",
+                          [order_id],
                           (err3, res3) => {
                             if (!err3) {
-                              const productInfo = res3[0];
+                              const productInfo = res3;
                               res.status(200).json({
                                 status: true,
                                 message: `Successfully Updated Product: ${res2[0].order_details_id} in Cart: ${order_id}`,
@@ -364,35 +366,138 @@ exports.addToCart = (req, res) => {
   );
 };
 
+// exports.delCart = (req, res) => {
+//   var oID = req.query.order_details_id;
+
+//   db.query(
+//     "DELETE FROM order_details WHERE `order_details`.`order_details_id` = ?",
+//     [oID],
+//     (err1, result) => {
+//       if (!err1) {
+//         if (result.affectedRows === 0) {
+//           res.status(200).json({
+//             status: false,
+//             message: `No product was deleted or no product with this ID: ${oID}`,
+//             client: { result },
+//           });
+//         } else {
+//           db.query(
+//             // "SELECT `products`.`product_id`, `products`.`product_name`, `products`.`product_price`, `products`.`product_short_des`, `products`.`product_details_des`, `products`.`product_cat_id`,`products`.`seller_id`,`products`.`sell_count`, `extra_cat`.*, order_details.order_details_id, order_details.product_total_price, order_details.product_quantity, orders.* FROM products INNER JOIN order_details ON order_details.product_id = products.product_id INNER JOIN orders ON orders.order_id = order_details.order_id INNER JOIN `extra_cat` ON `extra_cat`.`extra_cat_id` = `products`.`product_cat_id` WHERE orders.order_id = ?",
+//             "SELECT `products`.`product_id`, `products`.`product_name`, `products`.`product_price`, `products`.`product_short_des`, `products`.`product_details_des`, `products`.`product_cat_id`,`products`.`seller_id`,`products`.`sell_count`, `extra_cat`.*, order_details.order_details_id, order_details.product_total_price, order_details.product_quantity, orders.* FROM products INNER JOIN order_details ON order_details.product_id = products.product_id INNER JOIN orders ON orders.order_id = order_details.order_id INNER JOIN `extra_cat` ON `extra_cat`.`extra_cat_id` = `products`.`product_cat_id` WHERE orders.order_id = ?",
+//             [oID],
+//             (err3, res3) => {
+//               if (!err3) {
+//                 const productInfo = res3;
+//                 res.status(200).json({
+//                   status: true,
+//                   message: `Successfully Product Deleted from Order/Cart: ${oID}`,
+//                   client: {
+//                     productInfo: productInfo,
+//                   },
+//                 });
+//               } else {
+//                 console.log(err3);
+//                 res.status(500).json({
+//                   status: false,
+//                   message: "Internal Server Error !",
+//                   client: { err3 },
+//                 });
+//               }
+//             }
+//           );
+//           // res.status(200).json({
+//           //   status: true,
+//           //   message: `Successfully Product Deleted from Order/Cart: ${oID}`,
+//           //   client: { result },
+//           // });
+//         }
+//       } else {
+//         console.log(err1);
+//         res.status(500).json({
+//           status: false,
+//           message: "Internal Server Error!",
+//           client: { err1 },
+//         });
+//         return;
+//       }
+//     }
+//   );
+// };
+
 exports.delCart = (req, res) => {
   var oID = req.query.order_details_id;
+
   db.query(
-    "DELETE FROM order_details WHERE `order_details`.`order_details_id` = ?",
+    "SELECT order_id FROM order_details WHERE order_details_id = ?",
     [oID],
-    (err1, result) => {
-      if (!err1) {
-        if (result.affectedRows === 0) {
-          res.status(200).json({
-            status: false,
-            message: `No product was deleted or no product with this ID: ${oID}`,
-            client: { result },
-          });
-        } else {
-          res.status(200).json({
-            status: true,
-            message: `Successfully Product Deleted from Order/Cart: ${oID}`,
-            client: { result },
-          });
-        }
-      } else {
-        console.log(err1);
+    (err, result1) => {
+      if (err) {
+        console.log(err);
         res.status(500).json({
           status: false,
           message: "Internal Server Error!",
-          client: { err1 },
+          client: { err },
         });
         return;
       }
+
+      if (result1.length === 0) {
+        res.status(200).json({
+          status: false,
+          message: `No order details found with ID: ${oID}`,
+          client: {},
+        });
+        return;
+      }
+
+      const order_id = result1[0].order_id;
+
+      db.query(
+        "DELETE FROM order_details WHERE `order_details`.`order_details_id` = ?",
+        [oID],
+        (err1, result) => {
+          if (!err1) {
+            if (result.affectedRows === 0) {
+              res.status(200).json({
+                status: false,
+                message: `No product was deleted or no product with this ID: ${oID}`,
+                client: { result },
+              });
+            } else {
+              db.query(
+                "SELECT `products`.`product_id`, `products`.`product_name`, `products`.`product_price`, `products`.`product_short_des`, `products`.`product_details_des`, `products`.`product_cat_id`,`products`.`seller_id`,`products`.`sell_count`, `extra_cat`.*, order_details.order_details_id, order_details.product_total_price, order_details.product_quantity, orders.* FROM products INNER JOIN order_details ON order_details.product_id = products.product_id INNER JOIN orders ON orders.order_id = order_details.order_id INNER JOIN `extra_cat` ON `extra_cat`.`extra_cat_id` = `products`.`product_cat_id` WHERE orders.order_id = ?",
+                [order_id],
+                (err3, res3) => {
+                  if (!err3) {
+                    const productInfo = res3;
+                    res.status(200).json({
+                      status: true,
+                      message: `Successfully Product Deleted from Order/Cart: ${oID}`,
+                      client: {
+                        orderDetails: productInfo,
+                      },
+                    });
+                  } else {
+                    console.log(err3);
+                    res.status(500).json({
+                      status: false,
+                      message: "Internal Server Error!",
+                      client: { err3 },
+                    });
+                  }
+                }
+              );
+            }
+          } else {
+            console.log(err1);
+            res.status(500).json({
+              status: false,
+              message: "Internal Server Error!",
+              client: { err1 },
+            });
+          }
+        }
+      );
     }
   );
 };
