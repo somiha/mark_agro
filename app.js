@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
@@ -16,11 +17,12 @@ app.use(express.static("public"));
 app.use("/css", express.static(__dirname + "public/css"));
 app.use("/images", express.static(__dirname + "public/images"));
 app.use("/js", express.static(__dirname + "public/js"));
+app.use("/uploads", express.static("uploads"));
 
 app.set("view engine", "ejs");
 app.set("views");
 
-const port = 3010;
+const port = process.env.PORT || 3010;
 app.listen(port, function () {
   console.log("Listening on port 3000");
 });

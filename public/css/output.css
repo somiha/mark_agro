@@ -1243,6 +1243,16 @@ h6 {
   background-color: red;
 }
 
+.background-tertiaryColor {
+  --tw-bg-opacity: 1;
+  background-color: rgba(
+    220,
+    52,
+    0,
+    var(--tw-bg-opacity)
+  ); /* Adjusted RGB values */
+}
+
 .bg-secondaryColor {
   --tw-bg-opacity: 1;
   background-color: rgb(161 160 189 / var(--tw-bg-opacity));

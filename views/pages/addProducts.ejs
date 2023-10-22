@@ -3,14 +3,17 @@
 
     <div class="flex justify-between items-center flex-wrap gap-5 border-b py-10">
         <p class="text-xl xl:text-2xl font-semibold text-tColor2">Add Branded Product</p>
-        <button class="bg-[#504F54] text-white px-7 py-3 rounded flex items-center gap-2">
+        <!-- <button id="previewButton" class="bg-[#504F54] text-white px-7 py-3 rounded flex items-center gap-2">
+
             <i class="fa-solid fa-eye"></i>
+
             <p>Preview</p>
-        </button>
+
+        </button> -->
     </div>
 
     <!-- Product Upload Section -->
-    <form class="" action="">
+    <form action="/add-products" method="POST" enctype="multipart/form-data">
         <div class="grid grid-cols-1 xl:grid-cols-4 relative">
 
             <!-- Product Left Section -->
@@ -24,7 +27,7 @@
                     <div class="col-span-1 xl:col-span-2">
                         <p class="text-tColor3 mb-2">Product Name</p>
                         <input class=" border rounded px-3 py-2 flex-1 focus:outline-none focus:shadow-outline w-full"
-                            type="text" id="product_name" name="product-name" placeholder="Product Name">
+                            type="text" id="product_name" name="product_name" placeholder="Product Name">
                     </div>
 
                     <div class="col-span-1">
@@ -45,8 +48,14 @@
                             </div>
                             <input
                                 class=" border rounded-r border-l-0 px-3 py-2 flex-1 focus:outline-none focus:shadow-outline w-full"
-                                type="number" id="product_price" name="product-price" placeholder="Price">
+                                type="number" id="product_price" name="product_price" placeholder="Price">
                         </div>
+                    </div>
+
+                    <div class="col-span-1 xl:col-span-2">
+                        <p class="text-tColor3 mb-2">Product Quantity</p>
+                        <input class=" border rounded px-3 py-2 flex-1 focus:outline-none focus:shadow-outline w-full"
+                            type="number" id="quantity" name="quantity" placeholder="Product Quantity">
                     </div>
 
                 </div>
@@ -62,7 +71,7 @@
                         <div class="relative">
                             <select
                                 class=" border rounded-l px-3 py-2 pr-8 appearance-none focus:outline-none focus:shadow-outline w-full"
-                                id="country-code" name="country-code">
+                                id="product_cat_id" name="product_cat_id">
                                 <% for(let cat of extraCat){ %>
                                 <option value="<%= cat.extra_cat_id %>"><%= cat.extra_cat_name %></option>
                                 <% } %>
@@ -79,37 +88,39 @@
                 <div class="border-b pb-10">
                     <p class="text-tColor3 mb-2">Description</p>
                     <textarea class="border rounded-r px-3 py-2 flex-1 focus:outline-none focus:shadow-outline w-full"
-                        id="product_desciption" name="product-description" rows="4" cols="50"
+                        id="product_description" name="product_details_des" rows="4" cols="50"
                         placeholder="Enter Product Description"></textarea>
                 </div>
+
+                <div id="imageContainer" style="display: flex; justify-content: space-between; margin-top: 20px;"></div>
 
 
                 <!-- Product Image Upload Section -->
                 <div class="border-b py-10 w-fit">
                     <p class="font-semibold text-lg text-tColor2 mb-2">Media</p>
 
-                    <div class="flex gap-5 flex-wrap items-center">
-                        <h5>Product Feature Image</h5>
 
-                    </div>
+                    <p class="text-tColor3 mb-2">Product Feature Image</p>
                     <input name="product-featured-image" type="file"
                         class="dropzone-feature-file custom-feature-file-label" style="margin-top: 5px;" required />
                     <hr class="mt-2">
-                    <h6>Add Product Image</h6>
-                    <div class="mb-4" id="productImageContainer">
-                        <!-- product image fields will be dynamically added here -->
-                    </div>
-                    <button type="button" class="bg-primaryColor text-white rounded px-4 py-2" id="addImageBtn">Add
-                        Image</button>
+                    <div class="border-b pb-10">
+                        <p class="text-tColor3 mb-2">Add Product Image</p>
+                        <div class="mb-4" id="productImageContainer">
+                            <!-- product image fields will be dynamically added here -->
+                        </div>
+                        <button type="button" class="bg-primaryColor text-white rounded px-4 py-2" id="addImageBtn">Add
+                            Image</button>
 
+                    </div>
                 </div>
 
                 <div
                     class="flex justify-center xl:justify-between items-center flex-wrap gap-5 border rounded p-5 mb-5">
                     <p class="w-full xl:w-fit text-center">Saved on system <span>5 mins</span> ago</p>
-                    <button class="xl:ml-auto bg-orange-100 rounded"><i
-                            class="fa-regular fa-trash-can w-full text-tertiaryColor p-3"></i></button>
-                    <button class="bg-primaryColor text-white rounded px-4 py-2">+ Save Products</button>
+                    <!-- <button class="xl:ml-auto bg-orange-100 rounded"><i
+                            class="fa-regular fa-trash-can w-full text-tertiaryColor p-3"></i></button> -->
+                    <button type="submit" class="bg-primaryColor text-white rounded px-4 py-2">+ Save Products</button>
                 </div>
 
             </div>
@@ -119,6 +130,21 @@
     </form>
 
 </div>
+
+<!-- <div id="previewModal" class="hidden">
+    <div class="modal-content">
+        <h1>Product Preview</h1>
+        <p id="previewProductName">Product Name: </p>
+        <p id="previewProductPrice">Price: </p>
+        <p id="previewProductDescription">Description: </p>
+        <p id="previewProductCategory">Category: </p>
+        
+        <div id="previewImageContainer" style="display: flex; justify-content: space between; margin-top: 20px;">
+            
+        </div>
+        <button id="closePreviewModal">Close</button>
+    </div>
+</div> -->
 
 
 
@@ -153,7 +179,7 @@
 
 
 <!-- Accordion Script -->
-<script>
+<!-- <script>
     const accordionButtons = document.querySelectorAll('.accordion-button');
     const accordionMenu = document.querySelectorAll('.menu-collapse');
 
@@ -170,13 +196,25 @@
         collapse.classList.add('hidden');
     });
 
+    // document.addEventListener('click', function (e) {
+    //     if (!accordionMenu.contains(e.target) && !accordionButtons.contains(e.target)) {
+    //         accordionMenu.classList.add('hidden');
+    //     }
+    // });
+
     document.addEventListener('click', function (e) {
-        if (!accordionMenu.contains(e.target) && !accordionButtons.contains(e.target)) {
-            accordionMenu.classList.add('hidden');
+        const isButton = Array.from(accordionButtons).some(button => button.contains(e.target));
+        const isMenu = Array.from(accordionMenu).some(menu => menu.contains(e.target));
+
+        if (!isButton && !isMenu) {
+            Array.from(accordionMenu).forEach(menu => {
+                menu.classList.add('hidden');
+            });
         }
     });
 
-</script>
+
+</script> -->
 
 <script>
     // JavaScript to handle dynamically adding and removing subcategory fields
@@ -186,7 +224,7 @@
         newProdcutImageField.className = "flex items-center mb-2";
         newProdcutImageField.innerHTML = `
     <input  name="product-image" type="file" class="dropzone-file custom-file-label" style="margin-top: 5px;" />
-      <button type="button"  style="margin-left: 10px;" class="bg-red-800 text-white px-4 py-1 rounded" onclick="removeSubcategoryField(this)">Remove</button>
+      <button type="button"  style="margin-left: 10px;" class="background-tertiaryColor text-white px-4 py-1 rounded" onclick="removeSubcategoryField(this)">Remove</button>
     `;
         productImageContainer.appendChild(newProdcutImageField);
     });
@@ -205,6 +243,63 @@
             }
         }
     };
+</script>
+
+<script>
+    // Add an event listener to preview the product
+    document.getElementById("previewButton").addEventListener("click", function () {
+        // Get product information from form fields
+        const productName = document.getElementById("product_name").value;
+        const productPrice = document.getElementById("product_price").value;
+        const productDescription = document.getElementById("product_description").value;
+        const productCategory = document.getElementById("product_cat_id").value;
+
+        // Create an image container
+        const imageContainer = document.getElementById("imageContainer");
+        imageContainer.innerHTML = ""; // Clear the container
+
+        // Get the product feature image
+        const featureImageInput = document.querySelector('input[name="product-featured-image"]');
+        const featureImage = featureImageInput.files[0];
+        if (featureImage) {
+            const featureImageElement = document.createElement("img");
+            featureImageElement.src = URL.createObjectURL(featureImage);
+            featureImageElement.alt = "Feature Image";
+            featureImageElement.style.maxWidth = "100px"; // Adjust the image size as needed
+            featureImageElement.style.marginRight = "10px";
+            imageContainer.appendChild(featureImageElement);
+        }
+
+        // Get additional product images
+        const additionalImageInputs = document.querySelectorAll('input[name="product-image"]');
+        additionalImageInputs.forEach((input) => {
+            const image = input.files[0];
+            if (image) {
+                const imageElement = document.createElement("img");
+                imageElement.src = URL.createObjectURL(image);
+                imageElement.alt = "Additional Image";
+                imageElement.style.maxWidth = "100px"; // Adjust the image size as needed
+                imageElement.style.marginRight = "10px";
+                imageContainer.appendChild(imageElement);
+            }
+        });
+
+        // Display the product information in the preview modal
+        const previewModal = document.getElementById("previewModal");
+        previewModal.innerHTML = `
+        
+
+            <h1>Product Preview</h1>
+            <p>Product Name: ${productName}</p>
+            <p>Price: ${productPrice}</p>
+            <p>Description: ${productDescription}</p>
+            <p>Category: ${productCategory}</p>
+            
+        `;
+
+        // Show the preview modal
+        previewModal.classList.remove("hidden");
+    });
 </script>
 
 
