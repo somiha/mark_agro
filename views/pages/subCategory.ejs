@@ -50,27 +50,25 @@
                         <tr>
                             <th>NO</th>
                             <th>CATEGORY</th>
+                            <th>REF-CATEGORY</th>
                             <th>PRODUCTS</th>
                             <!-- <th>SALES</th> -->
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <% for (let mainCat of mainCats) { %>
+                        <% for (let subCat of subCats) { %>
                         <tr>
-                            <td class="text-tColor"><%= mainCat.main_cat_id %></td>
+                            <td class="text-tColor"><%= subCat.sub_cat_id %></td>
                             <td>
                                 <div class="flex items-center gap-5">
-                                    <img src="<%= mainCat.main_cat_image_url %>" alt="" class="h-9 w-9">
-                                    <p><%= mainCat.main_cat_name %></p>
+                                    <img src="<%= subCat.sub_cat_image_url %>" alt="" class="h-9 w-9">
+                                    <p><%= subCat.sub_cat_name %></p>
                                 </div>
                             </td>
+                            <td class="text-tColor"><%= subCat.sub_cat_ref_name %></td>
+                            <td><span><%= subCat.total_products %></span> Products</td>
 
-                            <td><span><%= mainCat.total_products %></span> Products</td>
-                            <!-- <td>$<%= mainCat.total_price %></td> -->
-                            <!-- <td>
-                                <a href="#"><i class="fa-solid fa-ellipsis text-tColor"></i></a>
-                            </td> -->
                         </tr>
 
                         <% } %>
@@ -169,7 +167,7 @@
 
 <div class="bg-white h-screen max-h-[1080px] w-full xl:w-1/3 2xl:w-1/4 absolute top-0 right-0 shadow-lg p-10 hidden"
     id="add-category">
-    <form action="/main-category" method="POST" enctype="multipart/form-data">
+    <form action="/sub-category" method="POST" enctype="multipart/form-data">
         <div class="flex justify-between items-center">
             <p class="text-xl font-semibold">Add Category</p>
             <button id="category-close-button">
@@ -182,12 +180,29 @@
         <div>
             <p class="mb-2">Category Name</p>
             <input class="border rounded px-3 py-2 flex-1 focus:outline-none focus:shadow-outline w-full" type="text"
-                id="main_cat_name" name="main_cat_name" placeholder="Category Name">
+                id="sub_cat_name" name="sub_cat_name" placeholder="Category Name">
+        </div>
+
+        <div>
+            <p class="mt-5 mb-2">Ref-Category</p>
+            <div class="relative">
+                <select
+                    class=" border rounded-l px-3 py-2 pr-8 appearance-none focus:outline-none focus:shadow-outline w-full"
+                    id="sub_cat_ref" name="sub_cat_ref">
+                    <% for (let mainCat of mainCats) { %>
+                    <option value="<%= mainCat.main_cat_id %>"><%= mainCat.main_cat_name %></option>
+                    <% } %>
+                    <!-- Add more options here -->
+                </select>
+                <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                    <i class="text-sm fa-solid fa-angle-down"></i>
+                </div>
+            </div>
         </div>
 
         <div class="mt-5">
             <!-- Use a label for the file input -->
-            <label for="main-cat-image" id="label-text"
+            <label for="sub-cat-image" id="label-text"
                 class="flex flex-col items-center justify-center border border-dashed border-primaryColor rounded-lg cursor-pointer py-3 w-full">
                 <div class="flex items-center gap-5">
                     <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -197,7 +212,7 @@
                     </svg>
                     <p class="text-sm text-primaryColor text-center">Click here or drop svg, png</p>
                 </div>
-                <input id="main-cat-image" type="file" name="main-cat-image" class="hidden"
+                <input id="sub-cat-image" type="file" name="sub-cat-image" class="hidden"
                     onchange="displaySelectedImage()" />
             </label>
         </div>
@@ -215,7 +230,7 @@
 
 <!-- <script>
     function displaySelectedImage() {
-        const fileInput = document.getElementById("main-cat-image");
+        const fileInput = document.getElementById("sub-cat-image");
         const selectedImageName = document.getElementById("selected-image-name");
         const selectedImage = document.getElementById("selected-image");
 
@@ -234,7 +249,7 @@
 
 <script>
     function displaySelectedImage() {
-        const fileInput = document.getElementById("main-cat-image");
+        const fileInput = document.getElementById("sub-cat-image");
         const labelText = document.getElementById("label-text");
         const selectedImageName = document.getElementById("selected-image-name");
         const selectedImage = document.getElementById("selected-image");
