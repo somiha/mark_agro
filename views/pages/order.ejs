@@ -1,0 +1,317 @@
+<%- include('../partials/navigation.ejs') %>
+
+<div class="bg-gray-100 px-5 rounded-md">
+
+  <div class="flex flex-col xl:flex-row xl:items-center justify-between py-4 gap-4">
+
+    <p class="text-xl xl:text-2xl font-semibold text-tColor2">Orders</p>
+
+
+    <div class="flex xl:items-center gap-2 xl:gap-5">
+      <div class="bg-white relative ml-auto">
+        <input class="py-2 pl-3 pr-6 focus:outline-none max-w-[205px] rounded-md" type="text"
+          placeholder="Search order id..">
+        <i class="fa-solid fa-magnifying-glass absolute top-1/2 right-2 -translate-y-1/2 text-tColor"></i>
+      </div>
+
+      <div class="relative ml-auto">
+        <button class="accordion-button menu-list">
+          <i class="fa-solid fa-filter"></i>
+          <span>Filter By</span>
+          <i class="fa-solid fa-sort-down -mt-1"></i>
+        </button>
+
+        <ul class="menu-collapse bg-white absolute right-0 p-5 shadow-md">
+          <li><a href="#">By Name</a></li>
+          <li><a href="#">By Price</a></li>
+          <li><a href="#">By Category</a></li>
+          <li><a href="#">By Sales</a></li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+
+
+  <!-- All Orders Table -->
+  <div class="pb-5">
+
+    <div class="flex flex-col justify-around">
+
+      <div class="bg-white pt-5 overflow-x-scroll md:overflow-hidden px-5">
+        <table class="table-auto text-xs md:text-sm profile-table w-[230%] md:w-full">
+          <thead>
+            <tr>
+              <th>ORDER ID</th>
+              <th>ITEM</th>
+              <th>PRICE</th>
+              <th>STATUS</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for (let order of paginatedOrders) { %>
+            <tr>
+              <td class="text-tColor"><%= order.order_id %></td>
+              <td>
+                <div class="flex items-center gap-4">
+                  <!-- <img src="img/Product-1.png" alt="" class="h-9 w-9"> -->
+
+                  <div class="custom-max-w">
+                    <p class="font-semibold line-clamp">
+                      <%= order.product_names %>
+
+                    </p>
+                  </div>
+
+                  <!-- <span class="font-semibold text-primaryColor">+(2more)</span> -->
+                </div>
+              </td>
+              <td><%= order.total_product_price %></td>
+              <td>
+                <!-- <small
+                  class="<%= order.status_name === 'Pending' ? 'font-semibold text-orange-500 bg-orange-100 w-fit px-4 py-1 rounded' : (order.status_name === 'Confirmed' ? 'bg-blue-100 font-semibold text-blue-500 w-fit px-4 py-1 rounded' : (order.status_name === 'Processing' ? 'bg-red-100 font-semibold text-red-500 w-fit px-4 py-1 rounded' : '')) %>">
+                  <%= order.status_name %>
+                </small> -->
+                <% let statusClass = '';
+                if (order.status_name === 'Pending') {
+                    statusClass = 'font-semibold text-orange-500 bg-orange-100 w-fit px-4 py-1 rounded';
+                } else if (order.status_name === 'Confirm') {
+                    statusClass = 'font-semibold text-blue-500 bg-blue-100 w-fit px-4 py-1 rounded';
+                } else if (order.status_name === 'Processing') {
+                    statusClass = 'font-semibold text-red-500 bg-red-100 w-fit px-4 py-1 rounded';
+                } else if (order.status_name === 'Picked') {
+                    statusClass = 'font-semibold text-blue-500 bg-blue-100 w-fit px-4 py-1 rounded';
+                } else if (order.status_name === 'Shipped') {
+                    statusClass = 'font-semibold text-indigo-500 bg-indigo-100 w-fit px-4 py-1 rounded';
+                } else if (order.status_name === 'Delivered') {
+                    statusClass = 'font-semibold text-green-500 bg-green-100 w-fit px-4 py-1 rounded';
+                } else {
+                    statusClass = 'default-class'; // Use a default class if none of the conditions match
+                }
+                %>
+
+                <p class="<%= statusClass %>">
+                  <%= order.status_name %>
+                </p>
+              </td>
+              <td>
+                <button class="table-button"><i class="fa-solid fa-eye text-tColor"></i></button>
+
+                <!-- Pop up Details -->
+                <div
+                  class="table-collapse fixed bottom-0 right-0 bg-black/50 h-full w-full flex justify-center items-center z-10 hidden">
+
+                  <div
+                    class="bg-gray-100 border-2 border-primaryColor rounded-lg min-w-[350px] xl:min-w-[550px] p-5 max-h-full overflow-y-auto">
+
+                    <div class="flex justify-between items-center">
+                      <p class="font-semibold">Ordered Products</p>
+                      <button class="table-close bg-secondaryColor text-white text-sm rounded-[50%] px-[8px] py-[4px]">
+                        <i class="fa-solid fa-xmark "></i>
+                      </button>
+                    </div>
+
+                    <p class="text-white font-semibold text-xs bg-orange-500 px-4 py-1 rounded w-fit my-2">Sent to buyer
+                      to review</p>
+
+                    <table class="w-full profile-table">
+                      <thead class="py-5">
+                        <tr>
+                          <th>Product Name</th>
+                          <th>Per Unit Price</th>
+                          <th>Quantity</th>
+                          <th>Total Price</th>
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        <% let totalPrice = 0; %>
+                        <% for (let item of order.product_details) { %>
+                        <% totalPrice += item.product_quantity * item.product_price; %>
+                        <tr class="font-semibold bg-white border-b-8 border-gray-100">
+                          <td>
+                            <div class="flex items-center gap-4 pl-2">
+                              <img src="<%= item.product_image %>" alt="" class="h-9 w-9">
+                              <p><%= item.product_name %></p>
+                            </div>
+                          </td>
+                          <td><%= item.product_price %></td>
+                          <td>x<%= item.product_quantity %></td>
+                          <td><%= item.product_quantity * item.product_price %></td>
+                        </tr>
+                        <% } %>
+
+                      </tbody>
+
+                    </table>
+
+                    <div class="flex justify-between bg-primaryColor text-white rounded-md px-5 py-3 mt-2">
+                      <span>TOTAL</span>
+                      <span><%= totalPrice %></span>
+                    </div>
+
+                    <p class="font-semibold py-3">Ordered Products</p>
+
+                    <table class="w-full profile-table">
+                      <thead class="py-5">
+                        <tr>
+                          <th>Order ID</th>
+                          <th>Order Date</th>
+                          <th>Delivery Date</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+
+                        <tr class="font-semibold bg-white border-b-8 border-gray-100">
+                          <td class="pl-3"><%= order.order_id %></td>
+                          <td><%= new Date(order.placed_date).toLocaleDateString('en-GB') %></td>
+                          <td><%= new Date(order.delivery_date).toLocaleDateString('en-GB') %></td>
+                        </tr>
+
+                      </tbody>
+
+                    </table>
+
+                    <p class="font-semibold py-3">Delivery Status</p>
+                    <p class="text-primaryColor"><%= order.status_name %></p>
+
+                    <!-- <table class="w-full profile-table">
+                      <thead class="py-5">
+                        <tr>
+                          <th>Seller Name</th>
+                          <th>Buyer Name</th>
+                          <th>Delivery Location</th>
+                          <th>Payment Method</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+
+                        <tr class="font-semibold bg-white border-b-8 border-gray-100">
+                          <td class="pl-3">MD.Raju</td>
+                          <td>Salim Khan</td>
+                          <td>Kajla Rajshahi</td>
+                          <td class="text-primaryColor">Cash on delivery</td>
+                        </tr>
+
+
+                      </tbody>
+
+                    </table> -->
+
+
+                  </div>
+                </div>
+
+              </td>
+            </tr>
+            <% } %>
+
+          </tbody>
+        </table>
+
+      </div>
+
+
+
+    </div>
+
+
+  </div>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+
+
+
+<!-- Header Section Script -->
+<script>
+  // Menu toggle button 
+  const toggleButton = document.getElementById("toggle-button");
+  const toggleMenu = document.getElementById("toggle-menu");
+  var toggleCounter = 1;
+  toggleButton.onclick = function () {
+    toggleCounter++;
+    if (toggleCounter % 2 == 0) {
+      toggleMenu.classList.remove("hidden");
+      toggleMenu.classList.add("grid");
+    }
+    else {
+      toggleMenu.classList.remove("grid");
+      toggleMenu.classList.add("hidden");
+    }
+  }
+
+
+</script>
+
+
+<!-- Accordion Script -->
+<script>
+  const accordionButtons = document.querySelectorAll('.accordion-button');
+  const accordionMenu = document.querySelectorAll('.menu-collapse');
+
+  accordionButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const accordionCollapse = button.nextElementSibling;
+      button.setAttribute('aria-expanded', button.getAttribute('aria-expanded') === 'false' ? 'true' : 'false');
+      accordionCollapse.classList.toggle('hidden');
+    });
+  });
+
+  // Set all accordion items to collapsed state by default
+  document.querySelectorAll('.menu-collapse').forEach(collapse => {
+    collapse.classList.add('hidden');
+  });
+
+
+</script>
+
+
+<!-- Table Script -->
+<script>
+  const tableButtons = document.querySelectorAll('.table-button');
+  const tableMenu = document.querySelectorAll('.table-collapse');
+  const tableClose = document.querySelectorAll('.table-close');
+
+  tableButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const tableCollapse = button.nextElementSibling;
+      button.setAttribute('aria-expanded', button.getAttribute('aria-expanded') === 'false' ? 'true' : 'false');
+      tableCollapse.classList.toggle('hidden');
+    });
+  });
+
+  tableClose.forEach(button => {
+    button.addEventListener('click', () => {
+      const tableCollapse = button.parentElement.parentElement.parentElement;
+      button.setAttribute('aria-expanded', button.getAttribute('aria-expanded') === 'false' ? 'true' : 'false');
+      tableCollapse.classList.toggle('hidden');
+    });
+  });
+
+</script>
+
+<script>
+  const tables = document.querySelectorAll('.table-collapse');
+  window.onclick = function (event) {
+    for (let table of tables) {
+      if (event.target == table) {
+        table.classList.toggle('hidden');
+      }
+    }
+  };
+</script>
+
+
+
+</body>
+
+</html>

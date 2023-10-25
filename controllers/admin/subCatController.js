@@ -28,16 +28,26 @@ GROUP BY main_cat.main_cat_id;
 
 
 `;
+
     // const extraCats = `SELECT * FROM extra_cat`;
     const mainCats = await queryAsyncWithoutValue(mainCatQuery);
     // const extraCats = `SELECT * FROM extra_cat`;
     const subCats = await queryAsyncWithoutValue(subCatQuery);
     // const extraCat = await queryAsyncWithoutValue(extraCats);
 
+    const page = parseInt(req.query.page) || 1;
+    const productsPerPage = 8;
+    const startIdx = (page - 1) * productsPerPage;
+    const endIdx = startIdx + productsPerPage;
+    const paginatedCategories = subCats.slice(startIdx, endIdx);
+
     return res.status(200).render("pages/subCategory", {
       title: "Sub Category",
       subCats,
       mainCats,
+      paginatedCategories,
+      productsPerPage,
+      page,
     });
   } catch (e) {
     console.log(e);

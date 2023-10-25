@@ -19,9 +19,18 @@ GROUP BY main_cat.main_cat_id;
     const mainCats = await queryAsyncWithoutValue(mainCatQuery);
     // const extraCat = await queryAsyncWithoutValue(extraCats);
 
+    const page = parseInt(req.query.page) || 1;
+    const productsPerPage = 8;
+    const startIdx = (page - 1) * productsPerPage;
+    const endIdx = startIdx + productsPerPage;
+    const paginatedCategories = mainCats.slice(startIdx, endIdx);
+
     return res.status(200).render("pages/mainCategory", {
-      title: "All Product",
+      title: "Main Category",
       mainCats,
+      paginatedCategories,
+      productsPerPage,
+      page,
     });
   } catch (e) {
     console.log(e);

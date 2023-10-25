@@ -3,11 +3,11 @@ const { queryAsync, queryAsyncWithoutValue } = require("../../config/helper");
 const baseUrl = process.env.baseUrl;
 exports.getExtraCat = async (req, res, next) => {
   try {
-    const extraCatQuery = `SELECT extra_cat.*, main_cat.main_cat_name AS extra_cat_ref_name, COUNT(products.product_id) AS total_products
+    const extraCatQuery = `SELECT extra_cat.*, sub_cat.sub_cat_name AS extra_cat_ref_name, COUNT(products.product_id) AS total_products
 FROM extra_cat
 LEFT JOIN products ON products.product_cat_id = extra_cat.extra_cat_id
 LEFT JOIN product_image ON products.product_id = product_image.product_id
-LEFT JOIN main_cat ON extra_cat.extra_cat_ref = main_cat.main_cat_id
+LEFT JOIN sub_cat ON extra_cat.extra_cat_ref = sub_cat.sub_cat_id
 WHERE product_image.featured_image = 1 OR products.product_id IS NULL
 GROUP BY extra_cat.extra_cat_id;
 
@@ -28,15 +28,25 @@ GROUP BY sub_cat.sub_cat_id;
 
 `;
     const subCats = await queryAsyncWithoutValue(subCatQuery);
+    console.log("s", subCats);
 
     // const extraCats = `SELECT * FROM extra_cat`;
     const extraCats = await queryAsyncWithoutValue(extraCatQuery);
     // const extraCat = await queryAsyncWithoutValue(extraCats);
 
+    const page = parseInt(req.query.page) || 1;
+    const productsPerPage = 8;
+    const startIdx = (page - 1) * productsPerPage;
+    const endIdx = startIdx + productsPerPage;
+    const paginatedCategories = extraCats.slice(startIdx, endIdx);
+
     return res.status(200).render("pages/extraCategory", {
-      title: "extra Category",
+      title: "Extra Category",
+      paginatedCategories,
       extraCats,
       subCats,
+      productsPerPage,
+      page,
     });
   } catch (e) {
     console.log(e);

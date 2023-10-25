@@ -3,6 +3,12 @@ const {
   getAllProducts,
 } = require("../../controllers/admin/allProductController");
 
+const {
+  getAllCustomers,
+} = require("../../controllers/admin/customerController");
+
+const { getAllOrders } = require("../../controllers/admin/orderController");
+
 const { getDashboard } = require("../../controllers/admin/dashboardController");
 
 const {
@@ -30,6 +36,8 @@ const multiUpload = require("../../middlewares/multiupload");
 
 router.get("/", getDashboard);
 router.get("/all-products", getAllProducts);
+router.get("/all-customers", getAllCustomers);
+router.get("/all-orders", getAllOrders);
 router.get("/add-products", getAddProducts);
 router.post(
   "/add-products",
@@ -60,7 +68,7 @@ router.get("/extra-category", getExtraCat);
 router.post(
   "/extra-category",
   multiUpload.fields([{ name: "extra-cat-image" }]),
-  postSubCat
+  postExtraCat
 );
 
 module.exports = router;

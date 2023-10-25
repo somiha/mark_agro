@@ -1238,6 +1238,26 @@ h6 {
   --tw-bg-opacity: 1;
   background-color: rgb(254 226 226 / var(--tw-bg-opacity));
 }
+.bg-indigo-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(
+    197 202 233 / var(--tw-bg-opacity)
+  ); /* Specify your custom indigo background color here */
+}
+
+.bg-yellow-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(
+    255 249 196 / var(--tw-bg-opacity)
+  ); /* Specify your custom yellow background color here */
+}
+
+.bg-purple-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(
+    225 190 231 / var(--tw-bg-opacity)
+  ); /* Specify your custom purple background color here */
+}
 
 .bg-red-800 {
   background-color: red;
@@ -1513,9 +1533,29 @@ h6 {
   color: rgb(239 68 68 / var(--tw-text-opacity));
 }
 
+.text-purple-500 {
+  --tw-text-opacity: 1;
+  color: rgb(
+    156 39 176 / var(--tw-text-opacity)
+  ); /* Specify your custom purple text color here */
+}
+.text-indigo-500 {
+  --tw-text-opacity: 1;
+  color: rgb(
+    63 81 181 / var(--tw-text-opacity)
+  ); /* Specify your custom indigo text color here */
+}
+
 .text-red-600 {
   --tw-text-opacity: 1;
   color: rgb(220 38 38 / var(--tw-text-opacity));
+}
+
+.text-yellow-500 {
+  --tw-text-opacity: 1;
+  color: rgb(
+    255 235 59 / var(--tw-text-opacity)
+  ); /* Specify your custom yellow color here */
 }
 
 .text-tColor {
@@ -1851,4 +1891,14 @@ h6 {
   .min-\[2000px\]\:absolute {
     position: absolute;
   }
+}
+.line-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* Adjust the number of lines as needed */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.custom-max-w {
+  max-width: 30rem; /* Adjust the width as needed */
 }

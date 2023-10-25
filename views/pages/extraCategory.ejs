@@ -20,10 +20,11 @@
             <div class="flex flex-col xl:flex-row justify-between items-start xl:items-center gap-3">
 
                 <ul class="flex gap-7 border-b-2 pb-2 flex-wrap">
-                    <li><a href="/main-category" class="font-bold border-b-2 border-primaryColor pb-[10px]">Main</a>
+                    <li><a href="/main-category">Main</a>
                     </li>
                     <li><a href="/sub-category">Sub</a></li>
-                    <li><a href="/extra-category">Extra</a></li>
+                    <li><a href="/extra-category" class="font-bold border-b-2 border-primaryColor pb-[10px]">Extra</a>
+                    </li>
                 </ul>
 
                 <div class="relative ml-auto">
@@ -57,7 +58,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <% for (let extraCat of extraCats) { %>
+                        <% for (let extraCat of paginatedCategories) { %>
                         <tr>
                             <td class="text-tColor"><%= extraCat.extra_cat_id %></td>
                             <td>
@@ -82,7 +83,7 @@
             </div>
 
             <!-- Page Select -->
-            <div class="flex flex-col xl:flex-row justify-between xl:items-center py-5 gap-2">
+            <!-- <div class="flex flex-col xl:flex-row justify-between xl:items-center py-5 gap-2">
                 <p class="text-center text-xs xl:text-sm text-tColor">Show <span>11</span> from <span>11</span>
                     categories</p>
 
@@ -108,6 +109,47 @@
                                 stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                     </a>
+                </div>
+            </div> -->
+
+            <div class="flex flex-col xl:flex-row justify-between xl:items-center py-5 gap-2">
+                <p class="text-center text-xs xl:text-sm text-tColor">
+                    Show <%= paginatedCategories.length %> from <%= extraCats.length %> categories
+                </p>
+
+                <div
+                    class="scale-75 xl:scale-100 grid grid-flow-col content-center ml-auto mr-auto xl:mr-0 font-semibold xl:text-sm text-tColor gap-3">
+                    <% if (page > 1) { %>
+                    <a class="h-6 w-6 rounded flex items-center justify-center"
+                        href="/extra-category?page=<%= page - 1 %>">
+                        <svg width="6" height="10" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7.125 0.75L0.875 7L7.125 13.25" stroke="#84818A" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </a>
+                    <% } %>
+
+                    <% const maxPagesToShow = 8;
+                                   const startPage = Math.max(1, page - Math.floor(maxPagesToShow / 2));
+                                   const endPage = Math.min(
+                                       Math.ceil(extraCats.length / productsPerPage),
+                                       startPage + maxPagesToShow - 1
+                                   );
+                        
+                                   for (let i = startPage; i <= endPage; i++) { %>
+                    <a class=" h-6 w-6 rounded flex items-center justify-center <%= i === page ? 'bg-blue-100 text-primaryColor' : '' %>"
+                        href="/extra-category?page=<%= i %>"><%= i %></a>
+                    <% } %>
+
+                    <% if (page < Math.ceil(extraCats.length / productsPerPage)) { %>
+                    <a class="h-6 w-6 rounded flex items-center justify-center"
+                        href="/extra-category?page=<%= page + 1 %>">
+                        <svg width="6" height="10" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0.875 0.75L7.125 7L0.875 13.25" stroke="#84818A" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </a>
+                    <% } %>
                 </div>
             </div>
 
@@ -189,8 +231,8 @@
                 <select
                     class=" border rounded-l px-3 py-2 pr-8 appearance-none focus:outline-none focus:shadow-outline w-full"
                     id="extra_cat_ref" name="extra_cat_ref">
-                    <% for (let extraCat of extraCats) { %>
-                    <option value="<%= extraCat.sub_cat_id %>"><%= extraCat.sub_cat_name %></option>
+                    <% for (let subCat of subCats) { %>
+                    <option value="<%= subCat.sub_cat_id %>"><%= subCat.sub_cat_name %></option>
                     <% } %>
                     <!-- Add more options here -->
                 </select>
