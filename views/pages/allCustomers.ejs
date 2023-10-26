@@ -4,7 +4,7 @@
 
     <div class="flex items-center justify-between flex-wrap gap-5">
         <p class="text-xl xl:text-2xl font-semibold text-tColor2">All Customers</p>
-        <div class="relative">
+        <!-- <div class="relative">
             <select name="" id="" class="px-2 py-1 border-2 focus:outline-none">
                 <option value="">Filter</option>
                 <option value="">Filter 1</option>
@@ -12,7 +12,7 @@
                 <option value="">Filter 3</option>
                 <option value="">Filter 4</option>
             </select>
-        </div>
+        </div> -->
     </div>
 
     <!-- All Orders Table -->
@@ -25,7 +25,7 @@
                     <thead>
                         <tr>
                             <th>FULL NAME</th>
-                            <th>LOCATION</th>
+                            <th>PHONE NUMBER</th>
                             <th>TOTAL ORDERS</th>
                         </tr>
                     </thead>
@@ -44,14 +44,14 @@
                             </td>
                             <td>
                                 <div>
-                                    <p class="font-semibold">Atlanta,</p>
+
                                     <div class="flex items-center gap-1">
-                                        <img src="img/us.png" alt="">
-                                        <p>United States</p>
+
+                                        <p><%= user.phone %></p>
                                     </div>
                                 </div>
                             </td>
-                            <td><%= user.total_orders %></< /td>
+                            <td><%= user.total_orders %></td>
                         </tr>
 
                         <% } %>

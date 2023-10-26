@@ -35,7 +35,7 @@ GROUP BY
 `;
 
     const orders = await queryAsyncWithoutValue(orderQuery);
-    console.log({ orders });
+
     const page = parseInt(req.query.page) || 1;
     const ordersPerPage = 8;
     const startIdx = (page - 1) * ordersPerPage;

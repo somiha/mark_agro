@@ -11,8 +11,6 @@ LEFT JOIN sub_cat ON extra_cat.extra_cat_ref = sub_cat.sub_cat_id
 WHERE product_image.featured_image = 1 OR products.product_id IS NULL
 GROUP BY extra_cat.extra_cat_id;
 
-
-
 `;
     const subCatQuery = `SELECT sub_cat.*, main_cat.main_cat_name AS sub_cat_ref_name, COUNT(products.product_id) AS total_products
 FROM sub_cat
@@ -23,16 +21,10 @@ LEFT JOIN main_cat ON sub_cat.sub_cat_ref = main_cat.main_cat_id
 WHERE product_image.featured_image = 1 OR products.product_id IS NULL
 GROUP BY sub_cat.sub_cat_id;
 
-
-
-
 `;
     const subCats = await queryAsyncWithoutValue(subCatQuery);
-    console.log("s", subCats);
 
-    // const extraCats = `SELECT * FROM extra_cat`;
     const extraCats = await queryAsyncWithoutValue(extraCatQuery);
-    // const extraCat = await queryAsyncWithoutValue(extraCats);
 
     const page = parseInt(req.query.page) || 1;
     const productsPerPage = 8;
@@ -56,18 +48,9 @@ GROUP BY sub_cat.sub_cat_id;
 
 exports.postExtraCat = async (req, res, next) => {
   try {
-    // Extract main category information from the request body
     const { extra_cat_name, extra_cat_ref } = req.body;
-
-    console.log(req.body);
-
-    // Handle the main category image
-    const extraCatImage = req.files["extra-cat-image"][0]; // Assuming you're expecting one main category image
-
-    // Build the URL for the main category image
+    const extraCatImage = req.files["extra-cat-image"][0];
     const extraCatImageUrl = `${baseUrl}/uploads/${extraCatImage.filename}`;
-
-    // Insert the main category into the database
     const insertextraCatQuery =
       "INSERT INTO extra_cat (extra_cat_name, extra_cat_ref, extra_cat_image_url) VALUES (?, ?, ?)";
     const extraCatValues = [extra_cat_name, extra_cat_ref, extraCatImageUrl];
@@ -76,7 +59,6 @@ exports.postExtraCat = async (req, res, next) => {
       if (err) {
         throw err;
       }
-
       const extraCatId = result.insertId;
 
       return res.redirect("/extra-category");

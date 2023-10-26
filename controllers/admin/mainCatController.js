@@ -12,12 +12,8 @@ LEFT JOIN product_image ON products.product_id = product_image.product_id
 WHERE product_image.featured_image = 1 OR products.product_id IS NULL
 GROUP BY main_cat.main_cat_id;
 
-
-
 `;
-    // const extraCats = `SELECT * FROM extra_cat`;
     const mainCats = await queryAsyncWithoutValue(mainCatQuery);
-    // const extraCat = await queryAsyncWithoutValue(extraCats);
 
     const page = parseInt(req.query.page) || 1;
     const productsPerPage = 8;
@@ -40,18 +36,10 @@ GROUP BY main_cat.main_cat_id;
 
 exports.postMainCat = async (req, res, next) => {
   try {
-    // Extract main category information from the request body
     const { main_cat_name } = req.body;
-
-    console.log(req.body);
-
-    // Handle the main category image
-    const mainCatImage = req.files["main-cat-image"][0]; // Assuming you're expecting one main category image
-
-    // Build the URL for the main category image
+    const mainCatImage = req.files["main-cat-image"][0];
     const mainCatImageUrl = `${baseUrl}/uploads/${mainCatImage.filename}`;
 
-    // Insert the main category into the database
     const insertMainCatQuery =
       "INSERT INTO main_cat (main_cat_name, main_cat_image_url) VALUES (?, ?)";
     const mainCatValues = [main_cat_name, mainCatImageUrl];
