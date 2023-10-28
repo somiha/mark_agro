@@ -37,24 +37,56 @@ GROUP BY main_cat.main_cat_id;
 exports.postMainCat = async (req, res, next) => {
   try {
     const { main_cat_name } = req.body;
-    const mainCatImage = req.files["main-cat-image"][0];
-    const mainCatImageUrl = `${baseUrl}/uploads/${mainCatImage.filename}`;
+    const mainCatImage = req.files["main-cat-image"];
 
-    const insertMainCatQuery =
-      "INSERT INTO main_cat (main_cat_name, main_cat_image_url) VALUES (?, ?)";
-    const mainCatValues = [main_cat_name, mainCatImageUrl];
+    if (mainCatImage && mainCatImage.length > 0) {
+      const mainCatImageUrl = `${baseUrl}/uploads/${mainCatImage[0].filename}`;
+      const insertMainCatQuery =
+        "INSERT INTO main_cat (main_cat_name, main_cat_image_url) VALUES (?, ?)";
+      const mainCatValues = [main_cat_name, mainCatImageUrl];
 
-    db.query(insertMainCatQuery, mainCatValues, (err, result) => {
-      if (err) {
-        throw err;
-      }
+      db.query(insertMainCatQuery, mainCatValues, (err, result) => {
+        if (err) {
+          throw err;
+        }
 
-      const mainCatId = result.insertId;
+        const mainCatId = result.insertId;
 
-      return res.redirect("/main-category");
-    });
+        return res.redirect("/main-category");
+      });
+    } else {
+    }
   } catch (e) {
     console.log(e);
     return res.status(500).json({ msg: "Internal Server Error" });
   }
 };
+
+// exports.postMainCat = async (req, res, next) => {
+//   try {
+//     const { main_cat_name } = req.body;
+//     const mainCatImage = req.files["main-cat-image"];
+//     let mainCatImageUrl = null;
+//     if (mainCatImage && mainCatImage.length > 0) {
+//       mainCatImageUrl = `${baseUrl}/uploads/${mainCatImage[0].filename}`;
+//     }
+//     // const mainCatImageUrl = `${baseUrl}/uploads/${mainCatImage[0].filename}`;
+
+//     const insertMainCatQuery =
+//       "INSERT INTO main_cat (main_cat_name, main_cat_image_url) VALUES (?, ?)";
+//     const mainCatValues = [main_cat_name, mainCatImageUrl];
+
+//     db.query(insertMainCatQuery, mainCatValues, (err, result) => {
+//       if (err) {
+//         throw err;
+//       }
+
+//       const mainCatId = result.insertId;
+
+//       return res.redirect("/main-category");
+//     });
+//   } catch (e) {
+//     console.log(e);
+//     return res.status(500).json({ msg: "Internal Server Error" });
+//   }
+// };

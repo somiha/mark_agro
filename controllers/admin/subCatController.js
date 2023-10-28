@@ -47,26 +47,57 @@ GROUP BY main_cat.main_cat_id;
   }
 };
 
+// exports.postSubCat = async (req, res, next) => {
+//   try {
+//     const { sub_cat_name, sub_cat_ref } = req.body;
+
+//     const subCatImage = req.files["sub-cat-image"][0];
+
+//     const subCatImageUrl = `${baseUrl}/uploads/${subCatImage.filename}`;
+//     const insertSubCatQuery =
+//       "INSERT INTO sub_cat (sub_cat_name, sub_cat_ref, sub_cat_image_url) VALUES (?, ?, ?)";
+//     const subCatValues = [sub_cat_name, sub_cat_ref, subCatImageUrl];
+
+//     db.query(insertSubCatQuery, subCatValues, (err, result) => {
+//       if (err) {
+//         throw err;
+//       }
+
+//       const subCatId = result.insertId;
+
+//       return res.redirect("/sub-category");
+//     });
+//   } catch (e) {
+//     console.log(e);
+//     return res.status(500).json({ msg: "Internal Server Error" });
+//   }
+// };
+
 exports.postSubCat = async (req, res, next) => {
   try {
     const { sub_cat_name, sub_cat_ref } = req.body;
+    const subCatImage = req.files["sub-cat-image"];
 
-    const subCatImage = req.files["sub-cat-image"][0];
+    if (subCatImage && subCatImage.length > 0) {
+      const subCatImageUrl = `${baseUrl}/uploads/${subCatImage[0].filename}`;
+      const insertSubCatQuery =
+        "INSERT INTO sub_cat (sub_cat_name, sub_cat_ref, sub_cat_image_url) VALUES (?, ?, ?)";
+      const subCatValues = [sub_cat_name, sub_cat_ref, subCatImageUrl];
 
-    const subCatImageUrl = `${baseUrl}/uploads/${subCatImage.filename}`;
-    const insertSubCatQuery =
-      "INSERT INTO sub_cat (sub_cat_name, sub_cat_ref, sub_cat_image_url) VALUES (?, ?, ?)";
-    const subCatValues = [sub_cat_name, sub_cat_ref, subCatImageUrl];
+      db.query(insertSubCatQuery, subCatValues, (err, result) => {
+        if (err) {
+          throw err;
+        }
 
-    db.query(insertSubCatQuery, subCatValues, (err, result) => {
-      if (err) {
-        throw err;
-      }
+        const subCatId = result.insertId;
 
-      const subCatId = result.insertId;
-
-      return res.redirect("/sub-category");
-    });
+        return res.redirect("/sub-category");
+      });
+    } else {
+      // Handle the case when no image is provided (if needed)
+      // You can add custom logic here or simply close the form
+      // without returning any error response.
+    }
   } catch (e) {
     console.log(e);
     return res.status(500).json({ msg: "Internal Server Error" });

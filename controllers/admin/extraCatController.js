@@ -46,23 +46,54 @@ GROUP BY sub_cat.sub_cat_id;
   }
 };
 
+// exports.postExtraCat = async (req, res, next) => {
+//   try {
+//     const { extra_cat_name, extra_cat_ref } = req.body;
+//     const extraCatImage = req.files["extra-cat-image"][0];
+//     const extraCatImageUrl = `${baseUrl}/uploads/${extraCatImage.filename}`;
+//     const insertextraCatQuery =
+//       "INSERT INTO extra_cat (extra_cat_name, extra_cat_ref, extra_cat_image_url) VALUES (?, ?, ?)";
+//     const extraCatValues = [extra_cat_name, extra_cat_ref, extraCatImageUrl];
+
+//     db.query(insertextraCatQuery, extraCatValues, (err, result) => {
+//       if (err) {
+//         throw err;
+//       }
+//       const extraCatId = result.insertId;
+
+//       return res.redirect("/extra-category");
+//     });
+//   } catch (e) {
+//     console.log(e);
+//     return res.status(500).json({ msg: "Internal Server Error" });
+//   }
+// };
+
 exports.postExtraCat = async (req, res, next) => {
   try {
     const { extra_cat_name, extra_cat_ref } = req.body;
-    const extraCatImage = req.files["extra-cat-image"][0];
-    const extraCatImageUrl = `${baseUrl}/uploads/${extraCatImage.filename}`;
-    const insertextraCatQuery =
-      "INSERT INTO extra_cat (extra_cat_name, extra_cat_ref, extra_cat_image_url) VALUES (?, ?, ?)";
-    const extraCatValues = [extra_cat_name, extra_cat_ref, extraCatImageUrl];
+    const extraCatImage = req.files["extra-cat-image"];
 
-    db.query(insertextraCatQuery, extraCatValues, (err, result) => {
-      if (err) {
-        throw err;
-      }
-      const extraCatId = result.insertId;
+    if (extraCatImage && extraCatImage.length > 0) {
+      const extraCatImageUrl = `${baseUrl}/uploads/${extraCatImage[0].filename}`;
+      const insertExtraCatQuery =
+        "INSERT INTO extra_cat (extra_cat_name, extra_cat_ref, extra_cat_image_url) VALUES (?, ?, ?)";
+      const extraCatValues = [extra_cat_name, extra_cat_ref, extraCatImageUrl];
 
-      return res.redirect("/extra-category");
-    });
+      db.query(insertExtraCatQuery, extraCatValues, (err, result) => {
+        if (err) {
+          throw err;
+        }
+
+        const extraCatId = result.insertId;
+
+        return res.redirect("/extra-category");
+      });
+    } else {
+      // Handle the case when no image is provided (if needed)
+      // You can add custom logic here or simply close the form
+      // without returning any error response.
+    }
   } catch (e) {
     console.log(e);
     return res.status(500).json({ msg: "Internal Server Error" });

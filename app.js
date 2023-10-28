@@ -22,7 +22,7 @@ app.use("/uploads", express.static("uploads"));
 app.set("view engine", "ejs");
 app.set("views");
 
-const port = process.env.PORT || 3010;
+const port = process.env.PORT || 3000;
 app.listen(port, function () {
   console.log("Listening on port 3000");
 });

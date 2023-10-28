@@ -48,6 +48,129 @@
                             <td>
                                 <a href="#"><i class="fa-solid fa-ellipsis text-tColor"></i></a>
                             </td> -->
+                            <td>
+                                <button class="table-button"><i class="fa-solid fa-eye text-tColor"></i></button>
+
+                                <!-- Pop up Details -->
+                                <div
+                                    class="table-collapse fixed bottom-0 right-0 bg-black/50 h-full w-full flex justify-center items-center z-10 hidden">
+
+                                    <div
+                                        class="bg-gray-100 border-2 border-primaryColor rounded-lg min-w-[350px] xl:min-w-[550px] p-5 max-h-full overflow-y-auto">
+
+                                        <div class="flex justify-between items-center">
+                                            <p class="font-semibold"> Products Details</p>
+                                            <button
+                                                class="table-close bg-secondaryColor text-white text-sm rounded-[50%] px-[8px] py-[4px]">
+                                                <i class="fa-solid fa-xmark "></i>
+                                            </button>
+                                        </div>
+
+                                        <!-- <p
+                                            class="text-white font-semibold text-xs bg-orange-500 px-4 py-1 rounded w-fit my-2">
+                                            Sent to buyer
+                                            to review</p> -->
+
+                                        <table class="w-full profile-table">
+                                            <thead class="py-5">
+                                                <tr>
+                                                    <th>Product Quantity</th>
+                                                    <th>Seller ID</th>
+                                                    <!-- <th>Prodeuct Description</th> -->
+                                                    <!-- <th>Total Price</th> -->
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+
+                                                <tr class="font-semibold bg-white border-b-8 border-gray-100">
+                                                    <td>
+
+                                                        <%= product.quantity %>
+
+                                                    </td>
+                                                    <td><%= product.seller_id %></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+
+
+                                            </tbody>
+
+                                        </table>
+
+                                        <div
+                                            class="flex justify-between bg-primaryColor text-white rounded-md px-5 py-3 mt-2">
+                                            <span>TOTAL</span>
+
+                                        </div>
+
+                                        <p class="font-semibold py-3">Ordered Products</p>
+
+                                        <table class="w-full profile-table">
+                                            <thead class="py-5">
+                                                <tr>
+                                                    <th>Order ID</th>
+                                                    <th>Order Date</th>
+                                                    <th>Delivery Date</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                <tr class="font-semibold bg-white border-b-8 border-gray-100">
+                                                    <td class="pl-3"></td>
+                                                    <td><!-- Inside your EJS template -->
+                                                        <% if (product.non_featured_images) { %>
+                                                        <p>Non-Featured Images:</p>
+                                                        <ul>
+                                                            <% const nonFeaturedImages = product.non_featured_images.split(','); %>
+                                                            <% nonFeaturedImages.forEach((image) => { %>
+                                                            <li>
+                                                                <img src="<%= image %>" alt="Non-Featured Image"
+                                                                    style="max-width: 200px;">
+                                                            </li>
+                                                            <% }); %>
+                                                        </ul>
+                                                        <% } %>
+                                                    </td>
+                                                    <td></td>
+                                                </tr>
+
+                                            </tbody>
+
+                                        </table>
+
+                                        <p class="font-semibold py-3">Delivery Status</p>
+                                        <p class="text-primaryColor"></p>
+
+                                        <!-- <table class="w-full profile-table">
+                                                  <thead class="py-5">
+                                                    <tr>
+                                                      <th>Seller Name</th>
+                                                      <th>Buyer Name</th>
+                                                      <th>Delivery Location</th>
+                                                      <th>Payment Method</th>
+                                                    </tr>
+                                                  </thead>
+                                                  <tbody>
+                            
+                                                    <tr class="font-semibold bg-white border-b-8 border-gray-100">
+                                                      <td class="pl-3">MD.Raju</td>
+                                                      <td>Salim Khan</td>
+                                                      <td>Kajla Rajshahi</td>
+                                                      <td class="text-primaryColor">Cash on delivery</td>
+                                                    </tr>
+                            
+                            
+                                                  </tbody>
+                            
+                                                </table> -->
+
+
+                                    </div>
+                                </div>
+
+                            </td>
                         </tr>
 
                         <% } %>
@@ -115,7 +238,28 @@
 </section>
 
 
+<script>
+    const tableButtons = document.querySelectorAll('.table-button');
+    const tableMenu = document.querySelectorAll('.table-collapse');
+    const tableClose = document.querySelectorAll('.table-close');
 
+    tableButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const tableCollapse = button.nextElementSibling;
+            button.setAttribute('aria-expanded', button.getAttribute('aria-expanded') === 'false' ? 'true' : 'false');
+            tableCollapse.classList.toggle('hidden');
+        });
+    });
+
+    tableClose.forEach(button => {
+        button.addEventListener('click', () => {
+            const tableCollapse = button.parentElement.parentElement.parentElement;
+            button.setAttribute('aria-expanded', button.getAttribute('aria-expanded') === 'false' ? 'true' : 'false');
+            tableCollapse.classList.toggle('hidden');
+        });
+    });
+
+</script>
 
 
 <!-- Header Section Script -->

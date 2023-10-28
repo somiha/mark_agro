@@ -7,7 +7,10 @@ const {
   getAllCustomers,
 } = require("../../controllers/admin/customerController");
 
-const { getAllOrders } = require("../../controllers/admin/orderController");
+const {
+  getAllOrders,
+  updateStatus,
+} = require("../../controllers/admin/orderController");
 
 const { getDashboard } = require("../../controllers/admin/dashboardController");
 
@@ -38,6 +41,7 @@ router.get("/", getDashboard);
 router.get("/all-products", getAllProducts);
 router.get("/all-customers", getAllCustomers);
 router.get("/all-orders", getAllOrders);
+router.post("/all-orders", updateStatus);
 router.get("/add-products", getAddProducts);
 router.post(
   "/add-products",
