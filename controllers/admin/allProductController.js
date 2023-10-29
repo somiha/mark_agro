@@ -6,6 +6,8 @@ exports.getAllProducts = async (req, res, next) => {
     const productQuery = `SELECT 
     p.*,
     e.extra_cat_name,
+    v.variant_name,
+    v.price AS variant_price,
     (SELECT GROUP_CONCAT(product_image_url) 
      FROM product_image 
      WHERE product_image.product_id = p.product_id AND product_image.featured_image = 0) AS non_featured_images,
@@ -13,7 +15,8 @@ exports.getAllProducts = async (req, res, next) => {
      FROM product_image 
      WHERE product_image.product_id = p.product_id AND product_image.featured_image = 1) AS featured_image
 FROM products p
-INNER JOIN extra_cat e ON p.product_cat_id = e.extra_cat_id;
+INNER JOIN extra_cat e ON p.product_cat_id = e.extra_cat_id
+LEFT JOIN variant v ON p.product_id = v.product_id;
 `;
 
     const products = await queryAsyncWithoutValue(productQuery);

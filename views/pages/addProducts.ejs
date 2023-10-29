@@ -93,13 +93,18 @@
                 <div class="text-red-500 mt-2"><%= otherImagesError %></div>
                 <% } %>
 
-                <div class="border-b py-10 w-fit">
+                <div class="border-b py-10 w-full">
                     <p class="font-semibold text-lg text-tColor2 mb-2">Media</p>
 
 
                     <p class="text-tColor3 mb-2">Product Feature Image</p>
-                    <input name="product-featured-image" type="file"
-                        class="dropzone-feature-file custom-feature-file-label" style="margin-top: 5px;" required />
+                    <input name="product-featured-image" type="file" id="featured_image"
+                        class="dropzone-feature-file custom-feature-file-label" style="margin-top: 5px;" class="hidden"
+                        onchange="displaySelectedImage1()" required />
+
+                    <p id="selected-image-name" class="text-tColor2 mt-3"></p>
+
+                    <img id="selected-image" src="#" alt="" class="hidden" />
 
                     <!-- <label class="block">
                         <span class="sr-only">Choose profile photo</span>
@@ -115,10 +120,10 @@
 
 
 
-                    <hr class="mt-2">
-                    <div class="border-b pb-10">
+
+                    <div class="pb-10 pt-5">
                         <p class="text-tColor3 mb-2">Add Product Image</p>
-                        <div class="mb-4" id="productImageContainer">
+                        <div class="mb-5" id="productImageContainer">
 
                         </div>
                         <button type="button" class="bg-primaryColor text-white rounded px-4 py-2" id="addImageBtn">Add
@@ -126,7 +131,18 @@
 
                     </div>
 
-                    <div class="border-b py-10 w-fit">
+                    <p class="font-semibold text-lg text-tColor2 mb-2">Variant</p>
+                    <div class="pb-10">
+
+                        <div class="mb-4" id="variantContainer">
+
+                        </div>
+                        <button type="button" class="bg-primaryColor text-white rounded px-4 py-2" id="addBtn">Add
+                            Variant</button>
+
+                    </div>
+
+                    <!-- <div class="border-b py-10 w-fit">
                         <p class="font-semibold text-lg text-tColor2 mb-2">Product Variant</p>
 
 
@@ -146,16 +162,15 @@
                                     type="number" id="variant_price" name="variant_price" placeholder="Variant Price">
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
-                    <div
-                        class="flex justify-center xl:justify-between items-center flex-wrap gap-5 border rounded p-5 mb-5">
-                        <!-- <p class="w-full xl:w-fit text-center">Saved on system <span>5 mins</span> ago</p> -->
-                        <!-- <button class="xl:ml-auto bg-orange-100 rounded"><i
-                            class="fa-regular fa-trash-can w-full text-tertiaryColor p-3"></i></button> -->
-                        <button type="submit" class="bg-primaryColor text-white rounded px-4 py-2">+ Save
+                    <div class="flex justify-center items-center flex-wrap gap-5 pr-15 mb-5">
+
+                        <button type="submit" class="bg-primaryColor text-white rounded px-4 py-2 ">Save
                             Products</button>
                     </div>
+
+
 
                 </div>
 
@@ -252,21 +267,101 @@
 
 <script>
     // JavaScript to handle dynamically adding and removing subcategory fields
-    document.getElementById("addImageBtn").addEventListener("click", function () {
-        const productImageContainer = document.getElementById("productImageContainer");
-        const newProdcutImageField = document.createElement("div");
-        newProdcutImageField.className = "flex items-center mb-2";
-        newProdcutImageField.innerHTML = `
-    <input  name="product-image" type="file" class="dropzone-file custom-file-label" style="margin-top: 5px;" />
-      <button type="button"  style="margin-left: 10px;" class="background-tertiaryColor text-white px-4 py-1 rounded" onclick="removeSubcategoryField(this)">Remove</button>
+    document.getElementById("addBtn").addEventListener("click", function () {
+        const variantContainer = document.getElementById("variantContainer");
+        const newVariantField = document.createElement("div");
+        newVariantField.className = "col-span-1 xl:col-span-2";
+        newVariantField.innerHTML = `
+        <p class="text-tColor3 mb-2">Variant Name</p>
+    <input class=" border rounded px-3 py-2 flex-1 focus:outline-none focus:shadow-outline w-full"
+                                type="text" id="variant_name" name="variant_name" placeholder="Variant Name">
+                                <p class="text-tColor3 mb-2">Price</p>
+                                <input
+                                    class=" border rounded-r rounded-l px-3 py-2 flex-1 mb-4 focus:outline-none focus:shadow-outline w-full"
+                                    type="number" id="variant_price" name="variant_price" placeholder="Variant Price">
+                            </div>
+                            
+      <button type="button"  style="margin-left: 10px;" class="background-tertiaryColor text-white px-4 py-1 mb-4 rounded" onclick="removeSubcategoryField(this)">Remove</button>
     `;
-        productImageContainer.appendChild(newProdcutImageField);
+        variantContainer.appendChild(newVariantField);
     });
 
     function removeSubcategoryField(button) {
         button.parentNode.remove();
     }
 </script>
+
+<script>
+    function displaySelectedImage1() {
+        const fileInput = document.getElementById("featured_image");
+        // const labelText = document.getElementById("label-text");
+        const selectedImageName = document.getElementById("selected-image-name");
+        const selectedImage = document.getElementById("selected-image");
+
+        if (fileInput.files.length > 0) {
+            // labelText.style.display = "none";
+            const imageName = fileInput.files[0].name;
+            selectedImageName.textContent = `Selected Image: ${imageName}`;
+            selectedImage.src = URL.createObjectURL(fileInput.files[0]);
+            selectedImage.classList.remove("hidden");
+        } else {
+            // labelText.style.display = "block";
+            selectedImageName.textContent = "";
+            selectedImage.src = "";
+            selectedImage.classList.add("hidden");
+        }
+    }
+</script>
+
+<script>
+    let inputCounter = 1; // Initialize the counter for input elements
+
+    document.getElementById("addImageBtn").addEventListener("click", function () {
+        const productImageContainer = document.getElementById("productImageContainer");
+        const newProductImageField = document.createElement("div");
+        newProductImageField.className = "flex items-center mb-2";
+
+        // Generate the next input and image IDs
+        const inputId = `product_image${inputCounter}`;
+        const imgId = `selected-image${inputCounter}`;
+
+        newProductImageField.innerHTML = `
+            <input id="${inputId}" name="product-image" type="file" class="dropzone-file custom-file-label" style="margin-top: 5px;" class="hidden"
+                onchange="displaySelectedImage('${inputId}', '${imgId}')"/>
+            <p id="selected-image-name${inputCounter}" class="text-tColor2 mt-3"></p>
+            <img id="${imgId}" src="#" alt="" class="hidden"/>
+            <button type="button" style="margin-left: 10px;" class="background-tertiaryColor text-white px-4 py-1 rounded" onclick="removeSubcategoryField(this)">Remove</button>
+        `;
+
+        productImageContainer.appendChild(newProductImageField);
+
+        // Increment the input counter
+        inputCounter++;
+    });
+
+    function removeSubcategoryField(button) {
+        button.parentNode.remove();
+    }
+
+    function displaySelectedImage(inputId, imgId) {
+        const fileInput = document.getElementById(inputId);
+        const selectedImageName = document.getElementById(`selected-image-name${inputId.replace("product_image", "")}`);
+        const selectedImage = document.getElementById(imgId);
+
+        if (fileInput.files.length > 0) {
+            const imageName = fileInput.files[0].name;
+            selectedImageName.textContent = `Selected Image: ${imageName}`;
+            selectedImage.src = URL.createObjectURL(fileInput.files[0]);
+            selectedImage.classList.remove("hidden");
+        } else {
+            selectedImageName.textContent = "";
+            selectedImage.src = "";
+            selectedImage.classList.add("hidden");
+        }
+    }
+</script>
+
+
 
 <script>
     const tables = document.querySelectorAll('.table-collapse');
@@ -279,7 +374,7 @@
     };
 </script>
 
-<script>
+<!-- <script>
     // Add an event listener to preview the product
     document.getElementById("previewButton").addEventListener("click", function () {
         // Get product information from form fields
@@ -334,7 +429,7 @@
         // Show the preview modal
         previewModal.classList.remove("hidden");
     });
-</script>
+</script> -->
 
 
 

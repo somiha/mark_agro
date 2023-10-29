@@ -112,16 +112,22 @@ exports.postAddProduct = async (req, res, next) => {
           console.log({ res });
         });
       });
-    });
-    const insertVariantQuery =
-      "INSERT INTO variant (product_id, variant_name, price) VALUES (?, ?, ?)";
-    const variantValues = [pid, variant_name, variant_price];
 
-    db.query(insertVariantQuery, variantValues, (err, result) => {
-      if (err) {
-        throw err;
+      if (variant_name && variant_price) {
+        for (let i = 0; i < variant_name.length; i++) {
+          const insertVariantQuery =
+            "INSERT INTO variant (product_id, variant_name, price) VALUES (?, ?, ?)";
+          const variantValues = [productId, variant_name[i], variant_price[i]];
+
+          db.query(insertVariantQuery, variantValues, (err, result) => {
+            if (err) {
+              throw err;
+            }
+          });
+        }
       }
     });
+
     return res.redirect("/add-products");
   } catch (e) {
     console.log(e);
