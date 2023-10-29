@@ -106,11 +106,12 @@ exports.updateStatus = async (req, res, next) => {
     const { order_id, status_id, status_name } = req.body;
 
     const insertStatusQuery = `
-      INSERT INTO order_history (order_id, status_id, status_name)
-      VALUES (?, ?, ?)
+      INSERT INTO order_history (order_id, status_id)
+      VALUES (?, ?)
     `;
 
     await queryAsync(insertStatusQuery, [order_id, status_id, status_name]);
+    console.log("post alders", req.body);
 
     const updateOrderStatusQuery = `
       UPDATE orders
@@ -119,8 +120,9 @@ exports.updateStatus = async (req, res, next) => {
     `;
 
     await queryAsync(updateOrderStatusQuery, [status_id, order_id]);
+    console.log("post alders", req.body);
 
-    return res.redirect("/all-products");
+    return res.redirect("/all-orders");
   } catch (e) {
     console.error(e);
     res.status(500).json({ msg: "Internal Server Error" });

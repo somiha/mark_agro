@@ -115,7 +115,7 @@
                       </button>
                     </div>
 
-                    <form id="statusForm">
+                    <form id="statusForm" method="POST" action="/all-orders">
                       <div class="my-3">
                         <p class="mt-5 mb-2">Status</p>
                         <select
@@ -129,7 +129,7 @@
                           <% } %>
                         </select>
                         <input type="hidden" name="order_id" id="order_id" value="<%= order.order_id %>">
-                        <input type="hidden" name="status_name" id="status_name" value="<%= order.status_name %>">
+                        <!-- <input type="hidden" name="status_name" id="status_name" value="<%= order.status_name %>"> -->
                       </div>
                       <button id="my_button_5" class="bg-primaryColor text-white rounded px-4 py-2 w-full mt-5"
                         type="submit">Submit</button>
@@ -350,6 +350,7 @@
       const status_name = document.querySelector('input[name="status_name"]').value;
 
       const data = { order_id, status_id, status_name };
+      console.log({ data });
 
       const apiUrl = '/all-orders';
 
@@ -375,7 +376,7 @@
 </script> -->
 
 <!-- Add this script tag to your HTML file -->
-<script>
+<!-- <script>
   // Function to handle the form submission
   async function updateStatus(event) {
     event.preventDefault(); // Prevent the default form submission behavior
@@ -393,7 +394,7 @@
       const data = { order_id, status_id, status_name };
 
       // API endpoint URL
-      const apiUrl = '/all-orders'; // Replace with your actual API URL
+      const apiUrl = `/all-orders/${order_id}`; // Replace with your actual API URL
 
       // Make a POST request to the API
       const response = await fetch(apiUrl, {
@@ -420,7 +421,7 @@
   // Add an event listener to the form
   const statusForm = document.getElementById('statusForm');
   statusForm.addEventListener('submit', updateStatus);
-</script>
+</script> -->
 
 
 

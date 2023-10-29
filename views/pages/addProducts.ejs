@@ -27,34 +27,23 @@
                     <div class="col-span-1 xl:col-span-2">
                         <p class="text-tColor3 mb-2">Product Name</p>
                         <input class=" border rounded px-3 py-2 flex-1 focus:outline-none focus:shadow-outline w-full"
-                            type="text" id="product_name" name="product_name" placeholder="Product Name">
+                            type="text" id="product_name" name="product_name" placeholder="Product Name" required>
                     </div>
 
                     <div class="col-span-1">
                         <p class="text-tColor3 mb-2">Price</p>
                         <div class="flex mb-4 items-center">
-                            <!-- <div class="relative">
-                                <select
-                                    class=" border rounded-l px-3 py-2 pr-8 appearance-none focus:outline-none focus:shadow-outline"
-                                    id="country-code" name="country-code">
-                                    <option value="USD">USD</option>
-                                    <option value="GPT">GPT</option>
-                                    <option value="INR">INR</option>
-                                </select>
-                                <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
-                                    <i class="text-sm fa-solid fa-angle-down"></i>
-                                </div>
-                            </div> -->
+
                             <input
                                 class=" border rounded-r rounded-l px-3 py-2 flex-1 focus:outline-none focus:shadow-outline w-full"
-                                type="number" id="product_price" name="product_price" placeholder="Price">
+                                type="number" id="product_price" name="product_price" placeholder="Price" required>
                         </div>
                     </div>
 
                     <div class="col-span-1 xl:col-span-2 pb-10">
                         <p class="text-tColor3 mb-2">Product Quantity</p>
                         <input class=" border rounded px-3 py-2 flex-1 focus:outline-none focus:shadow-outline w-full"
-                            type="number" id="quantity" name="quantity" placeholder="Product Quantity">
+                            type="number" id="quantity" name="quantity" placeholder="Product Quantity" required>
                     </div>
 
                 </div>
@@ -70,7 +59,7 @@
                         <div class="relative">
                             <select
                                 class=" border rounded-l px-3 py-2 pr-8 appearance-none focus:outline-none focus:shadow-outline w-full"
-                                id="product_cat_id" name="product_cat_id">
+                                id="product_cat_id" name="product_cat_id" required>
                                 <% for(let cat of extraCat){ %>
                                 <option value="<%= cat.extra_cat_id %>"><%= cat.extra_cat_name %></option>
                                 <% } %>
@@ -88,7 +77,7 @@
                     <p class="text-tColor3 mb-2">Description</p>
                     <textarea class="border rounded-r px-3 py-2 flex-1 focus:outline-none focus:shadow-outline w-full"
                         id="product_description" name="product_details_des" rows="4" cols="50"
-                        placeholder="Enter Product Description"></textarea>
+                        placeholder="Enter Product Description" required></textarea>
                 </div>
 
                 <div id="imageContainer" style="display: flex; justify-content: space-between; margin-top: 20px;"></div>
@@ -109,10 +98,10 @@
 
 
                     <p class="text-tColor3 mb-2">Product Feature Image</p>
-                    <!-- <input name="product-featured-image" type="file"
-                        class="dropzone-feature-file custom-feature-file-label" style="margin-top: 5px;" required /> -->
+                    <input name="product-featured-image" type="file"
+                        class="dropzone-feature-file custom-feature-file-label" style="margin-top: 5px;" required />
 
-                    <label class="block">
+                    <!-- <label class="block">
                         <span class="sr-only">Choose profile photo</span>
                         <input type="file" class="block w-full text-sm text-slate-500
                           file:mr-4 file:py-2 file:px-4
@@ -121,7 +110,7 @@
                           file:bg-violet-50 file:text-violet-700
                           hover:file:bg-violet-100
                         " />
-                    </label>
+                    </label> -->
 
 
 
@@ -136,19 +125,41 @@
                             Image</button>
 
                     </div>
-                </div>
 
-                <div
-                    class="flex justify-center xl:justify-between items-center flex-wrap gap-5 border rounded p-5 mb-5">
-                    <!-- <p class="w-full xl:w-fit text-center">Saved on system <span>5 mins</span> ago</p> -->
-                    <!-- <button class="xl:ml-auto bg-orange-100 rounded"><i
+                    <div class="border-b py-10 w-fit">
+                        <p class="font-semibold text-lg text-tColor2 mb-2">Product Variant</p>
+
+
+                        <div class="col-span-1 xl:col-span-2">
+                            <p class="text-tColor3 mb-2">Variant Name</p>
+                            <input
+                                class=" border rounded px-3 py-2 flex-1 focus:outline-none focus:shadow-outline w-full"
+                                type="text" id="variant_name" name="variant_name" placeholder="Variant Name">
+                        </div>
+
+                        <div class="col-span-1">
+                            <p class="text-tColor3 mb-2">Price</p>
+                            <div class="flex mb-4 items-center">
+
+                                <input
+                                    class=" border rounded-r rounded-l px-3 py-2 flex-1 focus:outline-none focus:shadow-outline w-full"
+                                    type="number" id="variant_price" name="variant_price" placeholder="Variant Price">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="flex justify-center xl:justify-between items-center flex-wrap gap-5 border rounded p-5 mb-5">
+                        <!-- <p class="w-full xl:w-fit text-center">Saved on system <span>5 mins</span> ago</p> -->
+                        <!-- <button class="xl:ml-auto bg-orange-100 rounded"><i
                             class="fa-regular fa-trash-can w-full text-tertiaryColor p-3"></i></button> -->
-                    <button type="submit" class="bg-primaryColor text-white rounded px-4 py-2">+ Save Products</button>
+                        <button type="submit" class="bg-primaryColor text-white rounded px-4 py-2">+ Save
+                            Products</button>
+                    </div>
+
                 </div>
 
             </div>
-
-        </div>
 
     </form>
 

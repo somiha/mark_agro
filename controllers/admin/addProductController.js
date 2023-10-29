@@ -38,8 +38,10 @@ exports.postAddProduct = async (req, res, next) => {
       product_details_des,
       product_cat_id,
       quantity,
+      variant_name,
+      variant_price,
     } = req.body;
-
+    console.log(req.body);
     const featuredImage = req.files["product-featured-image"][0];
     const productImages = req.files["product-image"];
 
@@ -110,9 +112,17 @@ exports.postAddProduct = async (req, res, next) => {
           console.log({ res });
         });
       });
-
-      return res.redirect("/add-products");
     });
+    const insertVariantQuery =
+      "INSERT INTO variant (product_id, variant_name, price) VALUES (?, ?, ?)";
+    const variantValues = [pid, variant_name, variant_price];
+
+    db.query(insertVariantQuery, variantValues, (err, result) => {
+      if (err) {
+        throw err;
+      }
+    });
+    return res.redirect("/add-products");
   } catch (e) {
     console.log(e);
     return res.status(500).json({ msg: "Internal Server Error" });
