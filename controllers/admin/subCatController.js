@@ -3,14 +3,23 @@ const { queryAsync, queryAsyncWithoutValue } = require("../../config/helper");
 const baseUrl = process.env.baseUrl;
 exports.getSubCat = async (req, res, next) => {
   try {
-    const subCatQuery = `SELECT sub_cat.*, main_cat.main_cat_name AS sub_cat_ref_name, COUNT(products.product_id) AS total_products
+    const subCatQuery = `
+
+SELECT 
+    sub_cat.sub_cat_id,
+    sub_cat.sub_cat_name,
+    sub_cat.sub_cat_image_url,
+    main_cat.main_cat_name AS sub_cat_ref_name,
+    COUNT(products.product_id) AS total_products
 FROM sub_cat
-LEFT JOIN extra_cat ON sub_cat.sub_cat_ref = extra_cat.extra_cat_id
-LEFT JOIN products ON extra_cat.extra_cat_id = products.product_cat_id
+LEFT JOIN extra_cat ON sub_cat.sub_cat_id = extra_cat.extra_cat_ref
+LEFT JOIN products ON products.product_cat_id = extra_cat.extra_cat_id
 LEFT JOIN product_image ON products.product_id = product_image.product_id
 LEFT JOIN main_cat ON sub_cat.sub_cat_ref = main_cat.main_cat_id
 WHERE product_image.featured_image = 1 OR products.product_id IS NULL
-GROUP BY sub_cat.sub_cat_id;
+GROUP BY sub_cat.sub_cat_id, sub_cat.sub_cat_name, sub_cat_ref_name;
+
+
 
 `;
     const mainCatQuery = `SELECT main_cat.*, COUNT(products.product_id) AS total_products

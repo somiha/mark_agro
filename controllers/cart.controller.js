@@ -168,8 +168,8 @@ exports.addToCart = (req, res) => {
   // var { product_id, seller_id, user_id } = req.query    // For query version
 
   var { product_id, seller_id, user_id } = req.body;
+
   var order_id = req.body.order_id ? req.body.order_id : null;
-  console.log(order_id);
 
   // API security needed ! Check for isLoggedIn or something like that
   function addCart() {
@@ -200,6 +200,7 @@ exports.addToCart = (req, res) => {
       "SELECT * FROM `products` WHERE `products`.`product_id` = ?",
       [product_id],
       (err1, res1) => {
+        console.log(res1);
         if (!err1) {
           db.query(
             "SELECT * FROM `order_details` WHERE `order_details`.`product_id` = ? AND `order_details`.`order_id` = ?",

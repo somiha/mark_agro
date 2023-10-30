@@ -19,6 +19,9 @@ module.exports = {
       },
     },
   },
+  daisyui: {
+    darkTheme: "light",
+  },
   plugins: [
     function ({ addBase }) {
       addBase({

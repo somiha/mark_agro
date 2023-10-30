@@ -3,7 +3,6 @@ const { queryAsync, queryAsyncWithoutValue } = require("../../config/helper");
 
 exports.getAllOrders = async (req, res, next) => {
   try {
-    console.log("get all orders");
     // const orderQuery = `SELECT
     //     o.order_id,
     //     o.placed_date,
@@ -102,7 +101,6 @@ exports.getAllOrders = async (req, res, next) => {
 
 exports.updateStatus = async (req, res, next) => {
   try {
-    console.log("post alders", req.body);
     const { order_id, status_id, status_name } = req.body;
 
     const insertStatusQuery = `
@@ -120,7 +118,6 @@ exports.updateStatus = async (req, res, next) => {
     `;
 
     await queryAsync(updateOrderStatusQuery, [status_id, order_id]);
-    console.log("post alders", req.body);
 
     return res.redirect("/all-orders");
   } catch (e) {

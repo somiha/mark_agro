@@ -3,11 +3,11 @@
 
     <div class="flex justify-between items-center flex-wrap gap-5">
         <p class="text-xl xl:text-2xl font-semibold text-tColor2">All Products</p>
-        <div class="bg-white relative ml-auto">
+        <!-- <div class="bg-white relative ml-auto">
             <input class="py-2 pl-3 pr-6 focus:outline-none max-w-[205px] rounded-md" type="text"
                 placeholder="Search product...">
             <i class="fa-solid fa-magnifying-glass absolute top-1/2 right-2 -translate-y-1/2 text-tColor"></i>
-        </div>
+        </div> -->
         <a href="/add-products" class="primary-btn">+ Add Products</a>
     </div>
 
@@ -25,8 +25,8 @@
                             <th>CATEGORY</th>
                             <th>PRICE</th>
                             <th>SOLD</th>
-                            <!-- <th>SALES</th> -->
-                            <th></th>
+
+                            <th>ACTION</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -101,31 +101,35 @@
 
                                         </table>
 
+                                        <p class="font-semibold py-3">Products Description</p>
+                                        <p style="width: 800px; text-align: justify;">
+                                            <%= product.product_details_des %></p>
 
 
 
-                                        <% if (product.variant_name) { %>
-                                        <p class="font-semibold py-3">Product Variant</p>
+                                        <% if (product.variant_names && product.variant_prices) { %>
+                                        <p class="font-semibold py-3">Product Variants</p>
+
                                         <table class="w-full profile-table">
                                             <thead class="py-5">
                                                 <tr>
                                                     <th>Variant Name</th>
                                                     <th>Price</th>
-
                                                 </tr>
                                             </thead>
                                             <tbody>
-
+                                                <% const variantNames = product.variant_names.split(','); %>
+                                                <% const variantPrices = product.variant_prices.split(','); %>
+                                                <% for (let i = 0; i < variantNames.length; i++) { %>
                                                 <tr class="font-semibold bg-white border-b-8 border-gray-100">
-                                                    <td class="pl-3"><%= product.variant_name %></td>
-                                                    <td class="pl-3"><%= product.variant_price %></td>
-
+                                                    <td class="pl-3"><%= variantNames[i] %></td>
+                                                    <td class="pl-3"><%= variantPrices[i] %></td>
                                                 </tr>
-
+                                                <% } %>
                                             </tbody>
-
                                         </table>
                                         <% } %>
+
 
                                         <% if (product.non_featured_images) { %>
                                         <p class="font-semibold py-3">Non-Featured Images</p>

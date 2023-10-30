@@ -9,12 +9,12 @@ exports.getAddProducts = async (req, res, next) => {
     const extraCats = `SELECT * FROM extra_cat`;
     const products = await queryAsyncWithoutValue(productQuery);
     const extraCat = await queryAsyncWithoutValue(extraCats);
-    const pid = products[0].product_id;
+    // const pid = products[0].product_id;
 
     return res.status(200).render("pages/addProducts", {
       title: "All Product",
       products,
-      pid,
+
       extraCat,
     });
   } catch (e) {
@@ -30,7 +30,7 @@ exports.postAddProduct = async (req, res, next) => {
     const extraCats = `SELECT * FROM extra_cat`;
     const products = await queryAsyncWithoutValue(productQuery);
     const extraCat = await queryAsyncWithoutValue(extraCats);
-    const pid = products[0].product_id;
+    // const pid = products[0].product_id;
 
     let {
       product_name,
@@ -54,7 +54,7 @@ exports.postAddProduct = async (req, res, next) => {
         featuredImageError,
         productImageUrls: [],
         products,
-        pid,
+
         extraCat,
       });
     }
@@ -67,7 +67,7 @@ exports.postAddProduct = async (req, res, next) => {
         otherImagesError,
         productImageUrls: [],
         products,
-        pid,
+
         extraCat,
       });
     }
@@ -112,18 +112,43 @@ exports.postAddProduct = async (req, res, next) => {
           console.log({ res });
         });
       });
-
       if (variant_name && variant_price) {
-        for (let i = 0; i < variant_name.length; i++) {
-          const insertVariantQuery =
-            "INSERT INTO variant (product_id, variant_name, price) VALUES (?, ?, ?)";
-          const variantValues = [productId, variant_name[i], variant_price[i]];
+        if (Array.isArray(variant_name) && Array.isArray(variant_price)) {
+          for (let i = 0; i < variant_name.length; i++) {
+            const insertVariantQuery =
+              "INSERT INTO variant (product_id, variant_name, price) VALUES (?, ?, ?)";
+            const variantValues = [
+              productId,
+              variant_name[i],
+              variant_price[i],
+            ];
 
-          db.query(insertVariantQuery, variantValues, (err, result) => {
-            if (err) {
-              throw err;
-            }
-          });
+            db.query(insertVariantQuery, variantValues, (err, result) => {
+              if (err) {
+                throw err;
+              }
+            });
+          }
+        } else {
+          // If variant_name and variant_price are not arrays (single values), convert them to arrays
+          const variantNameArray = [variant_name];
+          const variantPriceArray = [variant_price];
+
+          for (let i = 0; i < variantNameArray.length; i++) {
+            const insertVariantQuery =
+              "INSERT INTO variant (product_id, variant_name, price) VALUES (?, ?, ?)";
+            const variantValues = [
+              productId,
+              variantNameArray[i],
+              variantPriceArray[i],
+            ];
+
+            db.query(insertVariantQuery, variantValues, (err, result) => {
+              if (err) {
+                throw err;
+              }
+            });
+          }
         }
       }
     });
