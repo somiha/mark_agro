@@ -1,9 +1,9 @@
 <%- include('../partials/navigation.ejs') %>
 
-<div class="bg-gray-100 px-5 pt-5 rounded-md">
+<div class="px-5 pt-5 rounded-md ">
 
-    <div class="flex items-center justify-between flex-wrap gap-5">
-        <p class="text-xl xl:text-2xl font-semibold text-tColor2">All Customers</p>
+    <div class="flex flex-wrap items-center justify-between gap-5">
+        <p class="text-xl font-semibold xl:text-2xl text-tColor2">All Customers</p>
         <!-- <div class="relative">
             <select name="" id="" class="px-2 py-1 border-2 focus:outline-none">
                 <option value="">Filter</option>
@@ -20,8 +20,8 @@
 
         <div class="flex flex-col justify-around">
 
-            <div class="bg-white pt-5 overflow-x-scroll md:overflow-hidden px-5">
-                <table class="table-auto text-xs md:text-sm profile-table w-[150%] md:w-full">
+            <div class="pt-5 overflow-x-auto ">
+                <table class="table text-xs md:text-sm ">
                     <thead>
                         <tr>
                             <th>FULL NAME</th>
@@ -60,15 +60,15 @@
 
             </div>
 
-            <div class="flex flex-col xl:flex-row justify-between xl:items-center py-5 gap-2">
-                <p class="text-center text-xs xl:text-sm text-tColor">
+            <div class="flex flex-col justify-between gap-2 py-5 xl:flex-row xl:items-center">
+                <p class="text-xs text-center xl:text-sm text-tColor">
                     Show <%= paginatedCustomers.length %> from <%= customers.length %> customers
                 </p>
 
                 <div
-                    class="scale-75 xl:scale-100 grid grid-flow-col content-center ml-auto mr-auto xl:mr-0 font-semibold xl:text-sm text-tColor gap-3">
+                    class="grid content-center grid-flow-col gap-3 ml-auto mr-auto font-semibold scale-75 xl:scale-100 xl:mr-0 xl:text-sm text-tColor">
                     <% if (page > 1) { %>
-                    <a class="h-6 w-6 rounded flex items-center justify-center"
+                    <a class="flex items-center justify-center w-6 h-6 rounded"
                         href="/extra-category?page=<%= page - 1 %>">
                         <svg width="6" height="10" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M7.125 0.75L0.875 7L7.125 13.25" stroke="#84818A" stroke-width="1.5"
@@ -90,7 +90,7 @@
                     <% } %>
 
                     <% if (page < Math.ceil(customers.length / customersPerPage)) { %>
-                    <a class="h-6 w-6 rounded flex items-center justify-center"
+                    <a class="flex items-center justify-center w-6 h-6 rounded"
                         href="/extra-category?page=<%= page + 1 %>">
                         <svg width="6" height="10" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M0.875 0.75L7.125 7L0.875 13.25" stroke="#84818A" stroke-width="1.5"
