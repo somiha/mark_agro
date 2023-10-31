@@ -13,6 +13,7 @@ const regRouter = require("./registration.route");
 const cart = require("./cart.route");
 const all_products = require("./all-products.route");
 const startPage = require("./flashSell.route");
+const variant = require("./variant.route");
 
 //somiha
 const adminRoute = require("./adminRoute/adminRoute");
@@ -30,7 +31,7 @@ Router.use(regRouter);
 Router.use(cart);
 Router.use(all_products);
 Router.use(startPage);
-
+Router.use(variant);
 //somiha
 Router.use(adminRoute);
 Router.use(adminApiRoute);
