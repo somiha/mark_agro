@@ -1,12 +1,12 @@
 <%- include('../partials/navigation.ejs') %>
-<div class="bg-gray-100 px-5 pt-5 rounded-md">
+<div class="px-5 pt-5 rounded-md ">
 
-    <div class="flex justify-between items-center flex-wrap gap-5">
-        <p class="text-xl xl:text-2xl font-semibold text-tColor2">All Products</p>
-        <!-- <div class="bg-white relative ml-auto">
+    <div class="flex flex-wrap items-center justify-between gap-5">
+        <p class="text-xl font-semibold xl:text-2xl text-tColor2">All Products</p>
+        <!-- <div class="relative ml-auto bg-white">
             <input class="py-2 pl-3 pr-6 focus:outline-none max-w-[205px] rounded-md" type="text"
                 placeholder="Search product...">
-            <i class="fa-solid fa-magnifying-glass absolute top-1/2 right-2 -translate-y-1/2 text-tColor"></i>
+            <i class="absolute -translate-y-1/2 fa-solid fa-magnifying-glass top-1/2 right-2 text-tColor"></i>
         </div> -->
         <a href="/add-products" class="primary-btn">+ Add Products</a>
     </div>
@@ -16,8 +16,8 @@
 
         <div class="flex flex-col justify-around">
 
-            <div class="bg-white pt-5 mt-5 overflow-x-scroll md:overflow-hidden px-5">
-                <table class="table-auto text-xs md:text-sm profile-table w-[230%] md:w-full">
+            <div class="px-5 pt-5 mt-5 overflow-x-auto bg-white md:overflow-hidden">
+                <table class="table text-xs md:text-sm md:w-full">
                     <thead>
                         <tr>
                             <th>PRODUCT CODE</th>
@@ -40,7 +40,7 @@
                                 </div>
                             </td>
                             <td><span
-                                    class="bg-tColor text-white px-3 py-2 rounded"><%= product.extra_cat_name %></span>
+                                    class="text-white badge badge-primary"><%= product.extra_cat_name %></span>
                             </td>
                             <td>$<%= product.product_price %></td>
                             <td><%= product.sell_count %></td>
@@ -49,16 +49,16 @@
                                 <a href="#"><i class="fa-solid fa-ellipsis text-tColor"></i></a>
                             </td> -->
                             <td>
-                                <button class="table-button"><i class="fa-solid fa-eye text-tColor"></i></button>
+                                <button class=" btn btn-xs btn-outline btn-primary"><i class="bi bi-eye"></i></button>
 
                                 <!-- Pop up Details -->
                                 <div
-                                    class="table-collapse fixed bottom-0 right-0 bg-black/50 h-full w-full flex justify-center items-center z-10 hidden">
+                                    class="fixed bottom-0 right-0 z-10 flex items-center justify-center hidden w-full h-full table-collapse bg-black/50">
 
                                     <div
                                         class="bg-gray-100 border-2 border-primaryColor rounded-lg min-w-[350px] xl:min-w-[550px] p-5 max-h-full overflow-y-auto">
 
-                                        <div class="flex justify-between items-center">
+                                        <div class="flex items-center justify-between">
                                             <p class="font-semibold"> Products Details</p>
                                             <button
                                                 class="table-close bg-secondaryColor text-white text-sm rounded-[50%] px-[8px] py-[4px]">
@@ -67,7 +67,7 @@
                                         </div>
 
                                         <!-- <p
-                                            class="text-white font-semibold text-xs bg-orange-500 px-4 py-1 rounded w-fit my-2">
+                                            class="px-4 py-1 my-2 text-xs font-semibold text-white bg-orange-500 rounded w-fit">
                                             Sent to buyer
                                             to review</p> -->
 
@@ -85,12 +85,12 @@
 
                                                 <tr class="font-semibold bg-white border-8 border-gray-100">
                                                     <div class="flex items-center gap-4 pl-2">
-                                                        <td class="text-tColor pl-6">
+                                                        <td class="pl-6 text-tColor">
 
                                                             <%= product.quantity %>
 
                                                         </td>
-                                                        <td class="text-tColor pl-3">
+                                                        <td class="pl-3 text-tColor">
                                                             <%= product.seller_id %></td>
                                                     </div>
 
@@ -101,14 +101,14 @@
 
                                         </table>
 
-                                        <p class="font-semibold py-3">Products Description</p>
+                                        <p class="py-3 font-semibold">Products Description</p>
                                         <p style="width: 800px; text-align: justify;">
                                             <%= product.product_details_des %></p>
 
 
 
                                         <% if (product.variant_names && product.variant_prices) { %>
-                                        <p class="font-semibold py-3">Product Variants</p>
+                                        <p class="py-3 font-semibold">Product Variants</p>
 
                                         <table class="w-full profile-table">
                                             <thead class="py-5">
@@ -132,7 +132,7 @@
 
 
                                         <% if (product.non_featured_images) { %>
-                                        <p class="font-semibold py-3">Non-Featured Images</p>
+                                        <p class="py-3 font-semibold">Non-Featured Images</p>
                                         <ul style="display: flex; flex-wrap: wrap; justify-content: flex-start;">
                                             <% const nonFeaturedImages = product.non_featured_images.split(','); %>
                                             <% nonFeaturedImages.forEach((image) => { %>
@@ -167,15 +167,15 @@
 
             <!-- Page Select -->
 
-            <div class="flex flex-col xl:flex-row justify-between xl:items-center py-5 gap-2">
-                <p class="text-center text-xs xl:text-sm text-tColor">
+            <div class="flex flex-col justify-between gap-2 py-5 xl:flex-row xl:items-center">
+                <p class="text-xs text-center xl:text-sm text-tColor">
                     Show <%= paginatedProducts.length %> from <%= products.length %> products
                 </p>
 
                 <div
-                    class="scale-75 xl:scale-100 grid grid-flow-col content-center ml-auto mr-auto xl:mr-0 font-semibold xl:text-sm text-tColor gap-3">
+                    class="grid content-center grid-flow-col gap-3 ml-auto mr-auto font-semibold scale-75 xl:scale-100 xl:mr-0 xl:text-sm text-tColor">
                     <% if (page > 1) { %>
-                    <a class="h-6 w-6 rounded flex items-center justify-center"
+                    <a class="flex items-center justify-center w-6 h-6 rounded"
                         href="/all-products?page=<%= page - 1 %>">
                         <svg width="6" height="10" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M7.125 0.75L0.875 7L7.125 13.25" stroke="#84818A" stroke-width="1.5"
@@ -197,7 +197,7 @@
                     <% } %>
 
                     <% if (page < Math.ceil(products.length / productsPerPage)) { %>
-                    <a class="h-6 w-6 rounded flex items-center justify-center"
+                    <a class="flex items-center justify-center w-6 h-6 rounded"
                         href="/all-products?page=<%= page + 1 %>">
                         <svg width="6" height="10" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M0.875 0.75L7.125 7L0.875 13.25" stroke="#84818A" stroke-width="1.5"
