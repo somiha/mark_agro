@@ -1,219 +1,179 @@
 <%- include('../partials/navigation.ejs') %>
-    <div class="mx-5 rounded-md">
+<div class="mx-5 rounded-md">
 
-        <div class="flex flex-wrap items-center justify-between gap-5 py-10 ">
-            <p class="text-xl font-semibold xl:text-2xl text-tColor2">Add Product</p>
-        </div>
+    <div class="flex flex-wrap items-center justify-between gap-5 py-10 ">
+        <p class="text-xl font-semibold xl:text-2xl text-tColor2">Add Product</p>
+    </div>
 
-        <!-- Product Upload Section -->
-        <form action="/add-products" method="POST" enctype="multipart/form-data">
-            <div class="relative grid">
 
-                <!-- Product Left Section -->
-                <div class=" xl:pr-5">
-                    <div class="grid xl:grid-cols-2 gap-x-5">
-                        <div class="flex flex-col">
-                            <p class="pt-5 text-lg font-semibold text-tColor2">Product Information</p>
-                            <!-- Product Information Input Section -->
-                            <div class="grid grid-cols-1 gap-5 mt-5 ">
+    <form action="/add-products" method="POST" enctype="multipart/form-data">
+        <div class="relative grid">
 
+            <div class=" xl:pr-5">
+                <div class="grid xl:grid-cols-2 gap-x-5">
+                    <div class="flex flex-col">
+                        <p class="pt-5 text-lg font-semibold text-tColor2">Product Information</p>
+                        <div class="grid grid-cols-1 gap-5 mt-5 ">
+
+                            <div class="">
+                                <p class="mb-2 text-tColor3">Product Name</p>
+                                <input class="w-full input input-bordered focus:outline-none focus:shadow-outline"
+                                    type="text" id="product_name" name="product_name" placeholder="Product Name"
+                                    required>
+                            </div>
+
+                            <div class="grid xl:grid-cols-2 gap-x-5">
                                 <div class="">
-                                    <p class="mb-2 text-tColor3">Product Name</p>
-                                    <input
-                                        class="w-full input input-bordered focus:outline-none focus:shadow-outline"
-                                        type="text" id="product_name" name="product_name" placeholder="Product Name"
-                                        required>
-                                </div>
-
-                                <div class="grid xl:grid-cols-2 gap-x-5">
-
-
-
-                                    <div class="">
-                                        <p class="mb-2 text-tColor3">Price</p>
-                                        <div class="flex items-center">
-
-                                            <input
-                                                class="w-full input input-bordered focus:outline-none focus:shadow-outline"
-                                                type="number" id="product_price" name="product_price"
-                                                placeholder="Price" required>
-                                        </div>
-                                    </div>
-
-                                    <div class="pb-10 ">
-                                        <p class="mb-2 text-tColor3">Product Quantity</p>
+                                    <p class="mb-2 text-tColor3">Price</p>
+                                    <div class="flex items-center">
                                         <input
                                             class="w-full input input-bordered focus:outline-none focus:shadow-outline"
-                                            type="number" id="quantity" name="quantity" placeholder="Product Quantity"
+                                            type="number" id="product_price" name="product_price" placeholder="Price"
                                             required>
                                     </div>
                                 </div>
 
+                                <div class="pb-10 ">
+                                    <p class="mb-2 text-tColor3">Product Quantity</p>
+                                    <input class="w-full input input-bordered focus:outline-none focus:shadow-outline"
+                                        type="number" id="quantity" name="quantity" placeholder="Product Quantity"
+                                        required>
+                                </div>
                             </div>
-                            <div class="pb-10">
-                                <p class="mb-2 text-tColor3">Description</p>
-                                <textarea
-                                    class="w-full textarea textarea-bordered focus:outline-none focus:shadow-outline"
-                                    id="product_description" name="product_details_des" rows="4" cols="50"
-                                    placeholder="Enter Product Description" required></textarea>
-                            </div>
 
-                            <div id="imageContainer" style="display: flex; justify-content: space-between; margin-top: 20px;">
-                    </div>
+                        </div>
+                        <div class="pb-10">
+                            <p class="mb-2 text-tColor3">Description</p>
+                            <textarea class="w-full textarea textarea-bordered focus:outline-none focus:shadow-outline"
+                                id="product_description" name="product_details_des" rows="4" cols="50"
+                                placeholder="Enter Product Description" required></textarea>
+                        </div>
+                        <div id="imageContainer"
+                            style="display: flex; justify-content: space-between; margin-top: 20px;">
+                        </div>
 
 
-                    <!-- Product Image Upload Section -->
-                    <% if (typeof featuredImageError !=='undefined' && featuredImageError) { %>
+                        <% if (typeof featuredImageError !=='undefined' && featuredImageError) { %>
                         <div class="mt-2 text-red-500">
                             <%= featuredImageError %>
                         </div>
                         <% } %>
 
-
-                            <% if (typeof otherImagesError !=='undefined' && otherImagesError) { %>
-                                <div class="mt-2 text-red-500">
-                                    <%= otherImagesError %>
-                                </div>
-                                <% } %>
-
-
-
-                                    <div class="w-full py-10 ">
-                                        <p class="mb-2 text-lg font-semibold text-tColor2">Media</p>
-
-
-                                        <p class="mb-2 text-tColor3">Product Feature Image</p>
-                                        <input name="product-featured-image" type="file" id="featured_image"
-                                            class="file-input file-input-bordered file-input-primary"
-                                            style="margin-top: 5px;" style="margin-top: 5px;" class="hidden"
-                                            onchange="displaySelectedImage1()" required />
-
-                                        <p id="selected-image-name" class="mt-3 text-tColor2"></p>
-
-                                        <img id="selected-image" src="#" alt="" class="hidden" width="150px"
-                                            height="150px" />
-
-                                       
-
-
-
-
-                                        <div class="pt-5 pb-10">
-                                            <p class="mb-2 text-tColor3">Add Product Image</p>
-                                            <div class="mb-5" id="productImageContainer">
-
-                                            </div>
-                                            <button type="button" class="px-4 py-2 text-white rounded bg-primaryColor"
-                                                id="addImageBtn">Add
-                                                Image</button>
-
-                                        </div>
-
-                                        <p class="mb-2 text-lg font-semibold text-tColor2">Variant</p>
-                                        <div class="pb-10">
-
-                                            <div class="flex flex-col mb-4 gap-y-10 xl:gap-y-5" id="variantContainer">
-
-                                            </div>
-                                            <button type="button" class="px-4 py-2 text-white rounded bg-primaryColor"
-                                                id="addBtn">Add
-                                                Variant</button>
-
-                                        </div>
-
-
-                                        <div class="flex flex-wrap items-center self-start gap-5 mb-5 pr-15">
-
-                                            <button type="submit"
-                                                class="text-white btn btn-primary">Save
-                                                Products</button>
-                                        </div>
-
-
-
-                                    </div>
+                        <% if (typeof otherImagesError !=='undefined' && otherImagesError) { %>
+                        <div class="mt-2 text-red-500">
+                            <%= otherImagesError %>
                         </div>
+                        <% } %>
 
+                        <div class="w-full py-10 ">
+                            <p class="mb-2 text-lg font-semibold text-tColor2">Media</p>
 
+                            <p class="mb-2 text-tColor3">Product Feature Image</p>
+                            <input name="product-featured-image" type="file" id="featured_image"
+                                class="file-input file-input-bordered file-input-primary" style="margin-top: 5px;"
+                                style="margin-top: 5px;" class="hidden" onchange="displaySelectedImage1()" required />
 
+                            <p id="selected-image-name" class="mt-3 text-tColor2"></p>
 
+                            <img id="selected-image" src="#" alt="" class="hidden" width="150px" height="150px" />
 
+                            <div class="pt-5 pb-10">
+                                <p class="mb-2 text-tColor3">Add Product Image</p>
+                                <div class="mb-5" id="productImageContainer">
 
-                        <!-- Product Right Section -->
-                        <div class="">
-                            <p class="py-5 text-lg font-semibold text-tColor2">Primary Details</p>
-
-                            <div>
-                                <p class="mb-2 text-tColor3">Category</p>
-                                <div class="relative">
-                                    <select
-                                        class="w-full select select-bordered focus:outline-none focus:shadow-outline"
-                                        id="product_cat_id" name="product_cat_id" required>
-                                        <% for(let cat of extraCat){ %>
-                                            <option value="<%= cat.extra_cat_id %>">
-                                                <%= cat.extra_cat_name %>
-                                            </option>
-                                            <% } %>
-                                                <!-- Add more options here -->
-                                    </select>
-                                    <!-- <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
-                                        <i class="text-sm fa-solid fa-angle-down"></i>
-                                    </div> -->
                                 </div>
+                                <button type="button" class="px-4 py-2 text-white rounded bg-primaryColor"
+                                    id="addImageBtn">Add
+                                    Image</button>
+
                             </div>
-                        </div>
 
+                            <p class="mb-2 text-lg font-semibold text-tColor2">Variant</p>
+                            <div class="pb-10">
+                                <div class="flex flex-col mb-4 gap-y-10 xl:gap-y-5" id="variantContainer">
+
+                                </div>
+                                <button type="button" class="px-4 py-2 text-white rounded bg-primaryColor"
+                                    id="addBtn">Add
+                                    Variant</button>
+
+                            </div>
+                            =
+                            <div class="flex flex-wrap items-center self-start gap-5 mb-5 pr-15">
+
+                                <button type="submit" class="text-white btn btn-primary">Save
+                                    Products</button>
+                            </div>
+
+                        </div>
                     </div>
 
-                    
+                    <!-- Product Right Section -->
+                    <div class="">
+                        <p class="py-5 text-lg font-semibold text-tColor2">Primary Details</p>
+
+                        <div>
+                            <p class="mb-2 text-tColor3">Category</p>
+                            <div class="relative">
+                                <select class="w-full select select-bordered focus:outline-none focus:shadow-outline"
+                                    id="product_cat_id" name="product_cat_id" required>
+                                    <% for(let cat of extraCat){ %>
+                                    <option value="<%= cat.extra_cat_id %>">
+                                        <%= cat.extra_cat_name %>
+                                    </option>
+                                    <% } %>
+                                    <!-- Add more options here -->
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
 
                 </div>
 
-        </form>
+            </div>
 
-    </div>
+    </form>
 
-   
+</div>
 
+</div>
 
-
-    </div>
-
-    </section>
+</section>
 
 
 
 
 
-    <!-- Header Section Script -->
-    <script>
-        // Menu toggle button 
-        const toggleButton = document.getElementById("toggle-button");
-        const toggleMenu = document.getElementById("toggle-menu");
-        var toggleCounter = 1;
-        toggleButton.onclick = function () {
-            toggleCounter++;
-            if (toggleCounter % 2 == 0) {
-                toggleMenu.classList.remove("hidden");
-                toggleMenu.classList.add("grid");
-            }
-            else {
-                toggleMenu.classList.remove("grid");
-                toggleMenu.classList.add("hidden");
-            }
+<!-- Header Section Script -->
+<script>
+    // Menu toggle button 
+    const toggleButton = document.getElementById("toggle-button");
+    const toggleMenu = document.getElementById("toggle-menu");
+    var toggleCounter = 1;
+    toggleButton.onclick = function () {
+        toggleCounter++;
+        if (toggleCounter % 2 == 0) {
+            toggleMenu.classList.remove("hidden");
+            toggleMenu.classList.add("grid");
         }
+        else {
+            toggleMenu.classList.remove("grid");
+            toggleMenu.classList.add("hidden");
+        }
+    }
 
 
-    </script>
+</script>
 
 
 
-    <script>
-        // JavaScript to handle dynamically adding and removing subcategory fields
-        document.getElementById("addBtn").addEventListener("click", function () {
-            const variantContainer = document.getElementById("variantContainer");
-            const newVariantField = document.createElement("div");
-            newVariantField.innerHTML = `
+<script>
+    // JavaScript to handle dynamically adding and removing subcategory fields
+    document.getElementById("addBtn").addEventListener("click", function () {
+        const variantContainer = document.getElementById("variantContainer");
+        const newVariantField = document.createElement("div");
+        newVariantField.innerHTML = `
             <div class="flex w-full gap-x-5">
             <div class="grid w-full xl:grid-cols-2 gap-y-3 gap-x-5">
             <div class="flex flex-col">
@@ -227,49 +187,49 @@
             <button type="button"  class="self-end text-white btn btn-error btn-outline" onclick="removeSubcategoryField(this)"><i class="bi bi-trash3"></i></button>
             </div>
     `;
-            variantContainer.appendChild(newVariantField);
-        });
+        variantContainer.appendChild(newVariantField);
+    });
 
-        function removeSubcategoryField(button) {
-            button.parentNode.remove();
+    function removeSubcategoryField(button) {
+        button.parentNode.remove();
+    }
+</script>
+
+<script>
+    function displaySelectedImage1() {
+        const fileInput = document.getElementById("featured_image");
+        // const labelText = document.getElementById("label-text");
+        const selectedImageName = document.getElementById("selected-image-name");
+        const selectedImage = document.getElementById("selected-image");
+
+        if (fileInput.files.length > 0) {
+            // labelText.style.display = "none";
+            const imageName = fileInput.files[0].name;
+            selectedImageName.textContent = `Selected Image: ${imageName}`;
+            selectedImage.src = URL.createObjectURL(fileInput.files[0]);
+            selectedImage.classList.remove("hidden");
+        } else {
+            // labelText.style.display = "block";
+            selectedImageName.textContent = "";
+            selectedImage.src = "";
+            selectedImage.classList.add("hidden");
         }
-    </script>
+    }
+</script>
 
-    <script>
-        function displaySelectedImage1() {
-            const fileInput = document.getElementById("featured_image");
-            // const labelText = document.getElementById("label-text");
-            const selectedImageName = document.getElementById("selected-image-name");
-            const selectedImage = document.getElementById("selected-image");
+<script>
+    let inputCounter = 1; // Initialize the counter for input elements
 
-            if (fileInput.files.length > 0) {
-                // labelText.style.display = "none";
-                const imageName = fileInput.files[0].name;
-                selectedImageName.textContent = `Selected Image: ${imageName}`;
-                selectedImage.src = URL.createObjectURL(fileInput.files[0]);
-                selectedImage.classList.remove("hidden");
-            } else {
-                // labelText.style.display = "block";
-                selectedImageName.textContent = "";
-                selectedImage.src = "";
-                selectedImage.classList.add("hidden");
-            }
-        }
-    </script>
+    document.getElementById("addImageBtn").addEventListener("click", function () {
+        const productImageContainer = document.getElementById("productImageContainer");
+        const newProductImageField = document.createElement("div");
+        newProductImageField.className = "flex items-center mb-2";
 
-    <script>
-        let inputCounter = 1; // Initialize the counter for input elements
+        // Generate the next input and image IDs
+        const inputId = `product_image${inputCounter}`;
+        const imgId = `selected-image${inputCounter}`;
 
-        document.getElementById("addImageBtn").addEventListener("click", function () {
-            const productImageContainer = document.getElementById("productImageContainer");
-            const newProductImageField = document.createElement("div");
-            newProductImageField.className = "flex items-center mb-2";
-
-            // Generate the next input and image IDs
-            const inputId = `product_image${inputCounter}`;
-            const imgId = `selected-image${inputCounter}`;
-
-            newProductImageField.innerHTML = `
+        newProductImageField.innerHTML = `
             <input id="${inputId}" name="product-image" type="file" style="margin-top: 5px;" class="file-input file-input-primary file-input-bordered"
                 onchange="displaySelectedImage('${inputId}', '${imgId}')"/>
             <p id="selected-image-name${inputCounter}" class="mt-3 text-tColor2"></p>
@@ -277,51 +237,48 @@
             <button type="button" style="margin-left: 10px;" class="text-white btn btn-error btn-outline" onclick="removeSubcategoryField(this)"><i class="bi bi-trash3"></i></button>
         `;
 
-            productImageContainer.appendChild(newProductImageField);
+        productImageContainer.appendChild(newProductImageField);
 
-            // Increment the input counter
-            inputCounter++;
-        });
+        // Increment the input counter
+        inputCounter++;
+    });
 
-        function removeSubcategoryField(button) {
-            button.parentNode.remove();
+    function removeSubcategoryField(button) {
+        button.parentNode.remove();
+    }
+
+    function displaySelectedImage(inputId, imgId) {
+        const fileInput = document.getElementById(inputId);
+        const selectedImageName = document.getElementById(`selected-image-name${inputId.replace("product_image", "")}`);
+        const selectedImage = document.getElementById(imgId);
+
+        if (fileInput.files.length > 0) {
+            const imageName = fileInput.files[0].name;
+            selectedImageName.textContent = `Selected Image: ${imageName}`;
+            selectedImage.src = URL.createObjectURL(fileInput.files[0]);
+            selectedImage.classList.remove("hidden");
+        } else {
+            selectedImageName.textContent = "";
+            selectedImage.src = "";
+            selectedImage.classList.add("hidden");
         }
+    }
+</script>
 
-        function displaySelectedImage(inputId, imgId) {
-            const fileInput = document.getElementById(inputId);
-            const selectedImageName = document.getElementById(`selected-image-name${inputId.replace("product_image", "")}`);
-            const selectedImage = document.getElementById(imgId);
 
-            if (fileInput.files.length > 0) {
-                const imageName = fileInput.files[0].name;
-                selectedImageName.textContent = `Selected Image: ${imageName}`;
-                selectedImage.src = URL.createObjectURL(fileInput.files[0]);
-                selectedImage.classList.remove("hidden");
-            } else {
-                selectedImageName.textContent = "";
-                selectedImage.src = "";
-                selectedImage.classList.add("hidden");
+
+<script>
+    const tables = document.querySelectorAll('.table-collapse');
+    window.onclick = function (event) {
+        for (let table of tables) {
+            if (event.target == table) {
+                table.classList.toggle('hidden');
             }
         }
-    </script>
+    };
+</script>
 
 
+</body>
 
-    <script>
-        const tables = document.querySelectorAll('.table-collapse');
-        window.onclick = function (event) {
-            for (let table of tables) {
-                if (event.target == table) {
-                    table.classList.toggle('hidden');
-                }
-            }
-        };
-    </script>
-
-    
-
-
-
-    </body>
-
-    </html>
+</html>

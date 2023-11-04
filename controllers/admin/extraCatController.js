@@ -105,3 +105,53 @@ exports.postExtraCat = async (req, res, next) => {
     return res.status(500).json({ msg: "Internal Server Error" });
   }
 };
+
+exports.updateExtraCat = async (req, res, next) => {
+  try {
+    const { extraCatId, extra_cat_name, extra_cat_ref } = req.body;
+    const extraCatImage = req.files["extra-cat-image"];
+
+    // Check if an image is provided for the update (if needed)
+    let extraCatImageUrl = null;
+    if (extraCatImage && extraCatImage.length > 0) {
+      extraCatImageUrl = `${baseUrl}/uploads/${extraCatImage[0].filename}`;
+    }
+
+    // Check if extraCatImageUrl is not null, indicating an image update
+    if (extraCatImageUrl) {
+      // Update both the extra_cat_name, extra_cat_ref, and extra_cat_image_url
+      const updateExtraCatQuery =
+        "UPDATE extra_cat SET extra_cat_name = ?, extra_cat_ref = ?, extra_cat_image_url = ? WHERE extra_cat_id = ?";
+      const extraCatValues = [
+        extra_cat_name,
+        extra_cat_ref,
+        extraCatImageUrl,
+        extraCatId,
+      ];
+
+      db.query(updateExtraCatQuery, extraCatValues, (err, result) => {
+        if (err) {
+          throw err;
+        }
+
+        return res.redirect("/extra-category");
+      });
+    } else {
+      // If no image is provided for the update, update only extra_cat_name and extra_cat_ref
+      const updateExtraCatQuery =
+        "UPDATE extra_cat SET extra_cat_name = ?, extra_cat_ref = ? WHERE extra_cat_id = ?";
+      const extraCatValues = [extra_cat_name, extra_cat_ref, extraCatId];
+
+      db.query(updateExtraCatQuery, extraCatValues, (err, result) => {
+        if (err) {
+          throw err;
+        }
+
+        return res.redirect("/extra-category");
+      });
+    }
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json({ msg: "Internal Server Error" });
+  }
+};

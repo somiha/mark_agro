@@ -4,6 +4,13 @@ const {
 } = require("../../controllers/admin/allProductController");
 
 const {
+  editProduct,
+  postEditProduct,
+  deleteNonFeaturedImage,
+  deleteVariant,
+} = require("../../controllers/admin/editProductController");
+
+const {
   getAllCustomers,
 } = require("../../controllers/admin/customerController");
 
@@ -17,16 +24,19 @@ const { getDashboard } = require("../../controllers/admin/dashboardController");
 const {
   getMainCat,
   postMainCat,
+  updateMainCat,
 } = require("../../controllers/admin/mainCatController");
 
 const {
   getSubCat,
   postSubCat,
+  updateSubCat,
 } = require("../../controllers/admin/subCatController");
 
 const {
   getExtraCat,
   postExtraCat,
+  updateExtraCat,
 } = require("../../controllers/admin/extraCatController");
 
 const {
@@ -74,5 +84,37 @@ router.post(
   multiUpload.fields([{ name: "extra-cat-image" }]),
   postExtraCat
 );
+
+router.post(
+  "/update-extra-category",
+  multiUpload.fields([{ name: "extra-cat-image" }]),
+  updateExtraCat
+);
+
+router.post(
+  "/update-main-category",
+  multiUpload.fields([{ name: "main-cat-image" }]),
+  updateMainCat
+);
+
+router.post(
+  "/update-sub-category",
+  multiUpload.fields([{ name: "sub-cat-image" }]),
+  updateSubCat
+);
+
+router.get("/edit-product", editProduct);
+
+router.post(
+  "/edit-product",
+  multiUpload.fields([
+    { name: "product_featured_image" },
+    { name: "product-image" },
+  ]),
+  postEditProduct
+);
+
+router.post("/delete-non-featured-image", deleteNonFeaturedImage);
+router.post("/delete-variant", deleteVariant);
 
 module.exports = router;

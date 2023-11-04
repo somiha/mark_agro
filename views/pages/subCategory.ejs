@@ -53,7 +53,7 @@
                             <th>REF-CATEGORY</th>
                             <th>PRODUCTS</th>
                             <!-- <th>SALES</th> -->
-                            <th></th>
+                            <th>ACTION</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -68,6 +68,10 @@
                             </td>
                             <td class="text-tColor"><%= subCat.sub_cat_ref_name %></td>
                             <td><span><%= subCat.total_products %></span> Products</td>
+                            <td>
+                                <button
+                                    onclick="openEditCategoryPopup('<%= subCat.sub_cat_id %>', '<%= subCat.sub_cat_name %>', '<%= subCat.sub_cat_ref_id %>', '<%= subCat.sub_cat_ref_name %>', '<%= subCat.sub_cat_image_url %>')">Edit</button>
+                            </td>
 
                         </tr>
 
@@ -176,6 +180,65 @@
     </form>
 
 </div> -->
+
+<div class="bg-white h-screen max-h-[1080px] w-full xl:w-1/3 2xl:w-1/4 absolute top-0 right-0 shadow-lg p-10 hidden"
+    id="edit-category">
+    <form action="/update-sub-category" method="POST" enctype="multipart/form-data">
+        <div class="flex items-center justify-between">
+            <p class="text-xl font-semibold">Edit Category</p>
+            <button id="edit-category-close-button">
+                <i class="fa-solid fa-xmark bg-secondaryColor text-white text-sm rounded-[50%] px-[7px] py-[5px]"></i>
+            </button>
+        </div>
+
+        <p class="my-5 text-tColor2">Edit the information for the selected category.</p>
+
+        <div>
+            <p class="mb-2">Category Name</p>
+            <input class="flex-1 w-full px-3 py-2 border rounded focus:outline-none focus:shadow-outline" type="text"
+                id="edit_sub_cat_name" name="sub_cat_name" placeholder="Category Name">
+        </div>
+
+        <div>
+            <p class="mt-5 mb-2">Ref-Category</p>
+            <div class="relative">
+                <select
+                    class="w-full px-3 py-2 pr-8 border rounded-l appearance-none focus:outline-none focus:shadow-outline"
+                    id="edit_sub_cat_ref" name="sub_cat_ref">
+
+                    <% for (let mainCat of mainCats) { %>
+                    <option value=" <%= mainCat.main_cat_id %>"><%= mainCat.main_cat_name %></option>
+                    <% } %>
+                    <!-- Add more options here -->
+                </select>
+                <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                    <i class="text-sm fa-solid fa-angle-down"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-5">
+            <label for="edit-sub-cat-image" id="edit-label-text"
+                class="flex flex-col items-center justify-center w-full py-3 border border-dashed rounded-lg cursor-pointer border-primaryColor">
+                <div class="flex items-center gap-5">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Add your SVG icon here -->
+                    </svg>
+                    <p class="text-sm text-center text-primaryColor">Click here or drop an image</p>
+                </div>
+                <input id="edit-sub-cat-image" type="file" name="sub-cat-image" class="hidden"
+                    onchange="displaySelectedImage2()" />
+
+            </label>
+        </div>
+
+        <p id="edit-selected-image-name" class="mt-3 text-tColor2"></p>
+        <img id="edit-selected-image" src="#" alt="" class="hidden" />
+
+        <input type="hidden" name="subCatId" id="edit-subCatId" value="">
+        <button class="w-full px-4 py-2 mt-5 text-white rounded bg-primaryColor" type="submit">Update</button>
+    </form>
+</div>
 
 <div class="bg-white h-screen max-h-[1080px] w-full xl:w-1/3 2xl:w-1/4 absolute top-0 right-0 shadow-lg p-10 hidden"
     id="add-category">
@@ -353,7 +416,81 @@
 </script>
 
 
+<script>
+    // Function to open the edit pop-up
+    function openEditCategoryPopup(subCatId, subCatName, subCatRefId, subCatRefName, imageUrl) {
+        const editCategoryPopup = document.getElementById("edit-category");
+        const editSubCatNameInput = document.getElementById("edit_sub_cat_name");
+        const editSubCatRefSelect = document.getElementById("edit_sub_cat_ref");
+        const editImageInput = document.getElementById("edit-sub-cat-image");
+        const editSelectedImageName = document.getElementById("edit-selected-image-name");
+        const editSelectedImage = document.getElementById("edit-selected-image");
+        const editSubCatId = document.getElementById("edit-subCatId");
 
+        // Set the initial values in the edit pop-up
+        editSubCatNameInput.value = subCatName;
+        const option = editSubCatRefSelect.querySelector(`option[value="${subCatRefId}"]`);
+        if (option) {
+            option.selected = true;
+            editSubCatRefSelect.value = subCatRefId;
+            editSubCatRefSelect.textContent = subCatRefName;
+        }
+        editSelectedImageName.textContent = `Selected Image: ${imageUrl}`;
+        editSelectedImage.src = imageUrl;
+        editSubCatId.value = subCatId;
+
+        // Show the edit pop-up
+        editCategoryPopup.classList.remove("hidden");
+    }
+</script>
+
+<script>
+    function displayEditCategoryPopUp(selectedValue) {
+        // Display the edit pop-up
+        const editCategoryPopUp = document.getElementById("edit-category");
+        editCategoryPopUp.classList.remove("hidden");
+
+        // Set the selected option in the dropdown
+        const selectElement = document.getElementById("edit_sub_cat_ref");
+        const selectedValue = selectElement.getAttribute("data-selected-value");
+
+        for (let i = 0; i < selectElement.options.length; i++) {
+            if (selectElement.options[i].value === selectedValue) {
+                selectElement.selectedIndex = i;
+                break;
+            }
+        }
+    }
+
+    // Example usage:
+    // Call displayEditCategoryPopUp(selectedValue) when opening the edit pop-up
+    displayEditCategoryPopUp("selectedValue"); // Replace "selectedValue" with the actual value
+
+</script>
+
+
+<script>
+    function displaySelectedImage2() {
+        const fileInput = document.getElementById(`edit-sub-cat-image`);
+        const labelText = document.getElementById(`edit-label-text`);
+        const selectedImageName = document.getElementById(`edit-selected-image-name`);
+        const selectedImage = document.getElementById(`edit-selected-image`);
+
+        if (fileInput.files.length > 0) {
+            labelText.style.display = "none";
+            const imageName = fileInput.files[0].name;
+            selectedImageName.textContent = `Selected Image: ${imageName}`;
+            selectedImage.src = URL.createObjectURL(fileInput.files[0]);
+            selectedImage.classList.remove("hidden");
+        } else {
+            labelText.style.display = "block";
+            selectedImageName.textContent = "";
+            selectedImage.src = "";
+            selectedImage.classList.add("hidden");
+        }
+    }
+
+</script>
 
 </body>
 

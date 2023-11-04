@@ -112,3 +112,53 @@ exports.postSubCat = async (req, res, next) => {
     return res.status(500).json({ msg: "Internal Server Error" });
   }
 };
+
+exports.updateSubCat = async (req, res, next) => {
+  try {
+    const { subCatId, sub_cat_name, sub_cat_ref } = req.body;
+    const subCatImage = req.files["sub-cat-image"];
+
+    // Check if an image is provided for the update (if needed)
+    let subCatImageUrl = null;
+    if (subCatImage && subCatImage.length > 0) {
+      subCatImageUrl = `${baseUrl}/uploads/${subCatImage[0].filename}`;
+    }
+
+    // Check if subCatImageUrl is not null, indicating an image update
+    if (subCatImageUrl) {
+      // Update both the sub_cat_name, sub_cat_ref, and sub_cat_image_url
+      const updateSubCatQuery =
+        "UPDATE sub_cat SET sub_cat_name = ?, sub_cat_ref = ?, sub_cat_image_url = ? WHERE sub_cat_id = ?";
+      const subCatValues = [
+        sub_cat_name,
+        sub_cat_ref,
+        subCatImageUrl,
+        subCatId,
+      ];
+
+      db.query(updateSubCatQuery, subCatValues, (err, result) => {
+        if (err) {
+          throw err;
+        }
+
+        return res.redirect("/sub-category");
+      });
+    } else {
+      // If no image is provided for the update, update only sub_cat_name and sub_cat_ref
+      const updateSubCatQuery =
+        "UPDATE sub_cat SET sub_cat_name = ?, sub_cat_ref = ? WHERE sub_cat_id = ?";
+      const subCatValues = [sub_cat_name, sub_cat_ref, subCatId];
+
+      db.query(updateSubCatQuery, subCatValues, (err, result) => {
+        if (err) {
+          throw err;
+        }
+
+        return res.redirect("/sub-category");
+      });
+    }
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json({ msg: "Internal Server Error" });
+  }
+};
