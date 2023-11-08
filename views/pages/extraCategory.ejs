@@ -35,6 +35,7 @@
                             <th>REF-CATEGORY</th>
                             <th>PRODUCTS</th>
                             <th>ACTION</th>
+                            <th>DELETE EXTRA CATEGORY</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -53,6 +54,11 @@
                                 <!-- Edit button to trigger the edit pop-up -->
                                 <button
                                     onclick="openEditCategoryPopup('<%= extraCat.extra_cat_id %>', '<%= extraCat.extra_cat_name %>', '<%= extraCat.extra_cat_ref_id %>', '<%= extraCat.extra_cat_ref_name %>', '<%= extraCat.extra_cat_image_url %>')">Edit</button>
+                            </td>
+                            <td>
+                                <button onclick="confirmDelete('<%= extraCat.extra_cat_id %>')"
+                                    class="table-button btn btn-xs btn-outline btn-primary"><i
+                                        class="fa fa-trash"></i></button>
                             </td>
 
 
@@ -410,6 +416,25 @@
             }
         }
     };
+</script>
+
+<script>
+    async function confirmDelete(id) {
+
+        const apiUrl = `/delete-extra-category?id=${id}`;
+
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        if (response.status === 200) {
+            // Page refresh
+            location.reload();
+        }
+    }
+
 </script>
 
 

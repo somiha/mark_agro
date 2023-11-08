@@ -50,6 +50,16 @@
                                             value="<%= product.product_price %>" placeholder="Price" required>
 
                                     </div>
+
+                                    <div class="pb-10">
+                                        <p class="mb-2 text-tColor3">Discount</p>
+                                        <div class="flex items-center">
+                                            <input
+                                                class="w-full input input-bordered focus:outline-none focus:shadow-outline"
+                                                type="number" id="diccount" value="<%= product.discount %>"
+                                                name="discount" placeholder="discount" required>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="pb-10 ">
@@ -57,6 +67,32 @@
                                     <input class="w-full input input-bordered focus:outline-none focus:shadow-outline"
                                         type="number" id="quantity" name="quantity" value="<%= product.quantity %>"
                                         placeholder="Product Quantity" required>
+                                </div>
+
+                                <div class="pb-10 ">
+                                    <p class="mb-2 text-tColor3">Product Unit</p>
+                                    <input class="w-full input input-bordered focus:outline-none focus:shadow-outline"
+                                        type="text" id="unit" name="unit" value="<%= product.unit %>"
+                                        placeholder="Product Unit" required>
+                                </div>
+
+                                <div class="pb-10">
+                                    <label class="block text-gray-700 text-sm mb-2" for="status">Status</label>
+                                    <div class="relative">
+                                        <select
+                                            class="block appearance-none w-full text-tColor py-3 px-4 pr-8 rounded leading-tight focus:outline-none shadow font-sm bg-gray-100"
+                                            name="status" id="status">
+
+                                            <option class="text-black" value="1"
+                                                <%= product.status === 1 ? 'selected' : '' %>>Publish</option>
+                                            <option class="text-black" value="0"
+                                                <%= product.status === 0 ? 'selected' : '' %>>Unpublish</option>
+                                        </select>
+                                        <div
+                                            class="pointer-events-none absolute inset-y-0 right-1 flex items-center px-2 text-white -mt-2">
+                                            <i class="fa-solid fa-sort-down text-tColor"></i>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -241,7 +277,7 @@
                 <p class="mb-2 text-tColor3">Price</p>
                 <input class="w-full input input-bordered focus:outline-none focus:shadow-outline" value="${varientPrice}"" type="number" name="variant_price" placeholder="Variant Price"></div>
             </div>
-            <button type="button"  class="self-end text-white btn btn-error btn-outline" onclick="${trashClickfunction}"><i class="bi bi-trash3"></i></button>
+            <button type="button" style="margin-top:30px;" class="self-end text-white btn btn-error btn-outline" onclick="${trashClickfunction}"><i class="fa fa-trash"></i></button>
             </div>
     `;
         variantContainer.appendChild(newVariantField);
@@ -320,7 +356,7 @@
                 onchange="displaySelectedImage('${inputId}', '${imgId}')"/>
             <p id="selected-image-name${inputCounter}" class="mt-3 text-tColor2"></p>
             <img id="${imgId}" src="${image}" alt=""  class="${className}" width="100px" height="100px"/>
-            <button type="button" style="margin-left: 10px;" class="text-white btn btn-error btn-outline" onclick="${trashClickfunction}"><i class="bi bi-trash3"></i></button>
+            <button type="button" style="margin-left: 10px;" class="text-white btn btn-error btn-outline" onclick="${trashClickfunction}"><i class="fa fa-trash"></i></button>
         `;
 
         productImageContainer.appendChild(newProductImageField);

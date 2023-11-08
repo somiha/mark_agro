@@ -38,6 +38,9 @@ exports.postAddProduct = async (req, res, next) => {
       product_details_des,
       product_cat_id,
       quantity,
+      unit,
+      discount,
+      status,
       variant_name,
       variant_price,
     } = req.body;
@@ -84,13 +87,16 @@ exports.postAddProduct = async (req, res, next) => {
     });
 
     const insertProductQuery =
-      "INSERT INTO products (product_name, product_price, product_details_des, product_cat_id, seller_id, quantity) VALUES (?, ?, ?, ?, 1, ?)";
+      "INSERT INTO products (product_name, product_price, product_details_des, product_cat_id, seller_id, quantity, unit, discount, status) VALUES (?, ?, ?, ?, 1, ?, ?, ?, ?)";
     const productValues = [
       product_name,
       product_price,
       product_details_des,
       product_cat_id,
       quantity,
+      unit,
+      discount,
+      status,
     ];
 
     db.query(insertProductQuery, productValues, (err, result) => {

@@ -15,13 +15,17 @@
                 <table class="table text-xs md:text-sm md:w-full">
                     <thead>
                         <tr>
-                            <th>PRODUCT CODE</th>
+                            <th>CODE</th>
                             <th>ITEM</th>
                             <th>CATEGORY</th>
                             <th>PRICE</th>
+                            <th>DISCOUNT</th>
                             <th>SOLD</th>
-
+                            <th>FLASHSELL</th>
+                            <th>STATUS</th>
                             <th>ACTION</th>
+                            <th>EDIT</th>
+                            <th>DELETE</th>
 
 
                         </tr>
@@ -39,11 +43,29 @@
                             <td><span class="text-white badge badge-primary"><%= product.extra_cat_name %></span>
                             </td>
                             <td>$<%= product.product_price %></td>
+                            <td>$<%= product.discount %></< /td>
                             <td><%= product.sell_count %></td>
+
+                            <td><input type="checkbox" class="checkbox checkbox-xs flashsell-checkbox"
+                                    data-product-id="<%= product.product_id %>"
+                                    onclick="flashSellInsertDelete('<%= product.product_id %>')" <input type="checkbox"
+                                    id="flashsellCheckbox" <% if (product.flashsell_id) { %>checked="checked" <% } %> />
+                            </td>
+
+
+
+
+                            <td>
+                                <% if (product.status === 1) { %>
+                                Published
+                                <% } else if (product.status === 0) { %>
+                                Unpublished
+                                <% } %>
+                            </td>
 
                             <td>
                                 <button class="table-button btn btn-xs btn-outline btn-primary"><i
-                                        class="bi bi-eye"></i></button>
+                                        class="fa fa-eye"></i></button>
 
 
                                 <div
@@ -66,6 +88,7 @@
                                             <thead class="py-5">
                                                 <tr>
                                                     <th>Product Quantity</th>
+                                                    <th>Product Unit</th>
                                                     <th>Seller ID</th>
 
                                                 </tr>
@@ -75,9 +98,14 @@
 
                                                 <tr class="font-semibold bg-white border-8 border-gray-100">
                                                     <div class="flex items-center gap-4 pl-2">
-                                                        <td class="pl-6 text-tColor">
+                                                        <td class="pl-3 text-tColor">
 
                                                             <%= product.quantity %>
+
+                                                        </td>
+                                                        <td class="pl-3 text-tColor">
+
+                                                            <%= product.unit %>
 
                                                         </td>
                                                         <td class="pl-3 text-tColor">
@@ -142,6 +170,16 @@
                                     </div>
                                 </div>
 
+                            </td>
+
+                            <td>
+                                <a href="/edit-product?product_id=<%= product.product_id %>" class="primary-btn"><i
+                                        class="fa fa-pencil"></i></a>
+                            </td>
+                            <td>
+                                <button onclick="confirmDelete('<%= product.product_id %>')"
+                                    class="table-button btn btn-xs btn-outline btn-primary"><i
+                                        class="fa fa-trash"></i></button>
                             </td>
 
                         </tr>
@@ -214,6 +252,24 @@
 </div>
 
 </section>
+
+<script>
+    async function flashSellInsertDelete(product_id) {
+        const apiUrl = `/flashsell?product_id=${product_id}`;
+
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        if (response.status === 200) {
+            // Page refresh
+            location.reload();
+        }
+    }
+
+</script>
 
 
 <script>
@@ -296,7 +352,24 @@
 </script>
 
 
+<script>
+    async function confirmDelete(id) {
 
+        const apiUrl = `/delete-product?id=${id}`;
+
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        if (response.status === 200) {
+            // Page refresh
+            location.reload();
+        }
+    }
+
+</script>
 </body>
 
 </html>

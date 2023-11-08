@@ -135,3 +135,22 @@ exports.updateMainCat = async (req, res, next) => {
     return res.status(500).json({ msg: "Internal Server Error" });
   }
 };
+
+exports.deleteMainCat = async (req, res, next) => {
+  try {
+    const id = req.query.id;
+    console.log(id);
+    const deleteMainCatQuery = "DELETE FROM main_cat WHERE main_cat_id = ?";
+
+    db.query(deleteMainCatQuery, [id], (mainCatDeleteErr) => {
+      if (mainCatDeleteErr) {
+        console.error("Error deleting main-category:", subCatDeleteErr);
+        return res.status(500).json({ msg: "Internal server error" });
+      } else {
+        return res.redirect("/sub-category");
+      }
+    });
+  } catch (e) {
+    return res.status(500).json({ msg: "Internal Server Error" });
+  }
+};

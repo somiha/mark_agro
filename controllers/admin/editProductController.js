@@ -211,6 +211,9 @@ exports.postEditProduct = async (req, res, next) => {
       product_details_des,
       product_cat_id,
       quantity,
+      unit,
+      discount,
+      status,
       variant_name,
       variant_price,
       featured_image_id,
@@ -239,7 +242,10 @@ exports.postEditProduct = async (req, res, next) => {
           product_price = ?,
           product_details_des = ?,
           product_cat_id = ?,
-          quantity = ?
+          quantity = ?,
+          unit = ?,
+          discount = ?,
+          status = ?
       WHERE product_id = ?;
     `;
     await queryAsync(updateProductQuery, [
@@ -248,6 +254,9 @@ exports.postEditProduct = async (req, res, next) => {
       product_details_des,
       product_cat_id,
       quantity,
+      unit,
+      discount,
+      status,
       product_id,
     ]);
 
@@ -421,5 +430,68 @@ exports.deleteVariant = async (req, res, next) => {
     res.status(200).json({ message: "Successfully deleted message." });
   } catch (err) {
     return res.status(503).json({ msg: "Internal Server Error" });
+  }
+};
+
+exports.deleteProduct = async (req, res, next) => {
+  try {
+    const product_id = req.query.id; // Get the product ID from the request parameters
+
+    // Query the product information to obtain the image file names
+    const selectProductQuery =
+      "SELECT product_image_url FROM product_image WHERE product_id = ?";
+    db.query(selectProductQuery, [product_id], (err, productResult) => {
+      if (err) {
+        throw err;
+      }
+
+      if (productResult.length === 0) {
+        return res.status(404).json({ msg: "Product not found" });
+      }
+      console.log({ productResult });
+      const featuredImageFileName = productResult[0].product_image_url;
+      const parts = featuredImageFileName.split("/");
+      const fileNameWithExtension = parts[parts.length - 1];
+
+      const imagePath = path.join(
+        __dirname,
+        "../../public/uploads/",
+        fileNameWithExtension
+      );
+
+      // If the image was deleted successfully, proceed to delete the product from the database
+      let deleteProductQuery = "DELETE FROM products WHERE product_id = ?";
+      db.query(deleteProductQuery, [product_id], (dbErr) => {
+        if (dbErr) {
+          console.error("Error deleting product:", dbErr);
+          return res.status(500).json({ msg: "Internal server error" });
+        }
+
+        fs.unlink(imagePath, (unlinkErr) => {
+          if (unlinkErr) {
+            console.error("Error deleting image:", unlinkErr);
+            return res.status(500).json({ msg: "Internal server error" });
+          }
+
+          // After deleting the product and its associated image, you can redirect to a suitable page
+          return res.redirect("/all-products");
+        });
+        const selectVariantQuery = "DELETE FROM variant WHERE product_id = ?";
+        db.query(selectVariantQuery, [product_id], (err, variantResult) => {
+          if (err) {
+            throw err;
+          }
+        });
+        const selectImageQuery =
+          "DELETE FROM product_image WHERE product_id = ?";
+        db.query(selectImageQuery, [product_id], (err, imageResult) => {
+          if (err) {
+            throw err;
+          }
+        });
+      });
+    });
+  } catch (e) {
+    return res.status(500).json({ msg: "Internal Server Error" });
   }
 };

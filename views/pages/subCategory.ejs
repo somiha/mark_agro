@@ -52,8 +52,8 @@
                             <th>CATEGORY</th>
                             <th>REF-CATEGORY</th>
                             <th>PRODUCTS</th>
-                            <!-- <th>SALES</th> -->
                             <th>ACTION</th>
+                            <th>DELETE SUB CATEGORY</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -71,6 +71,11 @@
                             <td>
                                 <button
                                     onclick="openEditCategoryPopup('<%= subCat.sub_cat_id %>', '<%= subCat.sub_cat_name %>', '<%= subCat.sub_cat_ref_id %>', '<%= subCat.sub_cat_ref_name %>', '<%= subCat.sub_cat_image_url %>')">Edit</button>
+                            </td>
+                            <td>
+                                <button onclick="confirmDelete('<%= subCat.sub_cat_id %>')"
+                                    class="table-button btn btn-xs btn-outline btn-primary"><i
+                                        class="fa fa-trash"></i></button>
                             </td>
 
                         </tr>
@@ -487,6 +492,29 @@
             selectedImageName.textContent = "";
             selectedImage.src = "";
             selectedImage.classList.add("hidden");
+        }
+    }
+
+</script>
+
+<script>
+    async function confirmDelete(id) {
+        console.log("here");
+        const apiUrl = `/delete-sub-category?id=${id}`;
+
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+
+        });
+        console.log("here2");
+
+        if (response.status === 20) {
+            // Page refresh
+
+            location.reload();
         }
     }
 

@@ -6,6 +6,7 @@ exports.getAllProducts = async (req, res, next) => {
     const productQuery = `SELECT 
     p.*,
     e.extra_cat_name,
+    f.flashsell_id,
     GROUP_CONCAT(DISTINCT v.variant_name ORDER BY v.variant_id ASC) AS variant_names,
     GROUP_CONCAT(DISTINCT v.price ORDER BY v.variant_id ASC) AS variant_prices,
     (SELECT GROUP_CONCAT(product_image_url) 
@@ -17,12 +18,16 @@ exports.getAllProducts = async (req, res, next) => {
 FROM products p
 INNER JOIN extra_cat e ON p.product_cat_id = e.extra_cat_id
 LEFT JOIN variant v ON p.product_id = v.product_id
-GROUP BY p.product_id;
+LEFT JOIN flashsell f ON p.product_id = f.product_id
+GROUP BY p.product_id, e.extra_cat_name, f.flashsell_id;
+
 
 
 
 `;
 
+    const flashsellQuery = `SELECT * FROM flashsell`;
+    const flashsells = await queryAsyncWithoutValue(flashsellQuery);
     const products = await queryAsyncWithoutValue(productQuery);
     // console.log({ products });
     const page = parseInt(req.query.page) || 1;
@@ -36,6 +41,7 @@ GROUP BY p.product_id;
       paginatedProducts,
       productsPerPage,
       page,
+      flashsells,
     });
   } catch (e) {
     console.log(e);
@@ -199,3 +205,28 @@ GROUP BY p.product_id;
 //     return res.status(503).json({ msg: "Internal Server Error" });
 //   }
 // };
+
+exports.FlashSell = async (req, res, next) => {
+  try {
+    let product_id = req.query.product_id;
+    let query = `SELECT * FROM flashsell WHERE product_id=${product_id}`;
+    let flashSellProduct = await queryAsyncWithoutValue(query);
+    if (flashSellProduct.length > 0) {
+      let deleteflashsellproductquery = `DELETE FROM flashsell WHERE product_id = ${product_id}`;
+      await queryAsyncWithoutValue(deleteflashsellproductquery);
+    } else {
+      const insertFlashsellQuery =
+        "INSERT INTO flashsell (product_id) VALUES (?)";
+      const flashsellValues = [product_id];
+
+      db.query(insertFlashsellQuery, flashsellValues, (err, result) => {
+        if (err) {
+          throw err;
+        }
+      });
+    }
+    return res.redirect("/all-products");
+  } catch (e) {
+    return res.status(500).json({ msg: "Internal Server Error" });
+  }
+};
