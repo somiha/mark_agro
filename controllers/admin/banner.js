@@ -13,11 +13,11 @@ exports.getBanners = async (req, res, next) => {
     const bannersPerPage = 8;
     const startIdx = (page - 1) * bannersPerPage;
     const endIdx = startIdx + bannersPerPage;
-    const paginatedbanners = banners.slice(startIdx, endIdx);
+    const paginatedBanners = banners.slice(startIdx, endIdx);
     return res.status(200).render("pages/banner", {
       title: "Banners",
       banners,
-      paginatedbanners,
+      paginatedBanners,
       bannersPerPage,
       page,
     });

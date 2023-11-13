@@ -12,6 +12,27 @@ const {
 } = require("../../controllers/admin/banner");
 
 const {
+  getCharges,
+  postCharge,
+  updateCharge,
+  deleteCharges,
+} = require("../../controllers/admin/delivery_charge");
+
+const {
+  getMessages,
+  postMessage,
+  updateMessage,
+  deleteMessage,
+} = require("../../controllers/admin/message");
+
+const {
+  getSubAdmin,
+  postSubAdmin,
+  updateSubAdmin,
+  deleteSubAdmin,
+} = require("../../controllers/admin/subAdmin");
+
+const {
   editProduct,
   postEditProduct,
   deleteNonFeaturedImage,
@@ -58,10 +79,37 @@ const {
 
 const upload = require("../../middlewares/uploadMiddleware");
 const multiUpload = require("../../middlewares/multiupload");
+const {
+  getEditor,
+  postEditor,
+  updateEditor,
+  deleteEditor,
+} = require("../../controllers/admin/editor");
 
 router.get("/", getDashboard);
 router.get("/all-products", getAllProducts);
 router.get("/banners", getBanners);
+
+router.get("/messages", getMessages);
+router.post("/add-messages", postMessage);
+router.post("/update-messages", updateMessage);
+router.post("/delete-message", deleteMessage);
+
+router.get("/sub-admin", getSubAdmin);
+router.post("/add-sub-admin", postSubAdmin);
+router.post("/update-sub-admin", updateSubAdmin);
+router.post("/delete-sub-admin", deleteSubAdmin);
+
+router.get("/editor", getEditor);
+router.post("/add-editor", postEditor);
+router.post("/update-editor", updateEditor);
+router.post("/delete-editor", deleteEditor);
+
+router.get("/charges", getCharges);
+router.post("/add-charge", postCharge);
+router.post("/update-charge", updateCharge);
+router.post("/delete-charge", deleteCharges);
+
 router.post(
   "/add-banners",
   multiUpload.fields([{ name: "banner-image" }]),

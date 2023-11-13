@@ -45,7 +45,6 @@ exports.postAddProduct = async (req, res, next) => {
       variant_price,
     } = req.body;
     console.log(req.body);
-    // product_name = product_name.replace(/"/g, '\\"');
 
     const featuredImage = req.files["product-featured-image"][0];
     const productImages = req.files["product-image"];

@@ -1,6 +1,9 @@
 const db = require("../../config/database.config");
 const { queryAsync, queryAsyncWithoutValue } = require("../../config/helper");
 const baseUrl = process.env.baseUrl;
+const fs = require("fs");
+const path = require("path");
+
 exports.getSubCat = async (req, res, next) => {
   try {
     const subCatQuery = `
@@ -347,7 +350,7 @@ exports.updateSubCat = async (req, res, next) => {
 
 exports.deleteSubCat = async (req, res, next) => {
   try {
-    const id = req.query.id; // Get the sub_cat_id from the request parameters
+    const id = req.query.id;
     console.log(id);
     const deleteSubCatQuery = "DELETE FROM sub_cat WHERE sub_cat_id = ?";
 
@@ -357,7 +360,6 @@ exports.deleteSubCat = async (req, res, next) => {
         return res.status(500).json({ msg: "Internal server error" });
       }
 
-      // Query extra categories (extra_cat_id) associated with the sub-category
       const selectExtraQuery =
         "SELECT extra_cat_id FROM extra_cat WHERE extra_cat_ref = ?";
 
@@ -368,16 +370,13 @@ exports.deleteSubCat = async (req, res, next) => {
         }
         console.log({ extraCatResults });
 
-        // Extract extra_cat_ids from the query results
         const extraCatIds = extraCatResults.map(
           (result) => result.extra_cat_id
         );
 
-        // Check if there are associated extra categories to delete
         if (extraCatIds.length > 0) {
           deleteExtraCategories(extraCatIds, res);
         } else {
-          // If there are no associated extra categories, directly redirect
           return res.redirect("/sub-category");
         }
       });
@@ -388,10 +387,8 @@ exports.deleteSubCat = async (req, res, next) => {
 };
 
 function deleteExtraCategories(extraCatIds, res) {
-  // Create an array to store the product IDs associated with the extra categories
   const productIds = [];
 
-  // Delete extra categories, products, variants, and product images
   let deleteExtraCatQuery = "DELETE FROM extra_cat WHERE extra_cat_id IN (?)";
   db.query(deleteExtraCatQuery, [extraCatIds], (deleteExtraCatErr) => {
     if (deleteExtraCatErr) {
@@ -399,7 +396,6 @@ function deleteExtraCategories(extraCatIds, res) {
       return res.status(500).json({ msg: "Internal server error" });
     }
 
-    // Query product IDs that belong to the extra categories
     const selectProductQuery =
       "SELECT product_id FROM products WHERE product_cat_id IN (?)";
     db.query(selectProductQuery, [extraCatIds], (err, queryResult) => {
@@ -407,51 +403,109 @@ function deleteExtraCategories(extraCatIds, res) {
         console.error("Error querying products:", err);
         return res.status(500).json({ msg: "Internal server error" });
       }
-
-      // Extract product_ids from the queryResult
       const productsForExtraCat = queryResult.map(
         (result) => result.product_id
       );
       productIds.push(...productsForExtraCat);
 
-      // Delete products, variants, and product images associated with the extra categories
       deleteProductsVariantsImages(productIds, res);
     });
   });
 }
 
+// function deleteProductsVariantsImages(productIds, res) {
+//   if (productIds.length === 0) {
+//     return res.redirect("/sub-category");
+//   }
+
+//   let deleteProductsQuery = "DELETE FROM products WHERE product_id IN (?)";
+//   db.query(deleteProductsQuery, [productIds], (deleteProductsErr) => {
+//     if (deleteProductsErr) {
+//       console.error("Error deleting products:", deleteProductsErr);
+//       return res.status(500).json({ msg: "Internal server error" });
+//     }
+
+//     let deleteVariantsQuery = "DELETE FROM variant WHERE product_id IN (?)";
+//     db.query(deleteVariantsQuery, [productIds], (deleteVariantsErr) => {
+//       if (deleteVariantsErr) {
+//         console.error("Error deleting variants:", deleteVariantsErr);
+//         return res.status(500).json({ msg: "Internal server error" });
+//       }
+
+//       let deleteImagesQuery =
+//         "DELETE FROM product_image WHERE product_id IN (?)";
+//       db.query(deleteImagesQuery, [productIds], (deleteImagesErr) => {
+//         if (deleteImagesErr) {
+//           console.error("Error deleting product images:", deleteImagesErr);
+//           return res.status(500).json({ msg: "Internal server error" });
+//         }
+//         return res.redirect("/sub-category");
+//       });
+//     });
+//   });
+// }
+
 function deleteProductsVariantsImages(productIds, res) {
-  // Check if there are no product IDs to delete
   if (productIds.length === 0) {
-    // No associated products found, so no need to proceed further
     return res.redirect("/sub-category");
   }
 
-  // Delete products, variants, and product images
-  let deleteProductsQuery = "DELETE FROM products WHERE product_id IN (?)";
-  db.query(deleteProductsQuery, [productIds], (deleteProductsErr) => {
-    if (deleteProductsErr) {
-      console.error("Error deleting products:", deleteProductsErr);
+  const selectImagesQuery =
+    "SELECT product_image_url FROM product_image WHERE product_id IN (?)";
+  db.query(selectImagesQuery, [productIds], (selectImagesErr, imageResults) => {
+    if (selectImagesErr) {
+      console.error("Error querying product images:", selectImagesErr);
       return res.status(500).json({ msg: "Internal server error" });
     }
 
-    let deleteVariantsQuery = "DELETE FROM variant WHERE product_id IN (?)";
-    db.query(deleteVariantsQuery, [productIds], (deleteVariantsErr) => {
-      if (deleteVariantsErr) {
-        console.error("Error deleting variants:", deleteVariantsErr);
+    const imageUrls = imageResults.map((result) => result.product_image_url);
+
+    const deleteProductsQuery = "DELETE FROM products WHERE product_id IN (?)";
+    db.query(deleteProductsQuery, [productIds], (deleteProductsErr) => {
+      if (deleteProductsErr) {
+        console.error("Error deleting products:", deleteProductsErr);
         return res.status(500).json({ msg: "Internal server error" });
       }
 
-      let deleteImagesQuery =
-        "DELETE FROM product_image WHERE product_id IN (?)";
-      db.query(deleteImagesQuery, [productIds], (deleteImagesErr) => {
-        if (deleteImagesErr) {
-          console.error("Error deleting product images:", deleteImagesErr);
+      const deleteVariantsQuery = "DELETE FROM variant WHERE product_id IN (?)";
+      db.query(deleteVariantsQuery, [productIds], (deleteVariantsErr) => {
+        if (deleteVariantsErr) {
+          console.error("Error deleting variants:", deleteVariantsErr);
           return res.status(500).json({ msg: "Internal server error" });
         }
 
-        // Redirect to a suitable page after deleting the sub-category, extra categories, products, variants, and product images
-        return res.redirect("/sub-category");
+        const deleteImagesQuery =
+          "DELETE FROM product_image WHERE product_id IN (?)";
+        db.query(deleteImagesQuery, [productIds], (deleteImagesErr) => {
+          if (deleteImagesErr) {
+            console.error(
+              "Error deleting product images from database:",
+              deleteImagesErr
+            );
+            return res.status(500).json({ msg: "Internal server error" });
+          }
+
+          // Now delete the images from the upload folder
+          imageUrls.forEach((imageUrl) => {
+            const parts = imageUrl.split("/");
+            const fileNameWithExtension = parts[parts.length - 1];
+
+            const imagePath = path.join(
+              __dirname,
+              "../../public/uploads/",
+              fileNameWithExtension
+            );
+
+            fs.unlink(imagePath, (unlinkErr) => {
+              if (unlinkErr) {
+                console.error("Error deleting image:", unlinkErr);
+                return res.status(500).json({ msg: "Internal server error" });
+              }
+            });
+          });
+
+          return res.redirect("/sub-category");
+        });
       });
     });
   });

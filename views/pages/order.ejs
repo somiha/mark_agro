@@ -21,7 +21,7 @@
           <i class="-mt-1 fa-solid fa-sort-down"></i>
         </button>
 
-        <ul class="absolute right-0 p-5 bg-white shadow-md menu-collapse">
+        <ul class="absolute right-0 p-5 bg-white shadow-md menu-collapse" style="z-index: 1;">
           <li><a href="/all-orders">All</a></li>
           <% for (let status of statuses) { %>
           <li id="<%= status.status_id %>"><a

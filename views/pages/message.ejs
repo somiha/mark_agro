@@ -1,0 +1,404 @@
+<%- include('../partials/navigation.ejs') %>
+
+<div class="mx-5 rounded-md">
+
+    <div class="flex justify-between items-center flex-wrap gap-5 py-10">
+        <p class="text-xl xl:text-2xl font-semibold text-tColor2">Add Branded Product</p>
+
+    </div>
+
+    <dialog id="my_modal_5" class="modal">
+        <div class="modal-box">
+            <form action="/update-messages" method="POST">
+                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+
+
+                <h3 class="font-bold text-lg mb-4">Edit Message</h3>
+                <input class="w-full input input-bordered focus:outline-none focus:shadow-outline" type="text"
+                    id="edit_id" name="edit_id" hidden />
+
+                <div class="pb-5 ">
+                    <p class="mb-2 text-tColor3">Message Title</p>
+                    <input class="w-full input input-bordered focus:outline-none focus:shadow-outline" type="text"
+                        id="edit_title" name="edit_title" placeholder="Message Title" />
+                </div>
+                <div class="pb-5">
+                    <p class="mb-2 text-tColor3">Message Info</p>
+                    <textarea class="w-full textarea textarea-bordered focus:outline-none focus:shadow-outline"
+                        id="edit_info" name="edit_info" rows="4" cols="50" placeholder="Message Info"
+                        required></textarea>
+                </div>
+                <div class="pb-5">
+                    <label class="block text-gray-700 text-sm mb-2" for="status">Status</label>
+                    <div class="relative">
+                        <select
+                            class="block appearance-none w-full text-tColor py-3 px-4 pr-8 rounded leading-tight focus:outline-none shadow font-sm bg-gray-100"
+                            name="edit_status" id="edit_status">
+
+                            <option class="text-black" value="1">Pin</option>
+                            <option class="text-black" value="0">Unpin</option>
+                        </select>
+                        <div
+                            class="pointer-events-none absolute inset-y-0 right-1 flex items-center px-2 text-white -mt-2">
+                            <i class="fa-solid fa-sort-down text-tColor"></i>
+                        </div>
+                    </div>
+                </div>
+
+
+                <button type="submit" class="primary-btn">Submit</button>
+            </form>
+
+
+
+        </div>
+    </dialog>
+    <dialog id="my_modal_6" class="modal">
+        <div class="modal-box">
+            <form method="dialog">
+                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+            </form>
+
+            <div class="flex flex-col items-center justify-center">
+                <h3 class="font-bold text-lg">Are you sure to delete?</h3>
+                <div class="flex items-center m-4">
+                    <button class="btn bg-red-600 text-white px-5 mr-3">Delete</button>
+                    <button class="btn bg-gray-600 text-white px-5 ml-3">Cancel</button>
+                </div>
+            </div>
+
+
+
+
+        </div>
+    </dialog>
+
+    <dialog id="my_modal_1" class="modal">
+        <div class="modal-box">
+            <form method="dialog">
+                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+            </form>
+
+            <h3 class="font-bold text-lg mb-4">Message Details</h3>
+
+            <div class="pb-5 ">
+                <h6 class="mb-2 text-tColor3">Message Status</h6>
+                <p id="message_details_status" name="message_details_status"> </p>
+            </div>
+
+            <div class="pb-5 ">
+                <h6 class="mb-2 text-tColor3">Message Title</h6>
+                <p id="message_details_title" name="message_details_title"> </p>
+            </div>
+            <div class="pb-5">
+                <h6 class="mb-2 text-tColor3">Message Info</h6>
+                <p id="message_details_info" name="message_details_info"></p>
+            </div>
+
+        </div>
+    </dialog>
+
+
+    <div class="mt-5">
+
+        <div class="flex flex-col justify-around">
+            <div class="w-9/12 flex justify-end">
+                <button class="primary-btn" onclick="my_modal_3.showModal()">Add Message</button>
+                <dialog id="my_modal_3" class="modal">
+                    <div class="modal-box">
+                        <form method="dialog">
+                            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                        </form>
+                        <form action="/add-messages" method="POST">
+                            <h3 class="font-bold text-lg mb-4">Add Message</h3>
+
+
+                            <div class="pb-5 ">
+                                <p class="mb-2 text-tColor3">Message Title</p>
+                                <input class="w-full input input-bordered focus:outline-none focus:shadow-outline"
+                                    type="text" id="title" name="title" placeholder="Message Title" />
+                            </div>
+                            <div class="pb-5">
+                                <p class="mb-2 text-tColor3">Message Info</p>
+                                <textarea
+                                    class="w-full textarea textarea-bordered focus:outline-none focus:shadow-outline"
+                                    id="info" name="info" rows="4" cols="50" placeholder="Message Info"
+                                    required></textarea>
+                            </div>
+                            <div class="pb-5 mb-5">
+                                <label class="block text-gray-700 text-sm mb-2" for="status">Status</label>
+                                <div class="relative">
+                                    <select
+                                        class="block appearance-none w-full text-tColor py-3 px-4 pr-8 rounded leading-tight focus:outline-none shadow font-sm bg-gray-100"
+                                        id="status" name="status">
+
+                                        <option class="text-black" value="1">Pin</option>
+                                        <option class="text-black" value="0">Unpin</option>
+                                    </select>
+                                    <div
+                                        class="pointer-events-none absolute inset-y-0 right-1 flex items-center px-2 text-white -mt-2">
+                                        <i class="fa-solid fa-sort-down text-tColor"></i>
+                                    </div>
+                                </div>
+                                <button type="submit" class="primary-btn mt-5">Submit</button>
+                        </form>
+                    </div>
+
+
+
+
+
+
+
+            </div>
+            </dialog>
+        </div>
+
+        <div class="bg-white pt-5 overflow-x-scroll md:overflow-hidden">
+            <table class="table text-sm md:text-sm w-9/12">
+                <thead>
+                    <tr>
+                        <th>DATE</th>
+                        <th>TITLE</th>
+                        <th>INFO</th>
+                        <th>STATUS</th>
+                        <th>ACTION</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for (let message of messages) { %>
+                    <tr>
+                        <td class="text-tColor text-sm">
+
+                            <%= message.created_at.toLocaleDateString('en-GB') %>
+                        </td>
+                        <td class="text-tColor">
+                            <%= message.title %>
+                        </td>
+                        <td class="text-tColor line-clamp-1 leading-9 w-full">
+                            <%= message.info %>
+                        </td>
+                        <td class="text-tColor font-bold" value="<%= message.status %>">
+                            <% if (message.status === 1) { %>
+                            Pin
+                            <% } else if (message.status === 0) { %>
+                            Unpin
+                            <% } %>
+                        </td>
+                        <td class="text-tColor">
+                            <div class="flex items-center gap-3 ml-100">
+                                <button class="table-button btn btn-xs btn-outline btn-primary"
+                                    onclick="openMessageDetialsModal(`<%= message.title %>`, `<%= message.info %>`, '<%= message.status %>')"><i
+                                        class="fa fa-eye"></i></button>
+
+                                <button class="table-button btn btn-xs btn-outline btn-primary"
+                                    onclick="openEditModal('<%= message.message_id %>', `<%= message.title %>`, `<%= message.info %>`, '<%= message.status %>')"><i
+                                        class="fa fa-pencil"></i>
+                                </button>
+
+                                <button class="table-button btn btn-xs btn-outline btn-primary"
+                                    onclick="confirmDeleteMessage('<%= message.message_id %>')"><i
+                                        class="fa fa-trash"></i></button>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+                    <% } %>
+
+
+
+
+
+
+
+                </tbody>
+            </table>
+
+        </div>
+
+        <!-- Page Select -->
+        <div class="flex flex-col justify-between gap-2 py-5 xl:flex-row xl:items-center">
+            <p class="text-xs text-center xl:text-sm text-tColor">
+                Show <%= paginatedMessages.length %> from <%= messages.length %> messages
+            </p>
+
+            <div
+                class="grid content-center grid-flow-col gap-3 ml-auto mr-auto font-semibold scale-75 xl:scale-100 xl:mr-0 xl:text-sm text-tColor">
+                <% if (page > 1) { %>
+                <a class="flex items-center justify-center w-6 h-6 rounded" href="/messages?page=<%= page - 1 %>">
+                    <svg width="6" height="10" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7.125 0.75L0.875 7L7.125 13.25" stroke="#84818A" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </a>
+                <% } %>
+
+                <% const maxPagesToShow = 8;
+                                           const startPage = Math.max(1, page - Math.floor(maxPagesToShow / 2));
+                                           const endPage = Math.min(
+                                               Math.ceil(messages.length / messagesPerPage),
+                                               startPage + maxPagesToShow - 1
+                                           );
+                                
+                                           for (let i = startPage; i <= endPage; i++) { %>
+                <a class=" h-6 w-6 rounded flex items-center justify-center <%= i === page ? 'bg-blue-100 text-primaryColor' : '' %>"
+                    href="/messages?page=<%= i %>"><%= i %></a>
+                <% } %>
+
+                <% if (page < Math.ceil(messages.length / messagesPerPage)) { %>
+                <a class="flex items-center justify-center w-6 h-6 rounded" href="/messages?page=<%= page + 1 %>">
+                    <svg width="6" height="10" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0.875 0.75L7.125 7L0.875 13.25" stroke="#84818A" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </a>
+                <% } %>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+
+
+</div>
+
+
+
+</div>
+
+</section>
+
+<script>
+    async function openEditModal(id, title, info, status) {
+        console.log(id, title, info, status);
+        document.getElementById('edit_title').value = title;
+        document.getElementById("edit_info").value = info;
+        document.getElementById("edit_status").value = status;
+        document.getElementById("edit_id").value = id;
+        // Open the dialog
+        const editModal = document.getElementById('my_modal_5');
+        editModal.showModal();
+    }
+</script>
+
+<script>
+    async function openMessageDetialsModal(title, info, status) {
+        console.log(title, info, status);
+        document.getElementById('message_details_title').innerHTML = title;
+        document.getElementById("message_details_info").innerHTML = info;
+        document.getElementById("message_details_status").innerHTML = status == 1 ? 'Pinned' : 'Unpinned';
+        const detailsModal = document.getElementById('my_modal_1');
+        detailsModal.showModal();
+    }
+</script>
+
+
+<!-- Header Section Script -->
+<script>
+    // Menu toggle button 
+    const toggleButton = document.getElementById("toggle-button");
+    const toggleMenu = document.getElementById("toggle-menu");
+    var toggleCounter = 1;
+    toggleButton.onclick = function () {
+        toggleCounter++;
+        if (toggleCounter % 2 == 0) {
+            toggleMenu.classList.remove("hidden");
+            toggleMenu.classList.add("grid");
+        }
+        else {
+            toggleMenu.classList.remove("grid");
+            toggleMenu.classList.add("hidden");
+        }
+    }
+
+
+</script>
+
+
+<!-- Accordion Script -->
+<script>
+    const accordionButtons = document.querySelectorAll('.accordion-button');
+    const accordionMenu = document.querySelectorAll('.menu-collapse');
+
+    accordionButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const accordionCollapse = button.nextElementSibling;
+            button.setAttribute('aria-expanded', button.getAttribute('aria-expanded') === 'false' ? 'true' : 'false');
+            accordionCollapse.classList.toggle('hidden');
+        });
+    });
+
+    // Set all accordion items to collapsed state by default
+    document.querySelectorAll('.menu-collapse').forEach(collapse => {
+        collapse.classList.add('hidden');
+    });
+
+    document.addEventListener('click', function (e) {
+
+        const accordionButtons = document.querySelectorAll('.accordion-button');
+        const accordionMenu = document.querySelectorAll('.menu-collapse');
+        if (!accordionMenu || typeof accordionMenu.contains !== 'function') {
+            return;
+        }
+
+        if (!accordionMenu.contains(e.target) && !accordionButtons.contains(e.target)) {
+            accordionMenu.classList.add('hidden');
+        }
+    });
+
+</script>
+
+<script>
+    function confirmDeleteMessage(id) {
+        const dialog = document.getElementById('my_modal_6');
+        const deleteButton = dialog.querySelector('.bg-red-600');
+        const cancelButton = dialog.querySelector('.bg-gray-600');
+        deleteButton.onclick = async () => {
+            dialog.close();
+
+            try {
+                const response = await fetch(`/delete-message?id=${id}`, {
+                    method: 'POST',
+                });
+
+                if (response.status === 200) {
+
+                    location.reload();
+                } else {
+                    console.error('Error deleting banner');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        };
+
+        cancelButton.onclick = () => {
+            dialog.close();
+        };
+
+        dialog.showModal();
+    }
+</script>
+
+<script>
+    const tables = document.querySelectorAll('.table-collapse');
+    window.onclick = function (event) {
+        for (let table of tables) {
+            if (event.target == table) {
+                table.classList.toggle('hidden');
+            }
+        }
+    };
+</script>
+
+
+
+
+</body>
+
+</html>
