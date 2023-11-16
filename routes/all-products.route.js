@@ -1,5 +1,8 @@
 const express = require("express");
-const { allProducts, productsByCat } = require("../controllers/all-products.controller");
+const {
+  allProducts,
+  productsByCat,
+} = require("../controllers/all-products.controller");
 const router = express.Router();
 
 router.get("/allProducts", allProducts);

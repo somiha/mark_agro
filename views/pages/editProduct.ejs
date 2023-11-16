@@ -343,7 +343,7 @@
         const newProductImageField = document.createElement("div");
         newProductImageField.className = "flex items-center mb-2";
 
-        // Generate the next input and image IDs
+
         const inputId = `product_image${inputCounter}`;
         const imgId = `selected-image${inputCounter}`;
         const className = image !== '#' ? '' : 'hidden';
@@ -361,7 +361,7 @@
 
         productImageContainer.appendChild(newProductImageField);
 
-        // Increment the input counter
+
         inputCounter++;
     };
 
@@ -413,7 +413,7 @@
             },
         });
         if (response.status === 200) {
-            // Page refresh
+
             location.reload();
         }
     }
@@ -429,7 +429,7 @@
             },
         });
         if (response.status === 200) {
-            // Page refresh
+
             location.reload();
         }
     }

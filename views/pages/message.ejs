@@ -1,9 +1,9 @@
 <%- include('../partials/navigation.ejs') %>
 
-<div class="mx-5 rounded-md">
+<div class="px-5 pt-5 rounded-md ">
 
     <div class="flex justify-between items-center flex-wrap gap-5 py-10">
-        <p class="text-xl xl:text-2xl font-semibold text-tColor2">Add Branded Product</p>
+        <p class="text-xl xl:text-2xl font-semibold text-tColor2">Message</p>
 
     </div>
 
@@ -74,25 +74,28 @@
     </dialog>
 
     <dialog id="my_modal_1" class="modal">
-        <div class="modal-box">
+        <div class="modal-box max-w-max px-10">
             <form method="dialog">
                 <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
             </form>
 
-            <h3 class="font-bold text-lg mb-4">Message Details</h3>
+            <p class="font-semibold mb-4 text-xl">Message Details</p>
 
             <div class="pb-5 ">
-                <h6 class="mb-2 text-tColor3">Message Status</h6>
-                <p id="message_details_status" name="message_details_status"> </p>
+                <p class="py-3 font-semibold">Message Status</p>
+                <p id="message_details_status" name="message_details_status" style="width: 800px; text-align: justify;">
+                </p>
+
             </div>
 
             <div class="pb-5 ">
-                <h6 class="mb-2 text-tColor3">Message Title</h6>
-                <p id="message_details_title" name="message_details_title"> </p>
+                <p class="py-3 font-semibold">Message Title</p>
+                <p id="message_details_title" name="message_details_title" style="width: 800px; text-align: justify;">
+                </p>
             </div>
             <div class="pb-5">
-                <h6 class="mb-2 text-tColor3">Message Info</h6>
-                <p id="message_details_info" name="message_details_info"></p>
+                <p class="py-3 font-semibold">Message Info</p>
+                <p id="message_details_info" name="message_details_info" style="width: 800px; text-align: justify;"></p>
             </div>
 
         </div>
@@ -167,7 +170,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <% for (let message of messages) { %>
+                    <% for (let message of paginatedMessages) { %>
                     <tr>
                         <td class="text-tColor text-sm">
 
@@ -226,7 +229,7 @@
             </p>
 
             <div
-                class="grid content-center grid-flow-col gap-3 ml-auto mr-auto font-semibold scale-75 xl:scale-100 xl:mr-0 xl:text-sm text-tColor">
+                class="grid content-center grid-flow-col gap-3 ml-auto mr-auto font-semibold scale-75 xl:scale-100 xl:mr-10 xl:text-sm text-tColor">
                 <% if (page > 1) { %>
                 <a class="flex items-center justify-center w-6 h-6 rounded" href="/messages?page=<%= page - 1 %>">
                     <svg width="6" height="10" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">

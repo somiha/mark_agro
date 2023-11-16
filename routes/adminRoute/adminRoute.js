@@ -86,8 +86,8 @@ const {
   deleteEditor,
 } = require("../../controllers/admin/editor");
 
-router.get("/", getDashboard);
-router.get("/all-products", getAllProducts);
+// router.get("/", getDashboard);
+router.get("/", getAllProducts);
 router.get("/banners", getBanners);
 
 router.get("/messages", getMessages);

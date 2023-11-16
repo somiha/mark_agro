@@ -102,106 +102,6 @@ exports.editProduct = async (req, res, next) => {
   }
 };
 
-// exports.postEditProduct = async (req, res, next) => {
-//   try {
-//     const {
-//       product_id,
-//       product_name,
-//       product_price,
-//       product_details_des,
-//       product_cat_id,
-//       quantity,
-//     } = req.body;
-
-//     let product_featured_image = null; // Initialize to null
-
-//     if (
-//       req.files &&
-//       req.files.product_featured_image &&
-//       req.files.product_featured_image[0]
-//     ) {
-//       // New featured image provided
-//       product_featured_image = req.files.product_featured_image[0].filename;
-//     }
-//     // const product_featured_image = req.files.product_featured_image[0].filename;
-//     const featuredImageUrl = `${baseUrl}/uploads/${product_featured_image}`;
-
-//     console.log(product_featured_image);
-
-//     const updateProductQuery = `
-//       UPDATE products
-//       SET product_name = ?,
-//           product_price = ?,
-//           product_details_des = ?,
-//           product_cat_id = ?,
-//           quantity = ?
-//       WHERE product_id = ?;
-//     `;
-//     await queryAsync(updateProductQuery, [
-//       product_name,
-//       product_price,
-//       product_details_des,
-//       product_cat_id,
-//       quantity,
-//       product_id,
-//     ]);
-
-//     if (featuredImageUrl) {
-//       const updateFeaturedImageQuery = `
-//         UPDATE product_image
-//         SET featured_image = 1, product_image_url = ?
-//         WHERE product_id = ?;
-//       `;
-//       await queryAsync(updateFeaturedImageQuery, [
-//         featuredImageUrl,
-//         product_id,
-//         ,
-//       ]);
-//     }
-//     const productImages = req.files["product-image"];
-//     const productImageUrls = [];
-//     productImages.forEach((image) => {
-//       const imageURL = `${baseUrl}/uploads/${image.filename}`;
-//       productImageUrls.push({ url: imageURL, isFeatured: 0 });
-//     });
-
-//     // Fetch existing images from the database
-//     const selectExistingImagesQuery =
-//       "SELECT product_image_url FROM product_image WHERE product_id = ?";
-//     db.query(selectExistingImagesQuery, [product_id], (err, existingImages) => {
-//       if (err) {
-//         throw err;
-//       }
-
-//       const existingImageUrls = existingImages.map(
-//         (row) => row.product_image_url
-//       );
-
-//       // Insert the new images
-//       const insertProductImageQuery =
-//         "INSERT INTO product_image (product_id, product_image_url, featured_image) VALUES (?, ?, ?)";
-
-//       productImageUrls.forEach((imageData) => {
-//         const { url, isFeatured } = imageData;
-//         if (!existingImageUrls.includes(url)) {
-//           const imageValues = [product_id, url, isFeatured];
-//           db.query(insertProductImageQuery, imageValues, (err, res) => {
-//             if (err) {
-//               throw err;
-//             }
-//             console.log({ res });
-//           });
-//         }
-//       });
-//     });
-
-//     return res.redirect("/all-products");
-//   } catch (e) {
-//     console.error(e);
-//     return res.status(503).json({ msg: "Internal Server Error" });
-//   }
-// };
-
 exports.postEditProduct = async (req, res, next) => {
   try {
     const {
@@ -219,14 +119,13 @@ exports.postEditProduct = async (req, res, next) => {
       featured_image_id,
     } = req.body;
 
-    let product_featured_image = null; // Initialize to null
+    let product_featured_image = null;
 
     if (
       req.files &&
       req.files.product_featured_image &&
       req.files.product_featured_image[0]
     ) {
-      // New featured image provided
       product_featured_image = req.files.product_featured_image[0].filename;
     }
 
@@ -273,7 +172,6 @@ exports.postEditProduct = async (req, res, next) => {
       ]);
     }
 
-    // Process product images only if they were included in the request
     if (req.files && req.files["product-image"]) {
       const productImages = req.files["product-image"];
       const productImageUrls = [];
@@ -282,7 +180,6 @@ exports.postEditProduct = async (req, res, next) => {
         productImageUrls.push({ url: imageURL });
       });
 
-      // Fetch existing images from the database
       const selectExistingImagesQuery =
         "SELECT product_image_url FROM product_image WHERE product_id = ?";
       db.query(
@@ -331,7 +228,6 @@ exports.postEditProduct = async (req, res, next) => {
           });
         }
       } else {
-        // If variant_name and variant_price are not arrays (single values), convert them to arrays
         const variantNameArray = [variant_name];
         const variantPriceArray = [variant_price];
 
@@ -353,31 +249,17 @@ exports.postEditProduct = async (req, res, next) => {
       }
     }
 
-    return res.redirect("/all-products");
+    return res.redirect("/");
   } catch (e) {
     console.error(e);
     return res.status(503).json({ msg: "Internal Server Error" });
   }
 };
 
-// exports.deleteNonFeaturedImage = async (req, res, next) => {
-//   try {
-//     const image_id = req.query.image_id;
-//     const queryDeleteImage = `
-//     DELETE from product_image where id = ${image_id};
-//     `;
-//     await queryAsyncWithoutValue(queryDeleteImage);
-//     res.status(200).json({ message: "Successfully deleted message." });
-//   } catch (err) {
-//     return res.status(503).json({ msg: "Internal Server Error" });
-//   }
-// };
-
 exports.deleteNonFeaturedImage = async (req, res, next) => {
   try {
     const image_id = req.query.image_id;
 
-    // First, retrieve the image filename from the database (if needed)
     const selectImageQuery =
       "SELECT product_image_url FROM product_image WHERE id = ?";
     const imageResult = await queryAsync(selectImageQuery, [image_id]);
@@ -396,14 +278,12 @@ exports.deleteNonFeaturedImage = async (req, res, next) => {
       fileNameWithExtension
     );
 
-    // Delete the image file
     fs.unlink(imagePath, (unlinkErr) => {
       if (unlinkErr) {
         console.error("Error deleting image:", unlinkErr);
         return res.status(500).json({ msg: "Internal server error" });
       }
 
-      // If the image file was deleted successfully, proceed to delete the image from the database
       const deleteImageQuery = "DELETE FROM product_image WHERE id = ?";
       queryAsync(deleteImageQuery, [image_id])
         .then(() => {
@@ -435,9 +315,8 @@ exports.deleteVariant = async (req, res, next) => {
 
 exports.deleteProduct = async (req, res, next) => {
   try {
-    const product_id = req.query.id; // Get the product ID from the request parameters
+    const product_id = req.query.id;
 
-    // Query the product information to obtain the image file names
     const selectProductQuery =
       "SELECT product_image_url FROM product_image WHERE product_id = ?";
     db.query(selectProductQuery, [product_id], (err, productResult) => {
@@ -459,7 +338,6 @@ exports.deleteProduct = async (req, res, next) => {
         fileNameWithExtension
       );
 
-      // If the image was deleted successfully, proceed to delete the product from the database
       let deleteProductQuery = "DELETE FROM products WHERE product_id = ?";
       db.query(deleteProductQuery, [product_id], (dbErr) => {
         if (dbErr) {
@@ -473,8 +351,7 @@ exports.deleteProduct = async (req, res, next) => {
             return res.status(500).json({ msg: "Internal server error" });
           }
 
-          // After deleting the product and its associated image, you can redirect to a suitable page
-          return res.redirect("/all-products");
+          return res.redirect("/");
         });
         const selectVariantQuery = "DELETE FROM variant WHERE product_id = ?";
         db.query(selectVariantQuery, [product_id], (err, variantResult) => {

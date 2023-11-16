@@ -21,15 +21,12 @@ LEFT JOIN variant v ON p.product_id = v.product_id
 LEFT JOIN flashsell f ON p.product_id = f.product_id
 GROUP BY p.product_id, e.extra_cat_name, f.flashsell_id;
 
-
-
-
 `;
 
     const flashsellQuery = `SELECT * FROM flashsell`;
     const flashsells = await queryAsyncWithoutValue(flashsellQuery);
     const products = await queryAsyncWithoutValue(productQuery);
-    // console.log({ products });
+
     const page = parseInt(req.query.page) || 1;
     const productsPerPage = 8;
     const startIdx = (page - 1) * productsPerPage;
@@ -225,7 +222,7 @@ exports.FlashSell = async (req, res, next) => {
         }
       });
     }
-    return res.redirect("/all-products");
+    return res.redirect("/");
   } catch (e) {
     return res.status(500).json({ msg: "Internal Server Error" });
   }

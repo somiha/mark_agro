@@ -97,7 +97,7 @@
                 </thead>
 
                 <tbody>
-                    <% for (let banner of banners) { %>
+                    <% for (let banner of paginatedBanners) { %>
 
                     <tr>
                         <td style="padding-top: 0; padding-bottom: 0;">
@@ -143,7 +143,7 @@
             </p>
 
             <div
-                class="grid content-center grid-flow-col gap-3 ml-auto mr-auto font-semibold scale-75 xl:scale-100 xl:mr-0 xl:text-sm text-tColor">
+                class="grid content-center grid-flow-col gap-3 ml-auto mr-auto font-semibold scale-75 xl:scale-100 xl:mr-15 xl:text-sm text-tColor">
                 <% if (page > 1) { %>
                 <a class="flex items-center justify-center w-6 h-6 rounded" href="/banners?page=<%= page - 1 %>">
                     <svg width="6" height="10" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -265,14 +265,14 @@
         });
     });
 
-    // Set all accordion items to collapsed state by default
+
     document.querySelectorAll('.menu-collapse').forEach(collapse => {
         collapse.classList.add('hidden');
     });
 
     document.addEventListener('click', function (e) {
-        const accordionMenu = document.getElementById('yourAccordionMenuId'); // Replace with your actual ID
-        const accordionButtons = document.getElementById('yourAccordionButtonsId'); // Replace with your actual ID
+        const accordionMenu = document.getElementById('yourAccordionMenuId');
+        const accordionButtons = document.getElementById('yourAccordionButtonsId');
 
         if (accordionMenu && accordionButtons) {
             if (!accordionMenu.contains(e.target) && !accordionButtons.contains(e.target)) {

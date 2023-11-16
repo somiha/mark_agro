@@ -62,49 +62,17 @@ exports.postMainCat = async (req, res, next) => {
   }
 };
 
-// exports.postMainCat = async (req, res, next) => {
-//   try {
-//     const { main_cat_name } = req.body;
-//     const mainCatImage = req.files["main-cat-image"];
-//     let mainCatImageUrl = null;
-//     if (mainCatImage && mainCatImage.length > 0) {
-//       mainCatImageUrl = `${baseUrl}/uploads/${mainCatImage[0].filename}`;
-//     }
-//     // const mainCatImageUrl = `${baseUrl}/uploads/${mainCatImage[0].filename}`;
-
-//     const insertMainCatQuery =
-//       "INSERT INTO main_cat (main_cat_name, main_cat_image_url) VALUES (?, ?)";
-//     const mainCatValues = [main_cat_name, mainCatImageUrl];
-
-//     db.query(insertMainCatQuery, mainCatValues, (err, result) => {
-//       if (err) {
-//         throw err;
-//       }
-
-//       const mainCatId = result.insertId;
-
-//       return res.redirect("/main-category");
-//     });
-//   } catch (e) {
-//     console.log(e);
-//     return res.status(500).json({ msg: "Internal Server Error" });
-//   }
-// };
-
 exports.updateMainCat = async (req, res, next) => {
   try {
     const { mainCatId, main_cat_name } = req.body;
     const mainCatImage = req.files["main-cat-image"];
 
-    // Check if an image is provided for the update (if needed)
     let mainCatImageUrl = null;
     if (mainCatImage && mainCatImage.length > 0) {
       mainCatImageUrl = `${baseUrl}/uploads/${mainCatImage[0].filename}`;
     }
 
-    // Check if mainCatImageUrl is not null, indicating an image update
     if (mainCatImageUrl) {
-      // Update both the main_cat_name, main_cat_ref, and main_cat_image_url
       const updateMainCatQuery =
         "UPDATE main_cat SET main_cat_name = ?, main_cat_image_url = ? WHERE main_cat_id = ?";
       const mainCatValues = [main_cat_name, mainCatImageUrl, mainCatId];
@@ -117,7 +85,6 @@ exports.updateMainCat = async (req, res, next) => {
         return res.redirect("/main-category");
       });
     } else {
-      // If no image is provided for the update, update only main_cat_name and main_cat_ref
       const updateMainCatQuery =
         "UPDATE main_cat SET main_cat_name = ? WHERE main_cat_id = ?";
       const mainCatValues = [main_cat_name, mainCatId];
