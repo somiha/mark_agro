@@ -1,340 +1,334 @@
 <%- include('../partials/navigation.ejs') %>
 
-<div class="mx-5 rounded-md">
+    <div class="mx-5 rounded-md">
 
-    <div class="flex flex-wrap items-center justify-between gap-5 py-10">
-        <p class="text-xl font-semibold xl:text-2xl text-tColor2">Editor</p>
-
-    </div>
-
-    <dialog id="my_modal_5" class="modal">
-        <div class="modal-box">
-            <form action="/update-editor" method="POST">
-                <button class="absolute btn btn-sm btn-circle btn-ghost right-2 top-2">✕</button>
-
-
-                <h3 class="mb-4 text-lg font-bold">Edit Editor</h3>
-                <input class="w-full input input-bordered focus:outline-none focus:shadow-outline" type="text"
-                    id="edit_id" name="edit_id" hidden />
-
-                <div class="pb-5 ">
-                    <p class="mb-2 text-tColor3">Editor username</p>
-                    <input class="w-full input input-bordered focus:outline-none focus:shadow-outline" type="text"
-                        id="edit_username" name="edit_username" placeholder="Editor Username" />
-                </div>
-                <div class="pb-5">
-                    <p class="mb-2 text-tColor3">Editor password</p>
-                    <input class="w-full input input-bordered focus:outline-none focus:shadow-outline" type="text"
-                        id="edit_password" name="edit_password" placeholder="Editor Password" />
-                </div>
-
-
-
-                <button type="submit" class="primary-btn">Submit</button>
-            </form>
-
-
+        <div class="flex flex-wrap items-center justify-between gap-5 py-10">
+            <p class="text-xl font-semibold xl:text-2xl text-tColor2">Editor</p>
 
         </div>
-    </dialog>
-    <dialog id="my_modal_6" class="modal">
-        <div class="modal-box">
-            <form method="dialog">
-                <button class="absolute btn btn-sm btn-circle btn-ghost right-2 top-2">✕</button>
-            </form>
 
-            <div class="flex flex-col items-center justify-center">
-                <h3 class="text-lg font-bold">Are you sure to delete?</h3>
-                <div class="flex items-center m-4">
-                    <button class="px-5 mr-3 text-white bg-red-600 btn">Delete</button>
-                    <button class="px-5 ml-3 text-white bg-gray-600 btn">Cancel</button>
-                </div>
-            </div>
+        <dialog id="my_modal_5" class="modal">
+            <div class="modal-box">
+                <form action="/update-editor" method="POST">
+                    <button class="absolute btn btn-sm btn-circle btn-ghost right-2 top-2">✕</button>
 
 
+                    <h3 class="mb-4 text-lg font-bold">Edit Editor</h3>
+                    <input class="w-full input input-bordered focus:outline-none focus:shadow-outline" type="text"
+                        id="edit_id" name="edit_id" hidden />
 
-
-        </div>
-    </dialog>
-
-
-
-
-    <div class="mt-5">
-
-        <div class="flex flex-col justify-around">
-            <div class="flex flex-col items-start justify-between gap-3 xl:flex-row xl:items-center">
-
-                <ul class="flex flex-wrap pb-2 border-b-2 gap-7">
-
-                    <li><a href="/sub-admin">Sub Admin</a>
-                    </li>
-                    <li><a href="/editor" class="font-bold border-b-2 border-primaryColor pb-[10px]">Editor</a>
-                    </li>
-                </ul>
-
-
-            </div>
-            <div class="flex justify-end w-9/12">
-                <button class="primary-btn" onclick="my_modal_3.showModal()">Add Editor</button>
-                <dialog id="my_modal_3" class="modal">
-                    <div class="modal-box">
-                        <form method="dialog">
-                            <button class="absolute btn btn-sm btn-circle btn-ghost right-2 top-2">✕</button>
-                        </form>
-                        <form action="/add-editor" method="POST">
-                            <h3 class="mb-4 text-lg font-bold">Add Editor</h3>
-
-
-                            <div class="pb-5 ">
-                                <p class="mb-2 text-tColor3">Editor Username</p>
-                                <input class="w-full input input-bordered focus:outline-none focus:shadow-outline"
-                                    type="text" id="username" name="username" placeholder="Editor Username" />
-                            </div>
-                            <div class="pb-5">
-                                <p class="mb-2 text-tColor3">Editor password</p>
-                                <input class="w-full input input-bordered focus:outline-none focus:shadow-outline"
-                                    type="text" id="password" name="password" placeholder="Editor Password" />
-                            </div>
-
-                            <button type="submit" class="mt-5 primary-btn">Submit</button>
-                        </form>
+                    <div class="pb-5 ">
+                        <p class="mb-2 text-tColor3">Editor username</p>
+                        <input class="w-full input input-bordered focus:outline-none focus:shadow-outline" type="text"
+                            id="edit_username" name="edit_username" placeholder="Editor Username" />
+                    </div>
+                    <div class="pb-5">
+                        <p class="mb-2 text-tColor3">Editor password</p>
+                        <input class="w-full input input-bordered focus:outline-none focus:shadow-outline" type="text"
+                            id="edit_password" name="edit_password" placeholder="Editor Password" />
                     </div>
 
 
 
+                    <button type="submit" class="primary-btn">Submit</button>
+                </form>
+
+
+
+            </div>
+        </dialog>
+        <dialog id="my_modal_6" class="modal">
+            <div class="modal-box">
+                <form method="dialog">
+                    <button class="absolute btn btn-sm btn-circle btn-ghost right-2 top-2">✕</button>
+                </form>
+
+                <div class="flex flex-col items-center justify-center">
+                    <h3 class="text-lg font-bold">Are you sure to delete?</h3>
+                    <div class="flex items-center m-4">
+                        <button class="px-5 mr-3 text-white bg-red-600 btn">Delete</button>
+                        <button class="px-5 ml-3 text-white bg-gray-600 btn">Cancel</button>
+                    </div>
+                </div>
 
 
 
 
             </div>
-            </dialog>
-        </div>
-
-        <div class="pt-5 overflow-x-scroll bg-white md:overflow-hidden">
-            <table class="table w-9/12 text-sm md:text-sm">
-                <thead>
-                    <tr>
-                        <th>USERNAME</th>
-                        <th>PASSWORD</th>
-
-                        <th>ACTION</th>
-
-                    </tr>
-                </thead>
-                <tbody>
-                    <% for (let editor of editors) { %>
-                    <tr>
-                        <td class="text-tColor">
-
-                            <%= editor.username %>
-                        </td>
-                        <td class="text-tColor">
-                            <%= editor.password %>
-                        </td>
-
-
-                        <td class="text-tColor">
-                            <div class="flex items-center gap-3 ml-100">
-
-
-                                <button class="table-button btn btn-xs btn-outline btn-primary"
-                                    onclick="openEditModal('<%= editor.admin_id %>', `<%= editor.username %>`, `<%= editor.password %>`)"><i
-                                        class="fa fa-pencil"></i>
-                                </button>
-
-                                <button class="table-button btn btn-xs btn-outline btn-primary"
-                                    onclick="confirmDeleteEditor('<%= editor.admin_id %>')"><i
-                                        class="fa fa-trash"></i></button>
-
-                            </div>
-
-                        </td>
-
-                    </tr>
-                    <% } %>
+        </dialog>
 
 
 
 
+        <div class="mt-5">
+
+            <div class="flex flex-col justify-between lg:flex-row gap-y-5">
+                <div class="flex flex-col items-start justify-between gap-3 xl:flex-row xl:items-center">
+
+                    <ul class="flex flex-wrap pb-2 border-b-2 gap-7">
+
+                        <li><a href="/sub-admin">Sub Admin</a>
+                        </li>
+                        <li><a href="/editor" class="font-bold border-b-2 border-primaryColor pb-[10px]">Editor</a>
+                        </li>
+                    </ul>
 
 
+                </div>
+                <div class="flex w-9/12 lg:justify-end">
+                    <button class="primary-btn" onclick="my_modal_3.showModal()">Add Editor</button>
+                    <dialog id="my_modal_3" class="modal">
+                        <div class="modal-box">
+                            <form method="dialog">
+                                <button class="absolute btn btn-sm btn-circle btn-ghost right-2 top-2">✕</button>
+                            </form>
+                            <form action="/add-editor" method="POST">
+                                <h3 class="mb-4 text-lg font-bold">Add Editor</h3>
 
-                </tbody>
-            </table>
 
-        </div>
+                                <div class="pb-5 ">
+                                    <p class="mb-2 text-tColor3">Editor Username</p>
+                                    <input class="w-full input input-bordered focus:outline-none focus:shadow-outline"
+                                        type="text" id="username" name="username" placeholder="Editor Username" />
+                                </div>
+                                <div class="pb-5">
+                                    <p class="mb-2 text-tColor3">Editor password</p>
+                                    <input class="w-full input input-bordered focus:outline-none focus:shadow-outline"
+                                        type="text" id="password" name="password" placeholder="Editor Password" />
+                                </div>
 
-        <!-- Page Select -->
-        <div class="flex flex-col justify-between gap-2 py-5 xl:flex-row xl:items-center">
-            <p class="text-xs text-center xl:text-sm text-tColor">
-                Show <%= paginatedAdmin.length %> from <%= editors.length %> Editors
-            </p>
-
-            <div
-                class="grid content-center grid-flow-col gap-3 ml-auto mr-auto font-semibold scale-75 xl:scale-100 xl:mr-0 xl:text-sm text-tColor">
-                <% if (page > 1) { %>
-                <a class="flex items-center justify-center w-6 h-6 rounded" href="/sub-admin?page=<%= page - 1 %>">
-                    <svg width="6" height="10" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7.125 0.75L0.875 7L7.125 13.25" stroke="#84818A" stroke-width="1.5"
-                            stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                </a>
-                <% } %>
-
-                <% const maxPagesToShow = 8;
-                                           const startPage = Math.max(1, page - Math.floor(maxPagesToShow / 2));
-                                           const endPage = Math.min(
-                                               Math.ceil(editors.length / adminPerPage),
-                                               startPage + maxPagesToShow - 1
-                                           );
-                                
-                                           for (let i = startPage; i <= endPage; i++) { %>
-                <a class=" h-6 w-6 rounded flex items-center justify-center <%= i === page ? 'bg-blue-100 text-primaryColor' : '' %>"
-                    href="/sub-admin?page=<%= i %>"><%= i %></a>
-                <% } %>
-
-                <% if (page < Math.ceil(editors.length / adminPerPage)) { %>
-                <a class="flex items-center justify-center w-6 h-6 rounded" href="/sub-admin?page=<%= page + 1 %>">
-                    <svg width="6" height="10" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M0.875 0.75L7.125 7L0.875 13.25" stroke="#84818A" stroke-width="1.5"
-                            stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                </a>
-                <% } %>
+                                <button type="submit" class="mt-5 primary-btn">Submit</button>
+                            </form>
+                        </div>
+                    </dialog>
+                </div>
             </div>
+
+            <div class="pt-5 overflow-x-scroll bg-white md:overflow-hidden">
+                <table class="table text-sm md:text-sm">
+                    <thead>
+                        <tr>
+                            <th>USERNAME</th>
+                            <th>PASSWORD</th>
+
+                            <th>ACTION</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for (let editor of editors) { %>
+                            <tr>
+                                <td class="text-tColor">
+
+                                    <%= editor.username %>
+                                </td>
+                                <td class="text-tColor">
+                                    <%= editor.password %>
+                                </td>
+
+
+                                <td class="text-tColor">
+                                    <div class="flex items-center gap-3 ml-100">
+
+
+                                        <button class="table-button btn btn-xs btn-outline btn-primary"
+                                            onclick="openEditModal('<%= editor.admin_id %>', `<%= editor.username %>`, `<%= editor.password %>`)"><i
+                                                class="fa fa-pencil"></i>
+                                        </button>
+
+                                        <button class="table-button btn btn-xs btn-outline btn-primary"
+                                            onclick="confirmDeleteEditor('<%= editor.admin_id %>')"><i
+                                                class="fa fa-trash"></i></button>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+                            <% } %>
+
+
+
+
+
+
+
+                    </tbody>
+                </table>
+
+            </div>
+
+            <!-- Page Select -->
+            <div class="flex flex-col justify-between gap-2 py-5 xl:flex-row xl:items-center">
+                <p class="text-xs text-center xl:text-sm text-tColor">
+                    Show <%= paginatedAdmin.length %> from <%= editors.length %> Editors
+                </p>
+
+                <div
+                    class="grid content-center grid-flow-col gap-3 ml-auto mr-auto font-semibold scale-75 xl:scale-100 xl:mr-0 xl:text-sm text-tColor">
+                    <% if (page> 1) { %>
+                        <a class="flex items-center justify-center w-6 h-6 rounded"
+                            href="/sub-admin?page=<%= page - 1 %>">
+                            <svg width="6" height="10" viewBox="0 0 8 14" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7.125 0.75L0.875 7L7.125 13.25" stroke="#84818A" stroke-width="1.5"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </a>
+                        <% } %>
+
+                            <% const maxPagesToShow=8; const startPage=Math.max(1, page - Math.floor(maxPagesToShow /
+                                2)); const endPage=Math.min( Math.ceil(editors.length / adminPerPage), startPage +
+                                maxPagesToShow - 1 ); for (let i=startPage; i <=endPage; i++) { %>
+                                <a class=" h-6 w-6 rounded flex items-center justify-center <%= i === page ? 'bg-blue-100 text-primaryColor' : '' %>"
+                                    href="/sub-admin?page=<%= i %>">
+                                    <%= i %>
+                                </a>
+                                <% } %>
+
+                                    <% if (page < Math.ceil(editors.length / adminPerPage)) { %>
+                                        <a class="flex items-center justify-center w-6 h-6 rounded"
+                                            href="/sub-admin?page=<%= page + 1 %>">
+                                            <svg width="6" height="10" viewBox="0 0 8 14" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M0.875 0.75L7.125 7L0.875 13.25" stroke="#84818A"
+                                                    stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </a>
+                                        <% } %>
+                </div>
+            </div>
+
         </div>
+
 
     </div>
 
 
-</div>
-
-
-</div>
+    </div>
 
 
 
-</div>
+    </div>
 
-</section>
+    </section>
 
-<script>
-    async function openEditModal(id, username, password) {
-        console.log(id, username, password, status);
-        document.getElementById('edit_username').value = username;
-        document.getElementById("edit_password").value = password;
-        document.getElementById("edit_id").value = id;
-        // Open the dialog
-        const editModal = document.getElementById('my_modal_5');
-        editModal.showModal();
-    }
-</script>
-
-
-
-
-<!-- Header Section Script -->
-<script>
-    // Menu toggle button 
-    const toggleButton = document.getElementById("toggle-button");
-    const toggleMenu = document.getElementById("toggle-menu");
-    var toggleCounter = 1;
-    toggleButton.onclick = function () {
-        toggleCounter++;
-        if (toggleCounter % 2 == 0) {
-            toggleMenu.classList.remove("hidden");
-            toggleMenu.classList.add("grid");
+    <script>
+        async function openEditModal(id, username, password) {
+            console.log(id, username, password, status);
+            document.getElementById('edit_username').value = username;
+            document.getElementById("edit_password").value = password;
+            document.getElementById("edit_id").value = id;
+            // Open the dialog
+            const editModal = document.getElementById('my_modal_5');
+            editModal.showModal();
         }
-        else {
-            toggleMenu.classList.remove("grid");
-            toggleMenu.classList.add("hidden");
+    </script>
+
+
+
+
+    <!-- Header Section Script -->
+    <script>
+        // Menu toggle button 
+        const toggleButton = document.getElementById("toggle-button");
+        const toggleMenu = document.getElementById("toggle-menu");
+        var toggleCounter = 1;
+        toggleButton.onclick = function () {
+            toggleCounter++;
+            if (toggleCounter % 2 == 0) {
+                toggleMenu.classList.remove("hidden");
+                toggleMenu.classList.add("grid");
+            }
+            else {
+                toggleMenu.classList.remove("grid");
+                toggleMenu.classList.add("hidden");
+            }
         }
-    }
 
 
-</script>
+    </script>
 
 
-<!-- Accordion Script -->
-<script>
-    const accordionButtons = document.querySelectorAll('.accordion-button');
-    const accordionMenu = document.querySelectorAll('.menu-collapse');
-
-    accordionButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const accordionCollapse = button.nextElementSibling;
-            button.setAttribute('aria-expanded', button.getAttribute('aria-expanded') === 'false' ? 'true' : 'false');
-            accordionCollapse.classList.toggle('hidden');
-        });
-    });
-
-    // Set all accordion items to collapsed state by default
-    document.querySelectorAll('.menu-collapse').forEach(collapse => {
-        collapse.classList.add('hidden');
-    });
-
-    document.addEventListener('click', function (e) {
-
+    <!-- Accordion Script -->
+    <script>
         const accordionButtons = document.querySelectorAll('.accordion-button');
         const accordionMenu = document.querySelectorAll('.menu-collapse');
-        if (!accordionMenu || typeof accordionMenu.contains !== 'function') {
-            return;
-        }
 
-        if (!accordionMenu.contains(e.target) && !accordionButtons.contains(e.target)) {
-            accordionMenu.classList.add('hidden');
-        }
-    });
+        accordionButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const accordionCollapse = button.nextElementSibling;
+                button.setAttribute('aria-expanded', button.getAttribute('aria-expanded') === 'false' ? 'true' : 'false');
+                accordionCollapse.classList.toggle('hidden');
+            });
+        });
 
-</script>
+        // Set all accordion items to collapsed state by default
+        document.querySelectorAll('.menu-collapse').forEach(collapse => {
+            collapse.classList.add('hidden');
+        });
 
-<script>
-    function confirmDeleteEditor(id) {
-        const dialog = document.getElementById('my_modal_6');
-        const deleteButton = dialog.querySelector('.bg-red-600');
-        const cancelButton = dialog.querySelector('.bg-gray-600');
-        deleteButton.onclick = async () => {
-            dialog.close();
+        document.addEventListener('click', function (e) {
 
-            try {
-                const response = await fetch(`/delete-editor?id=${id}`, {
-                    method: 'POST',
-                });
+            const accordionButtons = document.querySelectorAll('.accordion-button');
+            const accordionMenu = document.querySelectorAll('.menu-collapse');
+            if (!accordionMenu || typeof accordionMenu.contains !== 'function') {
+                return;
+            }
 
-                if (response.status === 200) {
+            if (!accordionMenu.contains(e.target) && !accordionButtons.contains(e.target)) {
+                accordionMenu.classList.add('hidden');
+            }
+        });
 
-                    location.reload();
-                } else {
-                    console.error('Error deleting banner');
+    </script>
+
+    <script>
+        function confirmDeleteEditor(id) {
+            const dialog = document.getElementById('my_modal_6');
+            const deleteButton = dialog.querySelector('.bg-red-600');
+            const cancelButton = dialog.querySelector('.bg-gray-600');
+            deleteButton.onclick = async () => {
+                dialog.close();
+
+                try {
+                    const response = await fetch(`/delete-editor?id=${id}`, {
+                        method: 'POST',
+                    });
+
+                    if (response.status === 200) {
+
+                        location.reload();
+                    } else {
+                        console.error('Error deleting banner');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
                 }
-            } catch (error) {
-                console.error('Error:', error);
-            }
-        };
+            };
 
-        cancelButton.onclick = () => {
-            dialog.close();
-        };
+            cancelButton.onclick = () => {
+                dialog.close();
+            };
 
-        dialog.showModal();
-    }
-</script>
-
-<script>
-    const tables = document.querySelectorAll('.table-collapse');
-    window.onclick = function (event) {
-        for (let table of tables) {
-            if (event.target == table) {
-                table.classList.toggle('hidden');
-            }
+            dialog.showModal();
         }
-    };
-</script>
+    </script>
+
+    <script>
+        const tables = document.querySelectorAll('.table-collapse');
+        window.onclick = function (event) {
+            for (let table of tables) {
+                if (event.target == table) {
+                    table.classList.toggle('hidden');
+                }
+            }
+        };
+    </script>
 
 
 
 
-</body>
+    </body>
 
-</html>
+    </html>
