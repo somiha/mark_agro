@@ -2,18 +2,18 @@
 
 <div class="mx-5 rounded-md">
 
-    <div class="flex justify-between items-center flex-wrap gap-5 py-10">
-        <p class="text-xl xl:text-2xl font-semibold text-tColor2">Sub Admin</p>
+    <div class="flex flex-wrap items-center justify-between gap-5 py-10">
+        <p class="text-xl font-semibold xl:text-2xl text-tColor2">Editor</p>
 
     </div>
 
     <dialog id="my_modal_5" class="modal">
         <div class="modal-box">
             <form action="/update-editor" method="POST">
-                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                <button class="absolute btn btn-sm btn-circle btn-ghost right-2 top-2">✕</button>
 
 
-                <h3 class="font-bold text-lg mb-4">Edit Editor</h3>
+                <h3 class="mb-4 text-lg font-bold">Edit Editor</h3>
                 <input class="w-full input input-bordered focus:outline-none focus:shadow-outline" type="text"
                     id="edit_id" name="edit_id" hidden />
 
@@ -40,14 +40,14 @@
     <dialog id="my_modal_6" class="modal">
         <div class="modal-box">
             <form method="dialog">
-                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                <button class="absolute btn btn-sm btn-circle btn-ghost right-2 top-2">✕</button>
             </form>
 
             <div class="flex flex-col items-center justify-center">
-                <h3 class="font-bold text-lg">Are you sure to delete?</h3>
+                <h3 class="text-lg font-bold">Are you sure to delete?</h3>
                 <div class="flex items-center m-4">
-                    <button class="btn bg-red-600 text-white px-5 mr-3">Delete</button>
-                    <button class="btn bg-gray-600 text-white px-5 ml-3">Cancel</button>
+                    <button class="px-5 mr-3 text-white bg-red-600 btn">Delete</button>
+                    <button class="px-5 ml-3 text-white bg-gray-600 btn">Cancel</button>
                 </div>
             </div>
 
@@ -75,15 +75,15 @@
 
 
             </div>
-            <div class="w-9/12 flex justify-end">
-                <button class="primary-btn" onclick="my_modal_3.showModal()">Add Sub Admin</button>
+            <div class="flex justify-end w-9/12">
+                <button class="primary-btn" onclick="my_modal_3.showModal()">Add Editor</button>
                 <dialog id="my_modal_3" class="modal">
                     <div class="modal-box">
                         <form method="dialog">
-                            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                            <button class="absolute btn btn-sm btn-circle btn-ghost right-2 top-2">✕</button>
                         </form>
                         <form action="/add-editor" method="POST">
-                            <h3 class="font-bold text-lg mb-4">Add Editor</h3>
+                            <h3 class="mb-4 text-lg font-bold">Add Editor</h3>
 
 
                             <div class="pb-5 ">
@@ -97,7 +97,7 @@
                                     type="text" id="password" name="password" placeholder="Editor Password" />
                             </div>
 
-                            <button type="submit" class="primary-btn mt-5">Submit</button>
+                            <button type="submit" class="mt-5 primary-btn">Submit</button>
                         </form>
                     </div>
 
@@ -111,8 +111,8 @@
             </dialog>
         </div>
 
-        <div class="bg-white pt-5 overflow-x-scroll md:overflow-hidden">
-            <table class="table text-sm md:text-sm w-9/12">
+        <div class="pt-5 overflow-x-scroll bg-white md:overflow-hidden">
+            <table class="table w-9/12 text-sm md:text-sm">
                 <thead>
                     <tr>
                         <th>USERNAME</th>

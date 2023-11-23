@@ -1,373 +1,396 @@
 <%- include('../partials/navigation.ejs') %>
-<div class="px-5 pt-5 rounded-md ">
+    <div class="px-5 pt-5 rounded-md ">
 
-    <div class="flex flex-wrap items-center justify-between gap-5">
-        <p class="text-xl font-semibold xl:text-2xl text-tColor2">All Products</p>
+        <div class="flex flex-wrap items-center justify-between gap-5">
+            <p class="text-xl font-semibold xl:text-2xl text-tColor2">All Products</p>
 
-        <a href="/add-products" class="primary-btn">+ Add Products</a>
-    </div>
+            <a href="/add-products" class="primary-btn">+ Add Products</a>
+        </div>
 
-    <div class="mt-5">
+        <div class="mt-5">
 
-        <div class="flex flex-col justify-around">
+            <div class="flex flex-col justify-around">
 
-            <div class="px-5 pt-5 mt-5 overflow-x-auto bg-white md:overflow-hidden">
-                <table class="table text-xs md:text-sm md:w-full">
-                    <thead>
-                        <tr>
-                            <th>CODE</th>
-                            <th>ITEM</th>
-                            <th>CATEGORY</th>
-                            <th>PRICE</th>
-                            <th>DISCOUNT</th>
-                            <th>SOLD</th>
-                            <th>FLASHSELL</th>
-                            <th>STATUS</th>
-                            <th>ACTION</th>
-                            <th>EDIT</th>
-                            <th>DELETE</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <% for (let product of paginatedProducts) { %>
-                        <tr>
-                            <td class="text-tColor"><%= product.product_id %></td>
-                            <td>
-                                <div class="flex items-center gap-2">
-                                    <img src="<%= product.featured_image %>" alt="" class="h-9 w-9">
-                                    <p class="font-semibold"><%= product.product_name %></p>
-                                </div>
-                            </td>
-                            <td><span class="text-white badge badge-primary"><%= product.extra_cat_name %></span>
-                            </td>
-                            <td>$<%= product.product_price %></td>
-                            <td>$<%= product.discount %></< /td>
-                            <td><%= product.sell_count %></td>
+                <div class="px-5 pt-5 mt-5 overflow-x-auto bg-white md:overflow-hidden">
+                    <table class="table text-xs md:text-sm md:w-full">
+                        <thead>
+                            <tr>
+                                <th>CODE</th>
+                                <th>ITEM</th>
+                                <th>CATEGORY</th>
+                                <th>PRICE</th>
+                                <th>DISCOUNT</th>
+                                <th>SOLD</th>
+                                <th>FLASHSELL</th>
+                                <th>STATUS</th>
+                                <th>ACTION</th>
 
-                            <td><input type="checkbox" class="checkbox checkbox-xs flashsell-checkbox"
-                                    data-product-id="<%= product.product_id %>"
-                                    onclick="flashSellInsertDelete('<%= product.product_id %>')" <input type="checkbox"
-                                    id="flashsellCheckbox" <% if (product.flashsell_id) { %>checked="checked" <% } %> />
-                            </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% for (let product of paginatedProducts) { %>
+                                <tr>
+                                    <td class="text-tColor">
+                                        <%= product.product_id %>
+                                    </td>
+                                    <td>
+                                        <div class="flex items-center gap-2">
+                                            <img src="<%= product.featured_image %>" alt="" class="h-9 w-9">
+                                            <p class="font-semibold">
+                                                <%= product.product_name %>
+                                            </p>
+                                        </div>
+                                    </td>
+                                    <td><span class="text-white badge badge-primary">
+                                            <%= product.extra_cat_name %>
+                                        </span>
+                                    </td>
+                                    <td>$<%= product.product_price %>
+                                    </td>
+                                    <td>$<%= product.discount %>
+                                            </< /td>
+                                    <td>
+                                        <%= product.sell_count %>
+                                    </td>
 
-
-
-
-                            <td>
-                                <% if (product.status === 1) { %>
-                                Published
-                                <% } else if (product.status === 0) { %>
-                                Unpublished
-                                <% } %>
-                            </td>
-
-                            <td>
-                                <button class="table-button btn btn-xs btn-outline btn-primary"><i
-                                        class="fa fa-eye"></i></button>
+                                    <td><input type="checkbox" class="checkbox checkbox-xs flashsell-checkbox"
+                                            data-product-id="<%= product.product_id %>"
+                                            onclick="flashSellInsertDelete('<%= product.product_id %>')" <input
+                                            type="checkbox" id="flashsellCheckbox" <% if (product.flashsell_id) {
+                                            %>checked="checked" <% } %> />
+                                    </td>
 
 
-                                <div
-                                    class="fixed bottom-0 right-0 z-10 flex items-center justify-center hidden w-full h-full table-collapse bg-black/50">
 
-                                    <div
-                                        class="bg-gray-100 border-2 border-primaryColor rounded-lg min-w-[350px] xl:min-w-[550px] p-5 max-h-full overflow-y-auto">
 
-                                        <div class="flex items-center justify-between">
-                                            <p class="font-semibold"> Products Details</p>
-                                            <button
-                                                class="table-close bg-secondaryColor text-white text-sm rounded-[50%] px-[8px] py-[4px]">
-                                                <i class="fa-solid fa-xmark "></i>
-                                            </button>
+                                    <td>
+                                        <% if (product.status===1) { %>
+                                            Published
+                                            <% } else if (product.status===0) { %>
+                                                Unpublished
+                                                <% } %>
+                                    </td>
+
+                                    <td>
+                                        <button class="table-button btn btn-xs btn-outline btn-primary"><i
+                                                class="fa fa-eye"></i></button>
+
+
+                                        <div
+                                            class="fixed bottom-0 right-0 z-10 flex items-center justify-center hidden w-full h-full table-collapse bg-black/50">
+
+                                            <div
+                                                class="bg-gray-100 border-2 border-primaryColor rounded-lg min-w-[350px] xl:min-w-[550px] p-5 max-h-full overflow-y-auto">
+
+                                                <div class="flex items-center justify-between">
+                                                    <p class="font-semibold"> Products Details</p>
+                                                    <button
+                                                        class="table-close bg-secondaryColor text-white text-sm rounded-[50%] px-[8px] py-[4px]">
+                                                        <i class="fa-solid fa-xmark "></i>
+                                                    </button>
+                                                </div>
+
+
+
+                                                <table class="w-full profile-table">
+                                                    <thead class="py-5">
+                                                        <tr>
+                                                            <th>Product Quantity</th>
+                                                            <th>Product Unit</th>
+                                                            <th>Seller ID</th>
+
+                                                        </tr>
+                                                    </thead>
+
+                                                    <tbody>
+
+                                                        <tr class="font-semibold bg-white border-8 border-gray-100">
+                                                            <div class="flex items-center gap-4 pl-2">
+                                                                <td class="pl-3 text-tColor">
+
+                                                                    <%= product.quantity %>
+
+                                                                </td>
+                                                                <td class="pl-3 text-tColor">
+
+                                                                    <%= product.unit %>
+
+                                                                </td>
+                                                                <td class="pl-3 text-tColor">
+                                                                    <%= product.seller_id %>
+                                                                </td>
+                                                            </div>
+
+                                                        </tr>
+
+
+                                                    </tbody>
+
+                                                </table>
+
+                                                <p class="py-3 font-semibold">Products Description</p>
+                                                <p style="width: 800px; text-align: justify;">
+                                                    <%= product.product_details_des %>
+                                                </p>
+
+
+
+                                                <% if (product.variant_names && product.variant_prices) { %>
+                                                    <p class="py-3 font-semibold">Product Variants</p>
+
+                                                    <table class="w-full profile-table">
+                                                        <thead class="py-5">
+                                                            <tr>
+                                                                <th>Variant Name</th>
+                                                                <th>Price</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <% const variantNames=product.variant_names.split(','); %>
+                                                                <% const
+                                                                    variantPrices=product.variant_prices.split(','); %>
+                                                                    <% for (let i=0; i < variantNames.length; i++) { %>
+                                                                        <tr
+                                                                            class="font-semibold bg-white border-b-8 border-gray-100">
+                                                                            <td class="pl-3">
+                                                                                <%= variantNames[i] %>
+                                                                            </td>
+                                                                            <td class="pl-3">
+                                                                                <%= variantPrices[i] %>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <% } %>
+                                                        </tbody>
+                                                    </table>
+                                                    <% } %>
+
+
+                                                        <% if (product.non_featured_images) { %>
+                                                            <p class="py-3 font-semibold">Non-Featured Images</p>
+                                                            <ul
+                                                                style="display: flex; flex-wrap: wrap; justify-content: flex-start;">
+                                                                <% const
+                                                                    nonFeaturedImages=product.non_featured_images.split(',');
+                                                                    %>
+                                                                    <% nonFeaturedImages.forEach((image)=> { %>
+                                                                        <li
+                                                                            style="margin-right: 10px; margin-bottom: 10px;">
+                                                                            <div class="image-container"
+                                                                                style="width: 200px; height: 200px; overflow: hidden;">
+                                                                                <img src="<%= image %>"
+                                                                                    alt="Non-Featured Image"
+                                                                                    style="width: 100%; height: 100%; object-fit: fill;">
+                                                                            </div>
+                                                                        </li>
+                                                                        <% }); %>
+                                                            </ul>
+                                                            <% } %>
+
+
+
+                                            </div>
                                         </div>
 
+                                        <a href="/edit-product?product_id=<%= product.product_id %>"
+                                            class="table-button btn btn-xs btn-outline btn-primary"><i
+                                                class="fa fa-pencil"></i></a>
 
+                                        <button onclick="confirmDelete('<%= product.product_id %>')"
+                                            class="table-button btn btn-xs btn-outline btn-primary"><i
+                                                class="fa fa-trash"></i></button>
 
-                                        <table class="w-full profile-table">
-                                            <thead class="py-5">
-                                                <tr>
-                                                    <th>Product Quantity</th>
-                                                    <th>Product Unit</th>
-                                                    <th>Seller ID</th>
-
-                                                </tr>
-                                            </thead>
-
-                                            <tbody>
-
-                                                <tr class="font-semibold bg-white border-8 border-gray-100">
-                                                    <div class="flex items-center gap-4 pl-2">
-                                                        <td class="pl-3 text-tColor">
-
-                                                            <%= product.quantity %>
-
-                                                        </td>
-                                                        <td class="pl-3 text-tColor">
-
-                                                            <%= product.unit %>
-
-                                                        </td>
-                                                        <td class="pl-3 text-tColor">
-                                                            <%= product.seller_id %></td>
-                                                    </div>
-
-                                                </tr>
-
-
-                                            </tbody>
-
-                                        </table>
-
-                                        <p class="py-3 font-semibold">Products Description</p>
-                                        <p style="width: 800px; text-align: justify;">
-                                            <%= product.product_details_des %></p>
+                                    </td>
 
 
 
-                                        <% if (product.variant_names && product.variant_prices) { %>
-                                        <p class="py-3 font-semibold">Product Variants</p>
+                                </tr>
 
-                                        <table class="w-full profile-table">
-                                            <thead class="py-5">
-                                                <tr>
-                                                    <th>Variant Name</th>
-                                                    <th>Price</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <% const variantNames = product.variant_names.split(','); %>
-                                                <% const variantPrices = product.variant_prices.split(','); %>
-                                                <% for (let i = 0; i < variantNames.length; i++) { %>
-                                                <tr class="font-semibold bg-white border-b-8 border-gray-100">
-                                                    <td class="pl-3"><%= variantNames[i] %></td>
-                                                    <td class="pl-3"><%= variantPrices[i] %></td>
-                                                </tr>
-                                                <% } %>
-                                            </tbody>
-                                        </table>
-                                        <% } %>
+                                <% } %>
 
-
-                                        <% if (product.non_featured_images) { %>
-                                        <p class="py-3 font-semibold">Non-Featured Images</p>
-                                        <ul style="display: flex; flex-wrap: wrap; justify-content: flex-start;">
-                                            <% const nonFeaturedImages = product.non_featured_images.split(','); %>
-                                            <% nonFeaturedImages.forEach((image) => { %>
-                                            <li style="margin-right: 10px; margin-bottom: 10px;">
-                                                <div class="image-container"
-                                                    style="width: 200px; height: 200px; overflow: hidden;">
-                                                    <img src="<%= image %>" alt="Non-Featured Image"
-                                                        style="width: 100%; height: 100%; object-fit: fill;">
-                                                </div>
-                                            </li>
-                                            <% }); %>
-                                        </ul>
-                                        <% } %>
+                        </tbody>
+                    </table>
 
 
 
-                                    </div>
-                                </div>
-
-                            </td>
-
-                            <td>
-                                <a href="/edit-product?product_id=<%= product.product_id %>" class="primary-btn"><i
-                                        class="fa fa-pencil"></i></a>
-                            </td>
-                            <td>
-                                <button onclick="confirmDelete('<%= product.product_id %>')"
-                                    class="table-button btn btn-xs btn-outline btn-primary"><i
-                                        class="fa fa-trash"></i></button>
-                            </td>
-
-                        </tr>
-
-                        <% } %>
-
-                    </tbody>
-                </table>
-
-
-
-            </div>
-
-
-            <!-- Page Select -->
-
-            <div class="flex flex-col justify-between gap-2 py-5 xl:flex-row xl:items-center">
-                <p class="text-xs text-center xl:text-sm text-tColor">
-                    Show <%= paginatedProducts.length %> from <%= products.length %> products
-                </p>
-
-                <div
-                    class="grid content-center grid-flow-col gap-3 ml-auto mr-auto font-semibold scale-75 xl:scale-100 xl:mr-0 xl:text-sm text-tColor">
-                    <% if (page > 1) { %>
-                    <a class="flex items-center justify-center w-6 h-6 rounded"
-                        href="/all-products?page=<%= page - 1 %>">
-                        <svg width="6" height="10" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M7.125 0.75L0.875 7L7.125 13.25" stroke="#84818A" stroke-width="1.5"
-                                stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </a>
-                    <% } %>
-
-                    <% const maxPagesToShow = 8;
-                       const startPage = Math.max(1, page - Math.floor(maxPagesToShow / 2));
-                       const endPage = Math.min(
-                           Math.ceil(products.length / productsPerPage),
-                           startPage + maxPagesToShow - 1
-                       );
-            
-                       for (let i = startPage; i <= endPage; i++) { %>
-                    <a class=" h-6 w-6 rounded flex items-center justify-center <%= i === page ? 'bg-blue-100 text-primaryColor' : '' %>"
-                        href="/all-products?page=<%= i %>"><%= i %></a>
-                    <% } %>
-
-                    <% if (page < Math.ceil(products.length / productsPerPage)) { %>
-                    <a class="flex items-center justify-center w-6 h-6 rounded"
-                        href="/all-products?page=<%= page + 1 %>">
-                        <svg width="6" height="10" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M0.875 0.75L7.125 7L0.875 13.25" stroke="#84818A" stroke-width="1.5"
-                                stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </a>
-                    <% } %>
                 </div>
+
+
+                <!-- Page Select -->
+
+                <div class="flex flex-col justify-between gap-2 py-5 xl:flex-row xl:items-center">
+                    <p class="text-xs text-center xl:text-sm text-tColor">
+                        Show <%= paginatedProducts.length %> from <%= products.length %> products
+                    </p>
+
+                    <div
+                        class="grid content-center grid-flow-col gap-3 ml-auto mr-auto font-semibold scale-75 xl:scale-100 xl:mr-0 xl:text-sm text-tColor">
+                        <% if (page> 1) { %>
+                            <a class="flex items-center justify-center w-6 h-6 rounded"
+                                href="/all-products?page=<%= page - 1 %>">
+                                <svg width="6" height="10" viewBox="0 0 8 14" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M7.125 0.75L0.875 7L7.125 13.25" stroke="#84818A" stroke-width="1.5"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </a>
+                            <% } %>
+
+                                <% const maxPagesToShow=8; const startPage=Math.max(1, page - Math.floor(maxPagesToShow
+                                    / 2)); const endPage=Math.min( Math.ceil(products.length / productsPerPage),
+                                    startPage + maxPagesToShow - 1 ); for (let i=startPage; i <=endPage; i++) { %>
+                                    <a class=" h-6 w-6 rounded flex items-center justify-center <%= i === page ? 'bg-blue-100 text-primaryColor' : '' %>"
+                                        href="/all-products?page=<%= i %>">
+                                        <%= i %>
+                                    </a>
+                                    <% } %>
+
+                                        <% if (page < Math.ceil(products.length / productsPerPage)) { %>
+                                            <a class="flex items-center justify-center w-6 h-6 rounded"
+                                                href="/all-products?page=<%= page + 1 %>">
+                                                <svg width="6" height="10" viewBox="0 0 8 14" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M0.875 0.75L7.125 7L0.875 13.25" stroke="#84818A"
+                                                        stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                </svg>
+                                            </a>
+                                            <% } %>
+                    </div>
+                </div>
+
+
+
             </div>
+
 
 
 
         </div>
 
-
+    </div>
 
 
     </div>
 
-</div>
+    </section>
 
+    <script>
+        async function flashSellInsertDelete(product_id) {
+            const apiUrl = `/flashsell?product_id=${product_id}`;
 
-</div>
-
-</section>
-
-<script>
-    async function flashSellInsertDelete(product_id) {
-        const apiUrl = `/flashsell?product_id=${product_id}`;
-
-        const response = await fetch(apiUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-        if (response.status === 200) {
-            // Page refresh
-            location.reload();
-        }
-    }
-
-</script>
-
-
-<script>
-    const tableButtons = document.querySelectorAll('.table-button');
-    const tableMenu = document.querySelectorAll('.table-collapse');
-    const tableClose = document.querySelectorAll('.table-close');
-
-    tableButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const tableCollapse = button.nextElementSibling;
-            button.setAttribute('aria-expanded', button.getAttribute('aria-expanded') === 'false' ? 'true' : 'false');
-            tableCollapse.classList.toggle('hidden');
-        });
-    });
-
-    tableClose.forEach(button => {
-        button.addEventListener('click', () => {
-            const tableCollapse = button.parentElement.parentElement.parentElement;
-            button.setAttribute('aria-expanded', button.getAttribute('aria-expanded') === 'false' ? 'true' : 'false');
-            tableCollapse.classList.toggle('hidden');
-        });
-    });
-
-</script>
-
-
-<!-- Header Section Script -->
-<script>
-    // Menu toggle button 
-    const toggleButton = document.getElementById("toggle-button");
-    const toggleMenu = document.getElementById("toggle-menu");
-    var toggleCounter = 1;
-    toggleButton.onclick = function () {
-        toggleCounter++;
-        if (toggleCounter % 2 == 0) {
-            toggleMenu.classList.remove("hidden");
-            toggleMenu.classList.add("grid");
-        }
-        else {
-            toggleMenu.classList.remove("grid");
-            toggleMenu.classList.add("hidden");
-        }
-    }
-
-
-</script>
-
-
-<!-- Accordion Script -->
-<script>
-    const accordionButtons = document.querySelectorAll('.accordion-button');
-    const accordionMenu = document.querySelectorAll('.menu-collapse');
-
-    accordionButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const accordionCollapse = button.nextElementSibling;
-            button.setAttribute('aria-expanded', button.getAttribute('aria-expanded') === 'false' ? 'true' : 'false');
-            accordionCollapse.classList.toggle('hidden');
-        });
-    });
-
-    // Set all accordion items to collapsed state by default
-    document.querySelectorAll('.menu-collapse').forEach(collapse => {
-        collapse.classList.add('hidden');
-    });
-
-
-
-</script>
-
-<script>
-    const tables = document.querySelectorAll('.table-collapse');
-    window.onclick = function (event) {
-        for (let table of tables) {
-            if (event.target == table) {
-                table.classList.toggle('hidden');
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            if (response.status === 200) {
+                // Page refresh
+                location.reload();
             }
         }
-    };
-</script>
+
+    </script>
 
 
-<script>
-    async function confirmDelete(id) {
+    <script>
+        const tableButtons = document.querySelectorAll('.table-button');
+        const tableMenu = document.querySelectorAll('.table-collapse');
+        const tableClose = document.querySelectorAll('.table-close');
 
-        const apiUrl = `/delete-product?id=${id}`;
-
-        const response = await fetch(apiUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+        tableButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const tableCollapse = button.nextElementSibling;
+                button.setAttribute('aria-expanded', button.getAttribute('aria-expanded') === 'false' ? 'true' : 'false');
+                tableCollapse.classList.toggle('hidden');
+            });
         });
-        if (response.status === 200) {
-            // Page refresh
-            location.reload();
+
+        tableClose.forEach(button => {
+            button.addEventListener('click', () => {
+                const tableCollapse = button.parentElement.parentElement.parentElement;
+                button.setAttribute('aria-expanded', button.getAttribute('aria-expanded') === 'false' ? 'true' : 'false');
+                tableCollapse.classList.toggle('hidden');
+            });
+        });
+
+    </script>
+
+
+    <!-- Header Section Script -->
+    <script>
+        // Menu toggle button 
+        const toggleButton = document.getElementById("toggle-button");
+        const toggleMenu = document.getElementById("toggle-menu");
+        var toggleCounter = 1;
+        toggleButton.onclick = function () {
+            toggleCounter++;
+            if (toggleCounter % 2 == 0) {
+                toggleMenu.classList.remove("hidden");
+                toggleMenu.classList.add("grid");
+            }
+            else {
+                toggleMenu.classList.remove("grid");
+                toggleMenu.classList.add("hidden");
+            }
         }
-    }
 
-</script>
-</body>
 
-</html>
+    </script>
+
+
+    <!-- Accordion Script -->
+    <script>
+        const accordionButtons = document.querySelectorAll('.accordion-button');
+        const accordionMenu = document.querySelectorAll('.menu-collapse');
+
+        accordionButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const accordionCollapse = button.nextElementSibling;
+                button.setAttribute('aria-expanded', button.getAttribute('aria-expanded') === 'false' ? 'true' : 'false');
+                accordionCollapse.classList.toggle('hidden');
+            });
+        });
+
+        // Set all accordion items to collapsed state by default
+        document.querySelectorAll('.menu-collapse').forEach(collapse => {
+            collapse.classList.add('hidden');
+        });
+
+
+
+    </script>
+
+    <script>
+        const tables = document.querySelectorAll('.table-collapse');
+        window.onclick = function (event) {
+            for (let table of tables) {
+                if (event.target == table) {
+                    table.classList.toggle('hidden');
+                }
+            }
+        };
+    </script>
+
+
+    <script>
+        async function confirmDelete(id) {
+
+            const apiUrl = `/delete-product?id=${id}`;
+
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            if (response.status === 200) {
+                // Page refresh
+                location.reload();
+            }
+        }
+
+    </script>
+    </body>
+
+    </html>
