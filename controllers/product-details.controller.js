@@ -15,7 +15,7 @@ exports.productDetails = async (req, res) => {
       ]);
     var productID = req.query.id;
     var query =
-      "SELECT * FROM `products` INNER JOIN `extra_cat` ON `products`.`product_cat_id` = `extra_cat`.`extra_cat_id`  WHERE `products`.`product_id` = ?";
+      "SELECT products.*, CASE WHEN status = 1 THEN 'published' WHEN status = 0 THEN 'unpublished' ELSE 'unknown' END AS status FROM products INNER JOIN `extra_cat` ON `products`.`product_cat_id` = `extra_cat`.`extra_cat_id`  WHERE `products`.`product_id` = ?";
     db.query(query, [productID], (err1, res1) => {
       if (!err1) {
         db.query(
@@ -33,28 +33,27 @@ exports.productDetails = async (req, res) => {
                       [productID],
                       (err6, res6) => {
                         if (!err6) {
-                          if (
-                            res1[0].status == 1 &&
-                            res1[0].admin_published == 1 &&
-                            res1[0].quantity >= 0
-                          ) {
-                            res.status(200).json({
-                              status: true,
-                              message: `Successfully Fetched ID: ${productID} Product Details`,
-                              client: {
-                                productInfo: res1,
-                                productVariant: res2,
-                                productVideo: res5,
-                                productImages: res6,
-                              },
-                            });
-                          } else {
-                            res.status(200).json({
-                              status: false,
-                              message: `Product ID: ${productID} maybe not Published or status is not Approved`,
-                              client: {},
-                            });
-                          }
+                          // if (
+                          //   res1[0].status == "published" &&
+                          //   res1[0].quantity >= 0
+                          // ) {
+                          res.status(200).json({
+                            status: true,
+                            message: `Successfully Fetched ID: ${productID} Product Details`,
+                            client: {
+                              productInfo: res1,
+                              productVariant: res2,
+
+                              productImages: res6,
+                            },
+                          });
+                          // } else {
+                          //   res.status(200).json({
+                          //     status: false,
+                          //     message: `Product ID: ${productID} maybe not Published or status is not Approved`,
+                          //     client: {},
+                          //   });
+                          // }
                         } else {
                           res.status(500).json({
                             status: false,

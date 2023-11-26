@@ -16,3 +16,23 @@ db.connect(function (error) {
 });
 
 module.exports = db;
+
+// const mysql = require("mysql");
+// // const dotenv = require('dotenv');
+
+// const db = mysql.createConnection({
+//   host: "localhost",
+//   user: "soykjtul_mehedi",
+//   password: "devMeek007",
+//   database: "soykjtul_mark_agro",
+// });
+
+// db.connect(function (error) {
+//   if (error) {
+//     console.log(error);
+//   } else {
+//     console.log("Database Connected!");
+//   }
+// });
+
+// module.exports = db;

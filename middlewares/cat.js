@@ -66,13 +66,23 @@ exports.fetchAllCat = () => {
 
 exports.fetchAllProducts = () => {
   return new Promise((resolve, reject) => {
-    db.query("SELECT * FROM `products`", (err, res) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(res);
+    db.query(
+      `SELECT 
+  *,
+  CASE
+    WHEN status = 1 THEN 'published'
+    WHEN status = 0 THEN 'unpublished'
+    ELSE 'unknown'
+  END AS status
+FROM products;`,
+      (err, res) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(res);
+        }
       }
-    });
+    );
   });
 };
 

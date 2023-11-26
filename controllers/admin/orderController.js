@@ -87,18 +87,6 @@ exports.getAllOrders = async (req, res, next) => {
   }
 };
 
-// exports.updateStatus = async (req, res, next) => {
-//   try {
-//     console.log("here");
-//     const { order_id, status_id, status_name } = req.body;
-
-//     console.log(req.body);
-//   } catch (e) {
-//     console.log(e);
-//     return res.status(503).json({ msg: "Internal Server Error" });
-//   }
-// };
-
 exports.updateStatus = async (req, res, next) => {
   try {
     const { order_id, status_id, status_name } = req.body;

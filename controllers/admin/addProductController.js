@@ -9,7 +9,6 @@ exports.getAddProducts = async (req, res, next) => {
     const extraCats = `SELECT * FROM extra_cat`;
     const products = await queryAsyncWithoutValue(productQuery);
     const extraCat = await queryAsyncWithoutValue(extraCats);
-    // const pid = products[0].product_id;
 
     return res.status(200).render("pages/addProducts", {
       title: "All Product",
@@ -30,7 +29,6 @@ exports.postAddProduct = async (req, res, next) => {
     const extraCats = `SELECT * FROM extra_cat`;
     const products = await queryAsyncWithoutValue(productQuery);
     const extraCat = await queryAsyncWithoutValue(extraCats);
-    // const pid = products[0].product_id;
 
     let {
       product_name,
@@ -137,7 +135,6 @@ exports.postAddProduct = async (req, res, next) => {
             });
           }
         } else {
-          // If variant_name and variant_price are not arrays (single values), convert them to arrays
           const variantNameArray = [variant_name];
           const variantPriceArray = [variant_price];
 

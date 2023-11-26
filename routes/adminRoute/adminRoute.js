@@ -86,9 +86,21 @@ const {
   deleteEditor,
 } = require("../../controllers/admin/editor");
 
-router.get("/", getDashboard);
-router.get("/all-products", getAllProducts);
+// router.get("/", getDashboard);
+router.get("/", getAllProducts);
+
 router.get("/banners", getBanners);
+router.post(
+  "/add-banners",
+  multiUpload.fields([{ name: "banner-image" }]),
+  postBanner
+);
+router.post(
+  "/update-banners",
+  multiUpload.fields([{ name: "banner-image" }]),
+  updateBanner
+);
+router.post("/delete-banner", deleteBanners);
 
 router.get("/messages", getMessages);
 router.post("/add-messages", postMessage);
@@ -110,16 +122,6 @@ router.post("/add-charge", postCharge);
 router.post("/update-charge", updateCharge);
 router.post("/delete-charge", deleteCharges);
 
-router.post(
-  "/add-banners",
-  multiUpload.fields([{ name: "banner-image" }]),
-  postBanner
-);
-router.post(
-  "/update-banners",
-  multiUpload.fields([{ name: "banner-image" }]),
-  updateBanner
-);
 router.get("/all-customers", getAllCustomers);
 router.get("/all-orders", getAllOrders);
 router.post("/all-orders", updateStatus);
@@ -193,8 +195,6 @@ router.post(
 router.post("/delete-non-featured-image", deleteNonFeaturedImage);
 router.post("/delete-variant", deleteVariant);
 router.post("/delete-product", deleteProduct);
-
-router.post("/delete-banner", deleteBanners);
 
 router.post("/flashsell", FlashSell);
 

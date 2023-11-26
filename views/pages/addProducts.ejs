@@ -250,14 +250,13 @@
 </script>
 
 <script>
-    let inputCounter = 1; // Initialize the counter for input elements
+    let inputCounter = 1;
 
     document.getElementById("addImageBtn").addEventListener("click", function () {
         const productImageContainer = document.getElementById("productImageContainer");
         const newProductImageField = document.createElement("div");
         newProductImageField.className = "flex items-center mb-2";
 
-        // Generate the next input and image IDs
         const inputId = `product_image${inputCounter}`;
         const imgId = `selected-image${inputCounter}`;
 
@@ -271,7 +270,6 @@
 
         productImageContainer.appendChild(newProductImageField);
 
-        // Increment the input counter
         inputCounter++;
     });
 

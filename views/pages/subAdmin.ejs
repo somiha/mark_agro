@@ -1,6 +1,6 @@
 <%- include('../partials/navigation.ejs') %>
 
-<div class="mx-5 rounded-md">
+<div class="px-5 pt-5 rounded-md ">
 
     <div class="flex justify-between items-center flex-wrap gap-5 py-10">
         <p class="text-xl xl:text-2xl font-semibold text-tColor2">Sub Admin</p>
@@ -123,7 +123,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <% for (let subAdmin of subAdmins) { %>
+                    <% for (let subAdmin of paginatedAdmin) { %>
                     <tr>
                         <td class="text-tColor">
 
@@ -172,7 +172,7 @@
             </p>
 
             <div
-                class="grid content-center grid-flow-col gap-3 ml-auto mr-auto font-semibold scale-75 xl:scale-100 xl:mr-0 xl:text-sm text-tColor">
+                class="grid content-center grid-flow-col gap-3 ml-auto mr-auto font-semibold scale-75 xl:scale-100 xl:mr-10 xl:text-sm text-tColor">
                 <% if (page > 1) { %>
                 <a class="flex items-center justify-center w-6 h-6 rounded" href="/sub-admin?page=<%= page - 1 %>">
                     <svg width="6" height="10" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
