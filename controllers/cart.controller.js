@@ -649,7 +649,7 @@ exports.placeOrder = (req, res) => {
           });
         } else {
           db.query(
-            "SELECT `products`.`product_id`, `products`.`product_name`, `products`.`product_price`, `products`.`product_short_des`, `products`.`product_details_des`, `products`.`product_cat_id`,`products`.`seller_id`,`products`.`sell_count`, `extra_cat`.*, order_details.order_details_id, order_details.product_total_price, order_details.product_quantity, orders.* FROM products INNER JOIN order_details ON order_details.product_id = products.product_id INNER JOIN orders ON orders.order_id = order_details.order_id INNER JOIN `extra_cat` ON `extra_cat`.`extra_cat_id` = `products`.`product_cat_id` WHERE orders.order_id = ?",
+            "SELECT `products`.`product_id`, `products`.`product_name`, `products`.`product_price`,  `products`.`product_details_des`, `products`.`product_cat_id`,`products`.`seller_id`,`products`.`sell_count`, `extra_cat`.*, order_details.order_details_id, order_details.product_total_price, order_details.product_quantity, orders.* FROM products INNER JOIN order_details ON order_details.product_id = products.product_id INNER JOIN orders ON orders.order_id = order_details.order_id INNER JOIN `extra_cat` ON `extra_cat`.`extra_cat_id` = `products`.`product_cat_id` WHERE orders.order_id = ?",
             [oID],
             (err2, result2) => {
               if (!err2) {
